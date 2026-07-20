@@ -2,3 +2,5 @@
 data/raw/
 data/processed/
 .DS_Store
+notes.md
+rag/__pycache__/
