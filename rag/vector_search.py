@@ -57,15 +57,19 @@ class VectorIndex:
             "re-run build_embeddings() after changing the corpus"
         )
 
-    def search(self, query: str, ticker: str | None = None,
+    def search(self, query: str, filters: dict | None = None,
                num_results: int = 5) -> list[dict]:
         q = get_model().encode([query], normalize_embeddings=True)[0]
         scores = self.emb @ q  # cosine similarity, all chunks at once
 
-        # Metadata filter = hard constraint, applied by masking scores
-        # BEFORE ranking (same philosophy as keyword_fields in minsearch).
-        if ticker:
-            mask = np.array([c["ticker"] != ticker for c in self.chunks])
+        # Hard metadata constraints applied BEFORE ranking, by pushing
+        # excluded chunks below any achievable score.
+        if filters:
+            mask = np.array([
+                any(c[field] != value for field, value in filters.items())
+                for c in self.chunks
+            ])
+            scores = scores.copy()
             scores[mask] = -1.0
 
         top = np.argsort(scores)[::-1][:num_results]

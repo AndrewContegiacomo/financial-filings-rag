@@ -1,0 +1,371 @@
+[
+  {
+    "question": "What was Apple's total net sales for the Americas segment in 2025?",
+    "gold_chunk_id": "AAPL_10K_2025-10-31_0169",
+    "ticker": "AAPL",
+    "form": "10K",
+    "section": "Item 8",
+    "origin": "synthetic",
+    "kind": "financial"
+  },
+  {
+    "question": "What was the percentage of total net sales that Apple's research and development expenses represented in 2025?",
+    "gold_chunk_id": "AAPL_10K_2025-10-31_0108",
+    "ticker": "AAPL",
+    "form": "10K",
+    "section": "Item 1A",
+    "origin": "synthetic",
+    "kind": "financial"
+  },
+  {
+    "question": "What is the length of Apple's fiscal year that ended in 2025?",
+    "gold_chunk_id": "AAPL_10K_2025-10-31_0012",
+    "ticker": "AAPL",
+    "form": "10K",
+    "section": "Item 1",
+    "origin": "synthetic",
+    "kind": "narrative"
+  },
+  {
+    "question": "What potential consequences could Apple Inc. face in 2025 if it is required to change its business practices to comply with new laws and regulations related to data privacy and security?",
+    "gold_chunk_id": "AAPL_10K_2025-10-31_0076",
+    "ticker": "AAPL",
+    "form": "10K",
+    "section": "Item 1A",
+    "origin": "synthetic",
+    "kind": "narrative"
+  },
+  {
+    "question": "What types of laws and regulations did Apple face significant compliance costs and risks from during its 2025 fiscal year?",
+    "gold_chunk_id": "AAPL_10K_2025-10-31_0068",
+    "ticker": "AAPL",
+    "form": "10K",
+    "section": "Item 1A",
+    "origin": "synthetic",
+    "kind": "narrative"
+  },
+  {
+    "question": "What was Apple's effective tax rate for the three months ended December 27, 2025?",
+    "gold_chunk_id": "AAPL_10Q_2026-01-30_0041",
+    "ticker": "AAPL",
+    "form": "10Q",
+    "section": "Item 1A",
+    "origin": "synthetic",
+    "kind": "financial"
+  },
+  {
+    "question": "What was the total amount spent by Apple on repurchasing its common stock during the three months ended December 27, 2025?",
+    "gold_chunk_id": "AAPL_10Q_2026-01-30_0025",
+    "ticker": "AAPL",
+    "form": "10Q",
+    "section": "Item 1",
+    "origin": "synthetic",
+    "kind": "financial"
+  },
+  {
+    "question": "What changes, if any, occurred in Apple's internal control over financial reporting during the first quarter of 2026?",
+    "gold_chunk_id": "AAPL_10Q_2026-01-30_0048",
+    "ticker": "AAPL",
+    "form": "10Q",
+    "section": "Item 4",
+    "origin": "synthetic",
+    "kind": "narrative"
+  },
+  {
+    "question": "What accounting standard update related to income taxes is Apple expected to adopt in the fourth quarter of 2026?",
+    "gold_chunk_id": "AAPL_10Q_2026-01-30_0046",
+    "ticker": "AAPL",
+    "form": "10Q",
+    "section": "Item 1A",
+    "origin": "synthetic",
+    "kind": "narrative"
+  },
+  {
+    "question": "What changes has Apple made to its iOS, iPadOS, and App Store in the European Union as of the first quarter of 2026 to comply with new regulations?",
+    "gold_chunk_id": "AAPL_10Q_2026-05-01_0072",
+    "ticker": "AAPL",
+    "form": "10Q",
+    "section": "Item 1A",
+    "origin": "synthetic",
+    "kind": "narrative"
+  },
+  {
+    "question": "What was JPMorgan Chase's total noninterest expense for the year ended December 31, 2025?",
+    "gold_chunk_id": "JPM_10K_2026-02-13_0271",
+    "ticker": "JPM",
+    "form": "10K",
+    "section": "Item 8",
+    "origin": "synthetic",
+    "kind": "financial"
+  },
+  {
+    "question": "What was the net addition to the allowance for credit losses for JPMorgan Chase in 2025?",
+    "gold_chunk_id": "JPM_10K_2026-02-13_0270",
+    "ticker": "JPM",
+    "form": "10K",
+    "section": "Item 8",
+    "origin": "synthetic",
+    "kind": "financial"
+  },
+  {
+    "question": "What specific type of encryption is JPMorgan Chase considering adopting to enhance its security protections for the period ending 2026?",
+    "gold_chunk_id": "JPM_10K_2026-02-13_0164",
+    "ticker": "JPM",
+    "form": "10K",
+    "section": "Item 1A",
+    "origin": "synthetic",
+    "kind": "narrative"
+  },
+  {
+    "question": "What was the cap on the eSLR buffer for IDI subsidiaries of JPMorgan Chase in 2025?",
+    "gold_chunk_id": "JPM_10K_2026-02-13_0380",
+    "ticker": "JPM",
+    "form": "10K",
+    "section": "Item 8",
+    "origin": "synthetic",
+    "kind": "narrative"
+  },
+  {
+    "question": "What were the total preferred stock dividends paid by JPMorgan Chase in 2025?",
+    "gold_chunk_id": "JPM_10K_2026-02-13_0408",
+    "ticker": "JPM",
+    "form": "10K",
+    "section": "Item 8",
+    "origin": "synthetic",
+    "kind": "narrative"
+  },
+  {
+    "question": "What was JPMorgan Chase's net income for the period ended 2025-11-04?",
+    "gold_chunk_id": "JPM_10Q_2025-11-04_0636",
+    "ticker": "JPM",
+    "form": "10Q",
+    "section": "Item 6",
+    "origin": "synthetic",
+    "kind": "financial"
+  },
+  {
+    "question": "What was the total amount of assets under management at JPMorgan Chase as of March 31, 2026?",
+    "gold_chunk_id": "JPM_10Q_2026-05-01_0128",
+    "ticker": "JPM",
+    "form": "10Q",
+    "section": "Item 6",
+    "origin": "synthetic",
+    "kind": "financial"
+  },
+  {
+    "question": "What was the net addition to the allowance for lending-related commitments recognized by JPMorgan Chase in its liabilities for the period ended September 30, 2025?",
+    "gold_chunk_id": "JPM_10Q_2025-11-04_0107",
+    "ticker": "JPM",
+    "form": "10Q",
+    "section": "Item 6",
+    "origin": "synthetic",
+    "kind": "narrative"
+  },
+  {
+    "question": "What method does JPMorgan Chase use to mitigate the risk of charge-backs to merchants in its Merchant Services business for the period ended 2025-11-04?",
+    "gold_chunk_id": "JPM_10Q_2025-11-04_0608",
+    "ticker": "JPM",
+    "form": "10Q",
+    "section": "Item 6",
+    "origin": "synthetic",
+    "kind": "narrative"
+  },
+  {
+    "question": "What was the total amount of loans purchased by JPMorgan Chase during the three months ended March 31, 2026?",
+    "gold_chunk_id": "JPM_10Q_2026-05-01_0413",
+    "ticker": "JPM",
+    "form": "10Q",
+    "section": "Item 6",
+    "origin": "synthetic",
+    "kind": "narrative"
+  },
+  {
+    "question": "What was Microsoft's net income for the year ended June 30, 2025?",
+    "gold_chunk_id": "MSFT_10K_2025-07-30_0186",
+    "ticker": "MSFT",
+    "form": "10K",
+    "section": "Item 8",
+    "origin": "synthetic",
+    "kind": "financial"
+  },
+  {
+    "question": "What was the total amount of derivative obligations for Microsoft for the period ending 2025?",
+    "gold_chunk_id": "MSFT_10K_2025-07-30_0228",
+    "ticker": "MSFT",
+    "form": "10K",
+    "section": "Item 8",
+    "origin": "synthetic",
+    "kind": "financial"
+  },
+  {
+    "question": "What accounting firm did Microsoft engage to audit its consolidated financial statements for the period covered by its 2025 10K filing?",
+    "gold_chunk_id": "MSFT_10K_2025-07-30_0181",
+    "ticker": "MSFT",
+    "form": "10K",
+    "section": "Item 7A",
+    "origin": "synthetic",
+    "kind": "narrative"
+  },
+  {
+    "question": "What types of data does Microsoft store and process as it expands its cloud-based offerings in 2025?",
+    "gold_chunk_id": "MSFT_10K_2025-07-30_0086",
+    "ticker": "MSFT",
+    "form": "10K",
+    "section": "Item 1A",
+    "origin": "synthetic",
+    "kind": "narrative"
+  },
+  {
+    "question": "What type of plan did Microsoft Corporation file with the SEC on October 20, 2016, as referenced in exhibit 10.12, for the period ending September 30, 2016?",
+    "gold_chunk_id": "MSFT_10K_2025-07-30_0304",
+    "ticker": "MSFT",
+    "form": "10K",
+    "section": "Item 15",
+    "origin": "synthetic",
+    "kind": "narrative"
+  },
+  {
+    "question": "What was Microsoft's total revenue for the six months ended December 31, 2025?",
+    "gold_chunk_id": "MSFT_10Q_2026-01-28_0013",
+    "ticker": "MSFT",
+    "form": "10Q",
+    "section": "Item 1",
+    "origin": "synthetic",
+    "kind": "financial"
+  },
+  {
+    "question": "What was the year-over-year percentage change in Productivity and Business Processes revenue for Microsoft in the quarter ended March 31, 2026?",
+    "gold_chunk_id": "MSFT_10Q_2026-04-29_0098",
+    "ticker": "MSFT",
+    "form": "10Q",
+    "section": "Item 2",
+    "origin": "synthetic",
+    "kind": "financial"
+  },
+  {
+    "question": "What type of cyber attack did a nation-state associated threat actor use to compromise a Microsoft test account in late November 2023, as disclosed by Microsoft for the period ending January 28, 2026?",
+    "gold_chunk_id": "MSFT_10Q_2026-01-28_0151",
+    "ticker": "MSFT",
+    "form": "10Q",
+    "section": "Item 1A",
+    "origin": "synthetic",
+    "kind": "narrative"
+  },
+  {
+    "question": "What potential consequences could Microsoft face during the quarter ending April 29, 2026, if its facilities, network, or data security are breached?",
+    "gold_chunk_id": "MSFT_10Q_2026-04-29_0156",
+    "ticker": "MSFT",
+    "form": "10Q",
+    "section": "Item 1A",
+    "origin": "synthetic",
+    "kind": "narrative"
+  },
+  {
+    "question": "What was the percentage growth in Azure and other cloud services revenue for Microsoft in the quarter ended April 29, 2026?",
+    "gold_chunk_id": "MSFT_10Q_2026-04-29_0105",
+    "ticker": "MSFT",
+    "form": "10Q",
+    "section": "Item 2",
+    "origin": "synthetic",
+    "kind": "narrative"
+  },
+  {
+    "question": "What was the total net equity or deficit attributable to shareholders of Pfizer's equity-method investee ViiV as of December 31, 2025?",
+    "gold_chunk_id": "PFE_10K_2026-02-26_0421",
+    "ticker": "PFE",
+    "form": "10K",
+    "section": "Item 8",
+    "origin": "synthetic",
+    "kind": "financial"
+  },
+  {
+    "question": "What was the change in Pfizer's net repayments of short-term borrowings in its financing activities for the year ended 2026?",
+    "gold_chunk_id": "PFE_10K_2026-02-26_0333",
+    "ticker": "PFE",
+    "form": "10K",
+    "section": "Item 1",
+    "origin": "synthetic",
+    "kind": "financial"
+  },
+  {
+    "question": "How many employees did Pfizer have worldwide as of the end of 2025?",
+    "gold_chunk_id": "PFE_10K_2026-02-26_0145",
+    "ticker": "PFE",
+    "form": "10K",
+    "section": "Item 1A",
+    "origin": "synthetic",
+    "kind": "narrative"
+  },
+  {
+    "question": "What potential consequences could Pfizer face in 2025 if a court determines that one of its marketed products infringes on a third party's valid patent rights?",
+    "gold_chunk_id": "PFE_10K_2026-02-26_0547",
+    "ticker": "PFE",
+    "form": "10K",
+    "section": "Item 8",
+    "origin": "synthetic",
+    "kind": "narrative"
+  },
+  {
+    "question": "What potential consequences may Pfizer face in 2026 if its products are found to infringe on patents owned by other companies?",
+    "gold_chunk_id": "PFE_10K_2026-02-26_0207",
+    "ticker": "PFE",
+    "form": "10K",
+    "section": "Item 1",
+    "origin": "synthetic",
+    "kind": "narrative"
+  },
+  {
+    "question": "What was the balance of Pfizer's accumulated other comprehensive loss as of September 28, 2025?",
+    "gold_chunk_id": "PFE_10Q_2025-11-04_0064",
+    "ticker": "PFE",
+    "form": "10Q",
+    "section": "Item 1",
+    "origin": "synthetic",
+    "kind": "financial"
+  },
+  {
+    "question": "What was the total balance of Pfizer's restructuring accruals as of September 28, 2025, for the period ending in the third quarter of 2025?",
+    "gold_chunk_id": "PFE_10Q_2025-11-04_0054",
+    "ticker": "PFE",
+    "form": "10Q",
+    "section": "Item 1",
+    "origin": "synthetic",
+    "kind": "financial"
+  },
+  {
+    "question": "What year did New Monsanto complete its spin-off and assume liabilities related to Pharmacia's former agricultural business, according to Pfizer's 10Q filing for the period ended May 5, 2026?",
+    "gold_chunk_id": "PFE_10Q_2026-05-05_0094",
+    "ticker": "PFE",
+    "form": "10Q",
+    "section": "Item 85",
+    "origin": "synthetic",
+    "kind": "narrative"
+  },
+  {
+    "question": "What courts have been designated to coordinate personal injury actions against Pfizer related to Zantac sales in the state of California and other jurisdictions, as of Pfizer's Q3 2025 reporting period?",
+    "gold_chunk_id": "PFE_10Q_2025-11-04_0114",
+    "ticker": "PFE",
+    "form": "10Q",
+    "section": "Item 1",
+    "origin": "synthetic",
+    "kind": "narrative"
+  },
+  {
+    "question": "What lawsuits were filed against Pfizer by other companies regarding patent infringement of Comirnaty in the first quarter of 2025?",
+    "gold_chunk_id": "PFE_10Q_2026-05-05_0083",
+    "ticker": "PFE",
+    "form": "10Q",
+    "section": "Item 85",
+    "origin": "synthetic",
+    "kind": "narrative"
+  },
+  {
+    "question": "What were Apple's total net sales in the last fiscal year?",
+    "gold_chunk_id": "AAPL_10K_2025-10-31_0104",
+    "ticker": "AAPL",
+    "form": "10K",
+    "section": "Item 7",
+    "kind": "financial",
+    "origin": "manual"
+  }
+]

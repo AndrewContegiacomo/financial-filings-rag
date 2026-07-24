@@ -28,8 +28,12 @@ def build_index(chunks: list[dict]) -> Index:
     return index
 
 
-def keyword_search(index: Index, query: str, ticker: str | None = None,
+def keyword_search(index: Index, query: str, filters: dict | None = None,
                    num_results: int = 5) -> list[dict]:
-    filters = {"ticker": ticker} if ticker else {}
-    return index.search(query=query, filter_dict=filters,
+    """Unified retriever interface: (query, filters, k) -> chunks.
+
+    Both retrievers expose the same signature so evaluation (and later
+    hybrid search) can treat them interchangeably.
+    """
+    return index.search(query=query, filter_dict=filters or {},
                         num_results=num_results)

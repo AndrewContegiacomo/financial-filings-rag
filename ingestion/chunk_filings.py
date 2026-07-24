@@ -30,11 +30,9 @@ CHUNK_WORDS = 200
 # continuity.
 OVERLAP_WORDS = 40
 
-# Matches section headers like "Item 1A." or "ITEM 7." — the canonical
-# structure of 10-K/10-Q filings. Used only to TAG chunks with their
-# section, never to delimit them: if the pattern fails on some
-# company's HTML formatting, we lose the tag, not the content.
-ITEM_RE = re.compile(r"\bITEM\s+(\d{1,2}A?)\b[.\s]", re.IGNORECASE)
+# Item numbers in 10-K/10-Q filings run from 1 to 16. Accepting any
+# two-digit number produced bogus sections like "Item 85".
+ITEM_RE = re.compile(r"\bITEM\s+(1[0-6]|[1-9])(A?)\b[.\s]", re.IGNORECASE)
 
 
 def html_to_text(path: Path) -> str:

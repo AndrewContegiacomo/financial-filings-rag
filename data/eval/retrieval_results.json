@@ -1,0 +1,428 @@
+{
+  "overall": {
+    "keyword": {
+      "hit_rate@1": 0.171,
+      "mrr@1": 0.171,
+      "hit_rate@5": 0.415,
+      "mrr@5": 0.263,
+      "hit_rate@10": 0.61,
+      "mrr@10": 0.289,
+      "n": 41
+    },
+    "vector": {
+      "hit_rate@1": 0.122,
+      "mrr@1": 0.122,
+      "hit_rate@5": 0.317,
+      "mrr@5": 0.193,
+      "hit_rate@10": 0.366,
+      "mrr@10": 0.201,
+      "n": 41
+    },
+    "keyword+oracle_filter": {
+      "hit_rate@1": 0.317,
+      "mrr@1": 0.317,
+      "hit_rate@5": 0.659,
+      "mrr@5": 0.445,
+      "hit_rate@10": 0.756,
+      "mrr@10": 0.456,
+      "n": 41
+    },
+    "vector+oracle_filter": {
+      "hit_rate@1": 0.171,
+      "mrr@1": 0.171,
+      "hit_rate@5": 0.39,
+      "mrr@5": 0.253,
+      "hit_rate@10": 0.463,
+      "mrr@10": 0.261,
+      "n": 41
+    }
+  },
+  "kind": {
+    "financial": {
+      "keyword": {
+        "hit_rate@1": 0.118,
+        "mrr@1": 0.118,
+        "hit_rate@5": 0.294,
+        "mrr@5": 0.196,
+        "hit_rate@10": 0.588,
+        "mrr@10": 0.234,
+        "n": 17
+      },
+      "vector": {
+        "hit_rate@1": 0.0,
+        "mrr@1": 0.0,
+        "hit_rate@5": 0.118,
+        "mrr@5": 0.049,
+        "hit_rate@10": 0.176,
+        "mrr@10": 0.057,
+        "n": 17
+      },
+      "keyword+oracle_filter": {
+        "hit_rate@1": 0.235,
+        "mrr@1": 0.235,
+        "hit_rate@5": 0.588,
+        "mrr@5": 0.355,
+        "hit_rate@10": 0.588,
+        "mrr@10": 0.355,
+        "n": 17
+      },
+      "vector+oracle_filter": {
+        "hit_rate@1": 0.0,
+        "mrr@1": 0.0,
+        "hit_rate@5": 0.176,
+        "mrr@5": 0.078,
+        "hit_rate@10": 0.235,
+        "mrr@10": 0.084,
+        "n": 17
+      }
+    },
+    "narrative": {
+      "keyword": {
+        "hit_rate@1": 0.208,
+        "mrr@1": 0.208,
+        "hit_rate@5": 0.5,
+        "mrr@5": 0.31,
+        "hit_rate@10": 0.625,
+        "mrr@10": 0.329,
+        "n": 24
+      },
+      "vector": {
+        "hit_rate@1": 0.208,
+        "mrr@1": 0.208,
+        "hit_rate@5": 0.458,
+        "mrr@5": 0.295,
+        "hit_rate@10": 0.5,
+        "mrr@10": 0.302,
+        "n": 24
+      },
+      "keyword+oracle_filter": {
+        "hit_rate@1": 0.375,
+        "mrr@1": 0.375,
+        "hit_rate@5": 0.708,
+        "mrr@5": 0.508,
+        "hit_rate@10": 0.875,
+        "mrr@10": 0.528,
+        "n": 24
+      },
+      "vector+oracle_filter": {
+        "hit_rate@1": 0.292,
+        "mrr@1": 0.292,
+        "hit_rate@5": 0.542,
+        "mrr@5": 0.376,
+        "hit_rate@10": 0.625,
+        "mrr@10": 0.386,
+        "n": 24
+      }
+    }
+  },
+  "origin": {
+    "synthetic": {
+      "keyword": {
+        "hit_rate@1": 0.175,
+        "mrr@1": 0.175,
+        "hit_rate@5": 0.425,
+        "mrr@5": 0.27,
+        "hit_rate@10": 0.6,
+        "mrr@10": 0.293,
+        "n": 40
+      },
+      "vector": {
+        "hit_rate@1": 0.125,
+        "mrr@1": 0.125,
+        "hit_rate@5": 0.325,
+        "mrr@5": 0.198,
+        "hit_rate@10": 0.375,
+        "mrr@10": 0.206,
+        "n": 40
+      },
+      "keyword+oracle_filter": {
+        "hit_rate@1": 0.325,
+        "mrr@1": 0.325,
+        "hit_rate@5": 0.65,
+        "mrr@5": 0.447,
+        "hit_rate@10": 0.75,
+        "mrr@10": 0.459,
+        "n": 40
+      },
+      "vector+oracle_filter": {
+        "hit_rate@1": 0.175,
+        "mrr@1": 0.175,
+        "hit_rate@5": 0.4,
+        "mrr@5": 0.259,
+        "hit_rate@10": 0.475,
+        "mrr@10": 0.267,
+        "n": 40
+      }
+    },
+    "manual": {
+      "keyword": {
+        "hit_rate@1": 0.0,
+        "mrr@1": 0.0,
+        "hit_rate@5": 0.0,
+        "mrr@5": 0.0,
+        "hit_rate@10": 1.0,
+        "mrr@10": 0.143,
+        "n": 1
+      },
+      "vector": {
+        "hit_rate@1": 0.0,
+        "mrr@1": 0.0,
+        "hit_rate@5": 0.0,
+        "mrr@5": 0.0,
+        "hit_rate@10": 0.0,
+        "mrr@10": 0.0,
+        "n": 1
+      },
+      "keyword+oracle_filter": {
+        "hit_rate@1": 0.0,
+        "mrr@1": 0.0,
+        "hit_rate@5": 1.0,
+        "mrr@5": 0.333,
+        "hit_rate@10": 1.0,
+        "mrr@10": 0.333,
+        "n": 1
+      },
+      "vector+oracle_filter": {
+        "hit_rate@1": 0.0,
+        "mrr@1": 0.0,
+        "hit_rate@5": 0.0,
+        "mrr@5": 0.0,
+        "hit_rate@10": 0.0,
+        "mrr@10": 0.0,
+        "n": 1
+      }
+    }
+  },
+  "ticker": {
+    "AAPL": {
+      "keyword": {
+        "hit_rate@1": 0.0,
+        "mrr@1": 0.0,
+        "hit_rate@5": 0.364,
+        "mrr@5": 0.144,
+        "hit_rate@10": 0.909,
+        "mrr@10": 0.222,
+        "n": 11
+      },
+      "vector": {
+        "hit_rate@1": 0.091,
+        "mrr@1": 0.091,
+        "hit_rate@5": 0.364,
+        "mrr@5": 0.197,
+        "hit_rate@10": 0.455,
+        "mrr@10": 0.21,
+        "n": 11
+      },
+      "keyword+oracle_filter": {
+        "hit_rate@1": 0.455,
+        "mrr@1": 0.455,
+        "hit_rate@5": 1.0,
+        "mrr@5": 0.624,
+        "hit_rate@10": 1.0,
+        "mrr@10": 0.624,
+        "n": 11
+      },
+      "vector+oracle_filter": {
+        "hit_rate@1": 0.182,
+        "mrr@1": 0.182,
+        "hit_rate@5": 0.545,
+        "mrr@5": 0.306,
+        "hit_rate@10": 0.636,
+        "mrr@10": 0.316,
+        "n": 11
+      }
+    },
+    "JPM": {
+      "keyword": {
+        "hit_rate@1": 0.4,
+        "mrr@1": 0.4,
+        "hit_rate@5": 0.6,
+        "mrr@5": 0.453,
+        "hit_rate@10": 0.7,
+        "mrr@10": 0.464,
+        "n": 10
+      },
+      "vector": {
+        "hit_rate@1": 0.0,
+        "mrr@1": 0.0,
+        "hit_rate@5": 0.4,
+        "mrr@5": 0.142,
+        "hit_rate@10": 0.4,
+        "mrr@10": 0.142,
+        "n": 10
+      },
+      "keyword+oracle_filter": {
+        "hit_rate@1": 0.5,
+        "mrr@1": 0.5,
+        "hit_rate@5": 0.7,
+        "mrr@5": 0.553,
+        "hit_rate@10": 0.8,
+        "mrr@10": 0.564,
+        "n": 10
+      },
+      "vector+oracle_filter": {
+        "hit_rate@1": 0.1,
+        "mrr@1": 0.1,
+        "hit_rate@5": 0.4,
+        "mrr@5": 0.225,
+        "hit_rate@10": 0.6,
+        "mrr@10": 0.246,
+        "n": 10
+      }
+    },
+    "MSFT": {
+      "keyword": {
+        "hit_rate@1": 0.0,
+        "mrr@1": 0.0,
+        "hit_rate@5": 0.1,
+        "mrr@5": 0.05,
+        "hit_rate@10": 0.1,
+        "mrr@10": 0.05,
+        "n": 10
+      },
+      "vector": {
+        "hit_rate@1": 0.1,
+        "mrr@1": 0.1,
+        "hit_rate@5": 0.2,
+        "mrr@5": 0.133,
+        "hit_rate@10": 0.2,
+        "mrr@10": 0.133,
+        "n": 10
+      },
+      "keyword+oracle_filter": {
+        "hit_rate@1": 0.0,
+        "mrr@1": 0.0,
+        "hit_rate@5": 0.2,
+        "mrr@5": 0.1,
+        "hit_rate@10": 0.5,
+        "mrr@10": 0.137,
+        "n": 10
+      },
+      "vector+oracle_filter": {
+        "hit_rate@1": 0.1,
+        "mrr@1": 0.1,
+        "hit_rate@5": 0.2,
+        "mrr@5": 0.15,
+        "hit_rate@10": 0.2,
+        "mrr@10": 0.15,
+        "n": 10
+      }
+    },
+    "PFE": {
+      "keyword": {
+        "hit_rate@1": 0.3,
+        "mrr@1": 0.3,
+        "hit_rate@5": 0.6,
+        "mrr@5": 0.417,
+        "hit_rate@10": 0.7,
+        "mrr@10": 0.427,
+        "n": 10
+      },
+      "vector": {
+        "hit_rate@1": 0.3,
+        "mrr@1": 0.3,
+        "hit_rate@5": 0.3,
+        "mrr@5": 0.3,
+        "hit_rate@10": 0.4,
+        "mrr@10": 0.317,
+        "n": 10
+      },
+      "keyword+oracle_filter": {
+        "hit_rate@1": 0.3,
+        "mrr@1": 0.3,
+        "hit_rate@5": 0.7,
+        "mrr@5": 0.483,
+        "hit_rate@10": 0.7,
+        "mrr@10": 0.483,
+        "n": 10
+      },
+      "vector+oracle_filter": {
+        "hit_rate@1": 0.3,
+        "mrr@1": 0.3,
+        "hit_rate@5": 0.4,
+        "mrr@5": 0.325,
+        "hit_rate@10": 0.4,
+        "mrr@10": 0.325,
+        "n": 10
+      }
+    }
+  },
+  "form": {
+    "10K": {
+      "keyword": {
+        "hit_rate@1": 0.19,
+        "mrr@1": 0.19,
+        "hit_rate@5": 0.381,
+        "mrr@5": 0.27,
+        "hit_rate@10": 0.714,
+        "mrr@10": 0.314,
+        "n": 21
+      },
+      "vector": {
+        "hit_rate@1": 0.095,
+        "mrr@1": 0.095,
+        "hit_rate@5": 0.333,
+        "mrr@5": 0.179,
+        "hit_rate@10": 0.381,
+        "mrr@10": 0.185,
+        "n": 21
+      },
+      "keyword+oracle_filter": {
+        "hit_rate@1": 0.333,
+        "mrr@1": 0.333,
+        "hit_rate@5": 0.762,
+        "mrr@5": 0.494,
+        "hit_rate@10": 0.857,
+        "mrr@10": 0.506,
+        "n": 21
+      },
+      "vector+oracle_filter": {
+        "hit_rate@1": 0.143,
+        "mrr@1": 0.143,
+        "hit_rate@5": 0.429,
+        "mrr@5": 0.252,
+        "hit_rate@10": 0.524,
+        "mrr@10": 0.262,
+        "n": 21
+      }
+    },
+    "10Q": {
+      "keyword": {
+        "hit_rate@1": 0.15,
+        "mrr@1": 0.15,
+        "hit_rate@5": 0.45,
+        "mrr@5": 0.256,
+        "hit_rate@10": 0.5,
+        "mrr@10": 0.263,
+        "n": 20
+      },
+      "vector": {
+        "hit_rate@1": 0.15,
+        "mrr@1": 0.15,
+        "hit_rate@5": 0.3,
+        "mrr@5": 0.208,
+        "hit_rate@10": 0.35,
+        "mrr@10": 0.217,
+        "n": 20
+      },
+      "keyword+oracle_filter": {
+        "hit_rate@1": 0.3,
+        "mrr@1": 0.3,
+        "hit_rate@5": 0.55,
+        "mrr@5": 0.393,
+        "hit_rate@10": 0.65,
+        "mrr@10": 0.404,
+        "n": 20
+      },
+      "vector+oracle_filter": {
+        "hit_rate@1": 0.2,
+        "mrr@1": 0.2,
+        "hit_rate@5": 0.35,
+        "mrr@5": 0.254,
+        "hit_rate@10": 0.4,
+        "mrr@10": 0.26,
+        "n": 20
+      }
+    }
+  }
+}
