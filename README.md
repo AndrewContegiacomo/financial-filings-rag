@@ -137,85 +137,131 @@ python -m rag.rag
 
 ### Evaluation set
 
-41 question → gold-chunk pairs (`data/eval/eval_set.json`), built by
-sampling chunks from the corpus and asking an LLM to write the question
-each chunk answers — the source chunk is the gold by construction, so no
-manual annotation is required.
+82 question → gold-chunk pairs (`data/eval/eval_set.json`), in two subsets
+that serve different purposes.
 
-Sampling is **stratified** along two axes, and reproducible (fixed seed):
+**72 synthetic questions.** Chunks are sampled from the corpus and an LLM
+writes the question each chunk answers — the source chunk is the gold by
+construction. Sampling is stratified (company × form type × chunk kind)
+and reproducible via a fixed seed.
 
-- **Company × form type**, so that a single large filing can't dominate.
-- **Chunk kind**: `narrative` (flowing prose — risk factors, business
-  description) vs `financial` (figure-bearing text, mostly linearized
-  tables). An earlier version of the quality filter required 60%
-  alphabetic tokens, which silently excluded every financial table —
-  precisely the hard cases. Sampling both strata keeps the set
-  representative.
+**10 hand-written control questions.** These exist to test a specific
+threat to validity: a question written by a model that can see the chunk
+tends to reuse its vocabulary, which structurally favors keyword
+matching. Each control question was written *before* looking at the
+corpus, using everyday business language, and its gold was then located
+with plain substring search (`evaluation/find_gold.py`) — deliberately
+**not** with either retriever, since selecting golds with the systems
+under test would only keep questions those systems already answer.
 
-### Retrieval results (v1 — baseline)
+| # | Question | Filing wording | Gap |
+|---|---|---|---|
+| 1 | What were Apple's total net sales in the last fiscal year? | net sales | — |
+| 2 | How much did Apple spend on R&D last year? | research and development | spend → expenses |
+| 3 | How much profit did Microsoft make in fiscal 2025? | net income | profit → net income |
+| 4 | How much cash and cash equivalents did Apple hold at the end of fiscal 2025? | cash and cash equivalents | — |
+| 5 | How much did Microsoft's Azure business grow in fiscal 2025? | Azure and other cloud services revenue growth | business → revenue |
+| 6 | What is Apple's best-selling product line? | net sales by category (iPhone) | best-selling → highest net sales |
+| 7 | How much did JPMorgan pay in common stock dividends during 2025? | dividends declared on common stock | pay → declared |
+| 8 | What lawsuits is Pfizer facing over its former heartburn medication? | Zantac | **heartburn medication → Zantac** |
+| 9 | How could new U.S. import duties affect Apple's business? | tariffs | **import duties → tariffs** |
+| 10 | How much long-term borrowing did Microsoft have outstanding at the end of fiscal 2025? | long-term debt | borrowing → debt |
 
-Metrics: **hit-rate@k** (is the gold chunk in the top k?) and **MRR@k**
-(mean reciprocal rank of the gold — rewards position, not just presence,
-because context tokens cost money and LLM attention degrades on
-mid-context material).
+Questions 8 and 9 are the sharpest cases: "heartburn medication" and
+"import duties" appear **nowhere** in the filings. A user who doesn't know
+the corpus writes exactly this way.
+
+Three of the ten initial drafts had to be reformulated because locating
+the gold revealed they were ambiguous — "how much cash does Apple have
+available?" has two defensible answers ($35.9B cash and equivalents vs
+$132.4B including marketable securities). Synthetic questions never show
+this failure mode, which is not a virtue: they are written from the answer.
+
+**Multiple golds.** In financial filings the same figure legitimately
+appears in several places — Microsoft's net income shows up in the MD&A
+summary, the income statement, the cash flow statement, the equity
+statement and the EPS note — and the 40-word chunk overlap often splits
+an answer across two consecutive chunks. Control questions are therefore
+annotated with all valid golds (up to 5). Metrics are reported in two
+variants: **strict** (primary gold only, applied uniformly — the only
+convention under which subsets are comparable) and **expanded** (all
+annotated golds).
+
+### Retrieval results
+
+Metrics: **hit-rate@k** (does a gold chunk reach the top k?) and **MRR@k**
+(mean reciprocal rank — rewards position, since context tokens cost money
+and LLM attention degrades on mid-context material).
+
+**By question origin** (hit@5, strict) — the headline result:
+
+| Configuration | Synthetic (n=72) | Hand-written (n=10) |
+|---|---|---|
+| keyword (TF-IDF) | 0.417 | **0.000** |
+| vector (MiniLM) | 0.181 | 0.100 |
+| keyword + oracle filter* | 0.556 | 0.300 |
+| vector + oracle filter* | 0.278 | **0.400** |
+
+\* **Oracle filter = upper bound, not system performance.** Retrieval is
+restricted to the gold chunk's own ticker and form type — information a
+real system does not have. Reported to quantify what automatic metadata
+inference from the question would be worth.
+
+**Keyword search scores zero on hand-written questions.** Under the
+synthetic rate of 0.417, the probability of 0 hits in 10 is about 0.5% —
+this is a real effect, not sampling noise. An earlier version of this
+evaluation, run on synthetic questions only, concluded that TF-IDF
+outperformed embeddings. That conclusion was an artifact: it measured
+vocabulary overlap that the synthetic generation process had introduced.
+On realistic phrasing the ranking reverses.
+
+**The single-gold convention penalized dense retrieval specifically**
+(manual subset, hit@5):
+
+| Configuration | strict | expanded | Δ |
+|---|---|---|---|
+| keyword | 0.000 | 0.100 | +0.100 |
+| vector | 0.100 | 0.400 | +0.300 |
+| keyword + oracle | 0.300 | 0.400 | +0.100 |
+| vector + oracle | 0.400 | **0.800** | +0.400 |
+
+Embeddings retrieve semantically correct passages that happen not to be
+the annotated primary — the income statement rather than the MD&A
+summary. Those are legitimate answers being scored as failures. Keyword
+misses, by contrast, are genuine misses.
+
+**Overall baseline** (strict; dominated by the 72 synthetic items, so the
+by-origin split above is the more informative view):
 
 | Configuration | hit@1 | hit@5 | MRR@5 | hit@10 | MRR@10 |
 |---|---|---|---|---|---|
-| keyword (TF-IDF) | 0.171 | **0.415** | 0.263 | 0.610 | 0.289 |
-| vector (MiniLM) | 0.122 | 0.317 | 0.193 | 0.366 | 0.201 |
-| keyword + oracle filter* | 0.317 | 0.659 | 0.445 | 0.756 | 0.456 |
-| vector + oracle filter* | 0.171 | 0.390 | 0.253 | 0.463 | 0.261 |
+| keyword | 0.183 | 0.366 | 0.245 | 0.476 | 0.260 |
+| vector | 0.098 | 0.171 | 0.122 | 0.280 | 0.136 |
+| keyword + oracle* | 0.280 | 0.524 | 0.365 | 0.634 | 0.380 |
+| vector + oracle* | 0.134 | 0.293 | 0.188 | 0.402 | 0.203 |
 
-\* **Oracle filter = upper bound, not system performance.** These runs
-restrict retrieval to the gold chunk's own ticker and form type —
-information a real system does not have. They are reported to quantify
-what automatic metadata inference from the question would be worth.
+### What this means for the system
 
-### What the numbers show
-
-**Keyword beats dense retrieval on this corpus.** Contrary to the usual
-expectation, TF-IDF outperforms embeddings at every k. Financial
-questions are dense in exact, rare terms ("noninterest expense", "eSLR
-buffer", drug and subsidiary names) — exactly where high IDF pays off.
-
-**The two retrievers fail differently.** Going from k=5 to k=10,
-keyword gains +19.5 points while vector gains +4.9. When keyword misses,
-the gold is usually just outside the cut; when dense retrieval misses,
-the gold is buried far down (rank 231/4631 in the documented case
-study). Practical consequence: reranking a top-10 candidate set has real
-headroom on keyword and almost none on vector.
-
-**Dense retrieval collapses on financial tables** (hit@5 by chunk kind):
-
-| Chunk kind | keyword | vector |
-|---|---|---|
-| narrative (n=24) | 0.500 | 0.458 |
-| financial (n=17) | 0.294 | **0.118** |
-
-On prose the two are comparable. On figure-bearing text the sentence
-embedding model breaks down: a linearized table row is not a sentence.
-Even with the oracle filter, dense retrieval only reaches 0.176 on
-financial chunks — restricting to the right document doesn't help if the
-text can't be embedded meaningfully.
-
-**Metadata filtering is the single largest lever** (+24 points on
-keyword hit@5, +59% relative) — larger than any retrieval technique
-tested. Inferring ticker and form type from the question is a
-straightforward LLM task, which makes it the highest-value target for
-the agentic component.
+The two retrievers fail on **disjoint** question types: keyword needs the
+user to guess the filing's exact terminology, dense retrieval needs the
+answer to read like a sentence rather than a table row. Neither is
+adequate alone — which is the measured, rather than assumed, case for
+hybrid retrieval. Metadata filtering remains the single largest lever and
+benefits dense retrieval most, making automatic inference of ticker and
+form type from the question the highest-value target for the agentic
+component.
 
 ### Known limitations
 
-- **Small sample.** At n=17 for the financial stratum, one question is
-  worth 5.9 points. Directions are consistent with qualitative
-  evidence; exact magnitudes are not precise.
-- **Lexical leakage.** Questions written by an LLM that could see the
-  chunk tend to reuse its vocabulary, which structurally favors keyword
-  matching. The generation prompt actively counteracts this, but part
-  of the keyword advantage may still be an artifact. Hand-written
-  control questions are being added to test this.
-- **Single gold chunk.** Broad questions ("what risks does X face?")
-  are legitimately answered by several passages, but only one counts as
-  correct — this understates performance on the narrative stratum.
-- Questions occasionally cite the SEC **filing date** as if it were the
-  reporting period, an artifact of the generation prompt.
+- **Small control subset** (n=10): one question is worth 10 points.
+  Direction is robust, magnitude is not.
+- **Confound:** the control questions skew toward figure-bearing chunks
+  (~7/10), so part of the keyword collapse may be chunk type rather than
+  vocabulary. Keyword scores 0.333 on financial chunks overall vs 0.000
+  on the control set, so vocabulary appears to dominate.
+- **Multiple golds are curated for control questions only**, so the
+  strict/expanded comparison is valid only within that subset.
+- Synthetic questions occasionally cite the SEC **filing date** as if it
+  were the reporting period, an artifact of the generation prompt.
+- Section tags are best-effort and sometimes wrong (a cross-reference can
+  update the running state); one eval item has an unclassified chunk kind.

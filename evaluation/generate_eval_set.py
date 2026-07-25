@@ -104,8 +104,9 @@ def classify_source(chunk: dict) -> str | None:
     return None              # headers, TOC entries, pure number dumps
 
 
-# 3 narrative + 2 financial per (ticker, form) = 40 questions total
-PER_STRATUM = {"narrative": 3, "financial": 2}
+# Raised from {3, 2}: at n=17 per stratum a single question was worth
+# ~6 points of hit-rate. 8 strata x 9 = 72 synthetic questions.
+PER_STRATUM = {"narrative": 5, "financial": 4}
 
 
 def sample_chunks(chunks: list[dict]) -> list[dict]:
