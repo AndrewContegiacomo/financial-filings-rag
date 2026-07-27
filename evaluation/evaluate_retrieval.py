@@ -19,6 +19,7 @@ from tqdm import tqdm
 
 from rag.search import load_chunks, build_index, keyword_search
 from rag.vector_search import VectorIndex
+from rag.query_analysis import infer_filters
 
 EVAL_FILE = Path("data/eval/eval_set.json")
 OUT_FILE = Path("data/eval/retrieval_results.json")
@@ -67,12 +68,17 @@ def main() -> None:
     configs = {
         "keyword": lambda q, it: keyword_search(kw_index, q, None, MAX_K),
         "vector": lambda q, it: vec_index.search(q, None, MAX_K),
+        # Rule-based filters: what the system can actually infer from the
+        # question, with no privileged information.
+        "keyword+rule_filter": lambda q, it: keyword_search(
+            kw_index, q, infer_filters(q) or None, MAX_K),
+        "vector+rule_filter": lambda q, it: vec_index.search(
+            q, infer_filters(q) or None, MAX_K),
+        # Oracle: upper bound, uses the gold's own metadata.
         "keyword+oracle_filter": lambda q, it: keyword_search(
-            kw_index, q, {"ticker": it["ticker"], "form": it["form"]}, MAX_K
-        ),
+            kw_index, q, {"ticker": it["ticker"], "form": it["form"]}, MAX_K),
         "vector+oracle_filter": lambda q, it: vec_index.search(
-            q, {"ticker": it["ticker"], "form": it["form"]}, MAX_K
-        ),
+            q, {"ticker": it["ticker"], "form": it["form"]}, MAX_K),
     }
 
     
