@@ -240,16 +240,86 @@ by-origin split above is the more informative view):
 | keyword + oracle* | 0.280 | 0.524 | 0.365 | 0.634 | 0.380 |
 | vector + oracle* | 0.134 | 0.293 | 0.188 | 0.402 | 0.203 |
 
-### What this means for the system
+### Where retrieval actually fails
 
-The two retrievers fail on **disjoint** question types: keyword needs the
-user to guess the filing's exact terminology, dense retrieval needs the
-answer to read like a sentence rather than a table row. Neither is
-adequate alone — which is the measured, rather than assumed, case for
-hybrid retrieval. Metadata filtering remains the single largest lever and
-benefits dense retrieval most, making automatic inference of ticker and
-form type from the question the highest-value target for the agentic
-component.
+Hit-rate answers "is the gold in the top k". To choose a fix, the useful
+question is "how far off is it" — a near miss and a burial call for
+different remedies. Rank of the best gold across the whole corpus
+(4,631 chunks), hand-written subset:
+
+| Configuration | median rank | top-5 | 6–20 | 21–100 | >100 |
+|---|---|---|---|---|---|
+| keyword | 21 | 1 | 2 | 2 | 5 |
+| vector | 6 | 4 | 5 | 0 | 1 |
+| keyword + filter | 18 | 4 | 1 | 4 | 1 |
+| vector + filter | **1** | **8** | 1 | 0 | 1 |
+
+With metadata filtering, dense retrieval ranks the gold **first** in half
+the questions and within the top 5 in 8 of 10. Nine of ten golds sit
+within rank 12 — these are near misses, not burials, which means the
+remedies are configuration-level rather than architectural.
+
+The three questions where keyword search finds nothing in 200 results
+are exactly the ones designed with the widest vocabulary gap: "profit"
+(filing says *net income*), "best-selling" (*net sales by category*),
+"import duties" (*tariffs*). Dense retrieval finds all three within
+rank 12.
+
+### The conclusion that mattered
+
+The system was not underperforming — it was **configured on the wrong
+retriever**. Keyword search was chosen as the default early on, on
+intuition, and the first evaluation round appeared to confirm it. That
+round used synthetic questions only, which inherit the source chunk's
+vocabulary and hand keyword matching an advantage that does not exist in
+real use. Only the hand-written control subset exposed the mistake.
+
+The cost of an unrepresentative evaluation set is not imprecise numbers.
+It is making architectural decisions that look validated.
+
+### Generation evaluation
+
+Two prompt strategies were compared on identical retrieved context
+(retrieval held fixed, so the prompt is the only variable):
+
+- **A — strict contract:** answer only from context, cite every claim,
+  refuse when insufficient.
+- **B — explicit triage:** first identify which context blocks are
+  relevant, then extract, then answer; refuse if step one finds nothing.
+
+Scoring is conditioned on what the context actually contained: when a
+gold chunk was retrieved, the answer should be correct, grounded and
+cited; when it was not, the correct behaviour is an explicit refusal.
+Scoring only "was the answer right" would re-measure retrieval, since a
+prompt cannot extract a figure it was never given.
+
+**Result: B refuses cleanly, A does not.** With no gold in context, B
+refused in 86% of cases (100% on hand-written questions) against 7% for
+A. A's failure mode is not hallucination so much as verbose
+pseudo-refusal: paragraphs stating the answer is unavailable while
+citing irrelevant chunks — worse for the reader and ambiguous to score.
+
+**Both prompts fabricate when they do arithmetic.** Asked for share
+repurchases over a sub-period, A multiplied share counts by average
+prices across unrelated rows; B subtracted two figures from different
+scopes and reported $92.8B of buybacks in two months. Neither prompt
+forbids *deriving* figures — only inventing them. Restricting the model
+to values stated verbatim is a requirement for the next iteration.
+
+**Judge reliability: the automated scores are not trustworthy.** To stay
+within the free tier's daily token budget, judging ran on a smaller
+model than generation. Manual inspection shows it failed: correct
+answers ($35,934 for Apple's cash, 15% for operating expenses as a share
+of net sales) were scored incorrect, and near-identical refusals
+received opposite `refused` labels. The prompt comparison above rests on
+behaviour that is directly verifiable in the saved outputs
+(`data/eval/llm_results.json`), not on the judge's scores. A re-run with
+a stronger judge on a smaller subset is the pending item.
+
+A second flaw in this round: `gold_available` was derived from the
+annotated gold only. Synthetic items carry a single gold, so a retrieved
+chunk that legitimately contained the answer still counted as "gold
+absent" — which inflates the refusal metric in B's favour.
 
 ### Known limitations
 
@@ -265,3 +335,9 @@ component.
   were the reporting period, an artifact of the generation prompt.
 - Section tags are best-effort and sometimes wrong (a cross-reference can
   update the running state); one eval item has an unclassified chunk kind.
+  - **Generation evaluation is provisional.** Judged on 18 items with an
+  underpowered judge model; conclusions are drawn from manual reading of
+  the outputs rather than the automated scores.
+- **Free-tier token budget (100k/day)** constrains generation
+  evaluation subset size. This is an operational limit, not a
+  methodological choice.
