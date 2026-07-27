@@ -5,11 +5,15 @@ from dotenv import load_dotenv
 from groq import Groq
 
 from rag.search import load_chunks, build_index, keyword_search
+from rag.vector_search import VectorIndex
+from rag.query_analysis import infer_filters
 
 load_dotenv()
 client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
 MODEL = "llama-3.3-70b-versatile"
+
+TOP_K = 10  # number of chunks to retrieve for context
 
 # Three key clauses:
 # 1. answer ONLY from the provided context (hallucination guard)
@@ -42,8 +46,25 @@ def format_context(results: list[dict]) -> str:
     return "\n\n---\n\n".join(blocks)
 
 
-def answer(index, question: str, ticker: str | None = None) -> dict:
-    results = keyword_search(index, question, ticker=ticker)
+def answer(vec_index: VectorIndex, question: str) -> dict:
+    """Answer a question over the filings corpus.
+
+    Dense retrieval is the default: evaluation on hand-written questions
+    (the ones phrased without borrowing the filings' vocabulary) showed
+    keyword search failing to surface the gold at all on 3 of 10, while
+    dense retrieval ranked all of them within the top 12. The opposite
+    ordering seen on synthetic questions was an artifact of those
+    questions inheriting their source chunk's wording.
+
+    Filters are inferred from the question (no LLM), which closes about
+    half the gap to an oracle that knows the answer's metadata.
+
+    k=10 rather than 5: 10 chunks x 200 words is ~2k words of context,
+    negligible for a 128k-context model, and hit@10 runs 10-13 points
+    above hit@5 across configurations.
+    """
+    filters = infer_filters(question)
+    results = vec_index.search(question, filters or None, TOP_K)
     prompt = PROMPT_TEMPLATE.format(
         context=format_context(results), question=question
     )
@@ -55,12 +76,13 @@ def answer(index, question: str, ticker: str | None = None) -> dict:
     return {
         "answer": response.choices[0].message.content,
         "sources": [r["id"] for r in results],
+        "filters_applied": filters,
     }
 
 
 if __name__ == "__main__":
     print("Loading index...")
-    index = build_index(load_chunks())
+    index = VectorIndex()
     print("Ready. Empty line to quit.\n")
     while True:
         q = input("Question> ").strip()
@@ -68,4 +90,6 @@ if __name__ == "__main__":
             break
         result = answer(index, q)
         print("\n" + result["answer"])
-        print("\nRetrieved chunks:", ", ".join(result["sources"]), "\n")
+        if result["filters_applied"]:
+            print("\nFilters inferred:", result["filters_applied"])
+        print("Retrieved chunks:", ", ".join(result["sources"]), "\n")
