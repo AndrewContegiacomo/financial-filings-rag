@@ -20,6 +20,8 @@ from tqdm import tqdm
 from rag.search import load_chunks, build_index, keyword_search
 from rag.vector_search import VectorIndex
 from rag.query_analysis import infer_filters
+from rag.hybrid_search import HybridIndex
+from rag.llm_query_analysis import infer_filters_llm, rewrite_query
 
 EVAL_FILE = Path("data/eval/eval_set.json")
 OUT_FILE = Path("data/eval/retrieval_results.json")
@@ -62,6 +64,12 @@ def main() -> None:
     print("Building indexes...")
     kw_index = build_index(chunks)
     vec_index = VectorIndex()
+    hybrid = HybridIndex(kw_index, vec_index)
+    # Vector-leaning variant: dense retrieval measures better on
+    # hand-written questions, so the neutral 1:1 fusion may be giving
+    # keyword too much say. Tested rather than assumed.
+    hybrid_vw = HybridIndex(kw_index, vec_index,
+                            keyword_weight=0.5, vector_weight=1.0)
 
     # Each configuration is a function: question + item -> ranked chunks.
     # 'item' is passed so oracle configs can read the gold's metadata.
@@ -79,6 +87,20 @@ def main() -> None:
             kw_index, q, {"ticker": it["ticker"], "form": it["form"]}, MAX_K),
         "vector+oracle_filter": lambda q, it: vec_index.search(
             q, {"ticker": it["ticker"], "form": it["form"]}, MAX_K),
+        "hybrid": lambda q, it: hybrid.search(q, None, MAX_K),
+        "hybrid+rule_filter": lambda q, it: hybrid.search(
+            q, infer_filters(q) or None, MAX_K),
+        "hybrid_vw+rule_filter": lambda q, it: hybrid_vw.search(
+            q, infer_filters(q) or None, MAX_K),
+        "vector+llm_filter": lambda q, it: vec_index.search(
+            q, infer_filters_llm(q) or None, MAX_K),
+        "vector+rule_filter+rewrite": lambda q, it: vec_index.search(
+            rewrite_query(q), infer_filters(q) or None, MAX_K),
+        "vector+llm_filter+rewrite": lambda q, it: vec_index.search(
+            rewrite_query(q), infer_filters_llm(q) or None, MAX_K),
+        "vector+rule_filter_on_rewrite": lambda q, it: (
+            lambda rq: vec_index.search(rq, infer_filters(rq) or None, MAX_K)
+        )(rewrite_query(q)),
     }
 
     
