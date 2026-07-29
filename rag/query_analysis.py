@@ -34,20 +34,32 @@ COMPANY_ALIASES = {
 # Note the asymmetry: a 10-K covers the full year AND contains prior-year
 # comparatives, so annual signals are reliable; quarterly signals are
 # reliable only when explicit.
+# Signals derived from filing conventions, not from inspecting which
+# eval questions fail — tuning patterns against the eval set would make
+# the metrics measure our fitting rather than the system's generality.
+#
+# 10-K covers a fiscal year; its statements are headed "year ended".
 ANNUAL_SIGNALS = [
     r"\bfiscal year\b", r"\bfull year\b", r"\bannual\b", r"\bannually\b",
-    r"\bfy\s?20\d\d\b", r"\bfor the year\b", r"\byear ended\b",
-    r"\bper year\b", r"\blast year\b",
-    # "fiscal 2025" without the word "year" — found in live use, not in
-    # the eval set: a reminder that rule coverage gaps surface from
-    # actual questions, not from the questions you designed.
-    r"\bfiscal\s+20\d\d\b",
+    r"\bfy\s?20\d\d\b", r"\bfiscal\s+20\d\d\b",
+    r"\bfor the year\b", r"\byear ended\b", r"\byear-end\b",
+    r"\bper year\b", r"\blast year\b", r"\btwelve months\b",
+    # Annual-report-only content: these sections exist in 10-K filings
+    # and have no 10-Q counterpart.
+    r"\brisk factors\b", r"\bauditor\b", r"\bindependent registered\b",
+    r"\bemployees\b", r"\bheadcount\b", r"\bproperties\b",
+    r"\bexecutive compensation\b",
 ]
 
+# 10-Q covers a quarter; statements are headed "three/six/nine months
+# ended". Six and nine months are cumulative periods that appear ONLY in
+# quarterly filings, never in an annual report.
 QUARTERLY_SIGNALS = [
-    r"\bquarter\b", r"\bquarterly\b", r"\bq[1-4]\b", r"\bthree months\b",
-    r"\bsix months\b", r"\bnine months\b", r"\bfirst quarter\b",
-    r"\bsecond quarter\b", r"\bthird quarter\b", r"\bfourth quarter\b",
+    r"\bquarter\b", r"\bquarterly\b", r"\bq[1-4]\b",
+    r"\bthree months\b", r"\bsix months\b", r"\bnine months\b",
+    r"\bfirst quarter\b", r"\bsecond quarter\b",
+    r"\bthird quarter\b", r"\bfourth quarter\b",
+    r"\binterim\b", r"\bmost recent quarter\b",
 ]
 
 
