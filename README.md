@@ -51,50 +51,99 @@ detectable), which powers filtering and source citations downstream.
 
 ## Architecture
 
-SEC EDGAR ──> download_filings.py ──> data/raw/*.html
-│
-chunk_filings.py
-│
-v
-data/processed/chunks.json
-│ │
-keyword index embeddings
-(TF-IDF, minsearch) (MiniLM, precomputed .npy)
-│ │
-└────────┬───────────┘
-v
-retrieval (top-k, metadata filters)
-│
-v
-prompt with context + source metadata
-│
-v
-LLM (Groq, Llama 3.3 70B, temp=0)
-│
-v
-answer with citations
-[TICKER FORM DATE, SECTION]
+### Ingestion (offline, run once per corpus rebuild)
 
-**Two interchangeable retrievers** over the same chunked corpus:
+SEC EDGAR API
+      │
+      ▼
+download_filings.py ──────▶ data/raw/*.html
+      │
+      ▼
+chunk_filings.py ─────────▶ data/processed/chunks.json
+      │
+      ├──▶ TF-IDF index (in memory, built at startup)
+      │
+      └──▶ vector_search.py ──▶ data/processed/embeddings.npy
 
-- **Keyword (TF-IDF)** via [minsearch](https://github.com/alexeygrigorev/minsearch):
-  strong on exact financial terminology, blind to synonyms.
-- **Dense (embeddings)** via `all-MiniLM-L6-v2` (sentence-transformers,
-  runs locally): captures paraphrases ("revenue" ≈ "net sales"), but
-  struggles with linearized financial tables.
+### Query path A — natural-language questions (default)
 
-Both support **hard metadata filtering** (ticker, form type), applied
-before ranking rather than left to similarity scores. Both are kept —
-and evaluated head-to-head in Phase 3 — because early testing showed
-neither dominates: each fails on cases the other handles (see
-`notes.md` for a documented case study).
+question
+   │
+   ▼
+query_analysis.py          rules only, no LLM call
+   │  infers ticker + form type
+   ▼
+dense search               MiniLM, k=10, hard metadata filters
+   │
+   ▼
+prompt + context           context-only, cite each claim, refuse if absent
+   │
+   ▼
+Groq / Llama 3.3 70B       temperature=0
+   │
+   ▼
+answer + [TICKER FORM DATE, SECTION]
 
-**Generation:** the prompt enforces three rules — answer only from the
-retrieved context, cite every claim as `[TICKER FORM DATE, SECTION]`,
-and explicitly refuse when the context is insufficient. Verified on
-out-of-corpus questions (e.g. asking about a company not in the corpus
-correctly yields a refusal, not a hallucination). `temperature=0` for
-reproducible, factual answers.
+### Query path B — quantitative and comparative questions (agentic)
+
+question
+   │
+   ▼
+tool selection             model picks tool + parameters
+   │
+   ├──▶ lookup_metric(ticker, metric, period)
+   │         │
+   │         ▼
+   │    keyword search     TF-IDF, filtered by ticker + form
+   │         │
+   │         ▼
+   │    verbatim extraction   value + period label, quoted from source
+   │         │
+   │         ▼
+   │    _period_matches()     rejects wrong-column reads
+   │
+   └──▶ compare_periods(...)  two lookups, arithmetic in Python
+             │
+             ▼
+        answer + citations
+
+**Two retrieval strategies, each used where it measures better.**
+
+- **Dense retrieval (`all-MiniLM-L6-v2`) for natural-language questions.**
+  Users phrase questions in everyday vocabulary ("profit", "import
+  duties", "heartburn medication") while filings use accounting terms
+  ("net income", "tariffs", "Zantac"). Keyword search fails to surface
+  the gold at all on 3 of 10 such questions; dense retrieval ranks all
+  within the top 12.
+- **Keyword retrieval (TF-IDF) inside the agentic tools.** Tools receive
+  filing terminology by construction — the model supplies `metric="net
+  income"`, not a paraphrase — and on figure-bearing chunks keyword
+  scores 0.487 hit@5 against 0.205 for dense. Using dense retrieval here
+  returned tax-discussion passages and never surfaced the income
+  statement.
+
+**Metadata filtering** (`rag/query_analysis.py`) infers ticker and form
+type from the question with rules and no LLM call: company aliases
+include product names (Azure, Zantac, Comirnaty), and a closed
+vocabulary separates annual from quarterly wording. Ticker resolves on
+82/82 eval questions, form on 47/82, with one wrong inference in total.
+Filters are applied as hard constraints before ranking. Ambiguous cases
+produce no filter deliberately — a wrong hard filter makes the answer
+unreachable, while no filter merely leaves it lower-ranked.
+
+**Generation** enforces context-only answers, per-claim citations, and
+explicit refusal when the context is insufficient, at `temperature=0`.
+
+**Agentic path** (`rag/tools.py`, `rag/agent.py`) handles quantitative
+and comparative questions. The model chooses which figure to look up;
+the tool retrieves it, requires the model to quote the source fragment
+and the period label verbatim, and performs all arithmetic in Python.
+This split exists because generation evaluation showed both prompt
+variants fabricating figures whenever they computed — multiplying share
+counts by average prices across unrelated rows, subtracting values with
+mismatched scopes. A code-level guard rejects an extraction whose
+declared period doesn't match the requested one, which is the failure
+mode of three-year comparative tables.
 
 ## How to run
 
@@ -341,3 +390,74 @@ absent" — which inflates the refusal metric in B's favour.
 - **Free-tier token budget (100k/day)** constrains generation
   evaluation subset size. This is an operational limit, not a
   methodological choice.
+
+  ## Retrieval improvements: what was adopted and what wasn't
+
+Six techniques were implemented and measured against the 82-item
+evaluation set. Headline figures are hit@5 on the 10 hand-written
+questions (strict / expanded golds), since those are the ones phrased
+without borrowing the filings' vocabulary.
+
+| Technique | Result | Adopted |
+|---|---|---|
+| Rule-based metadata filtering | 0.100 → 0.400 / 0.800 | Y |
+| Dense retrieval as default, k=10 | see Evaluation | Y |
+| Hybrid search (RRF fusion) | 0.200 / 0.500 | N |
+| LLM-based form inference | 0.400 / 0.800 (identical to rules) | N |
+| Query rewriting | 0.500 / 0.800, 20× latency | N |
+| Cross-encoder reranking | 0.300 / 0.700 | N |
+| Agentic metric tools | qualitative — see below | Y |
+
+**Rule-based filtering was the largest single gain**, closing roughly
+half the gap to an oracle that knows the answer's metadata. Notably, one
+two-word regex addition (`fiscal 20\d\d`, matching "fiscal 2025" without
+the word "year") moved hand-written hit@5 from 0.200 to 0.400 — a larger
+gain than any retrieval technique tested. Rule coverage mattered more
+than algorithmic sophistication.
+
+**Hybrid search underperformed dense retrieval alone.** RRF rewards
+agreement between retrievers, which is evidence only when both are
+comparably strong; keyword scores 0.000 on realistic phrasing, so
+consensus amplified generic chunks that both rank moderately. Tuning
+RRF_K from 60 to 10 improved it (overall hit@5 0.280 → 0.305), confirming
+the mechanism without changing the verdict. Down-weighting keyword trends
+toward weight zero — that is, toward dense retrieval alone.
+
+**LLM form inference matched the rules exactly.** The 35 questions where
+rules abstain are genuinely period-ambiguous ("in 2025" fits either
+document type); abstaining was the correct answer, and a model cannot
+manufacture information the question doesn't contain.
+
+**Reranking was based on a mis-measured premise.** hit@1 of 0.110
+suggested room to promote golds, but that figure is dominated by the 72
+synthetic items. On realistic questions the first stage already ranks 7
+of 10 golds within position 3 — nothing to promote, only something to
+break, and 4 questions got worse. The two pushed out of the top 10
+entirely were the ones with the widest vocabulary gap; `ms-marco-MiniLM`
+is trained on web passage ranking, where question and passage share
+vocabulary, so on financial terminology it falls into the same trap as
+keyword search.
+
+The general lesson: **estimate headroom on the subset you care about,
+not on the aggregate.**
+
+### Agentic tools
+
+`compare_periods` answers questions like "how much did Apple's net sales
+grow from fiscal 2024 to fiscal 2025?" by looking up each figure
+separately and computing the change in Python. Building it surfaced three
+bugs that aggregate metrics had hidden:
+
+1. Without a form-type filter, the extractor read a six-month figure from
+   a 10-Q and reported it as an annual value.
+2. With the filter but using dense retrieval, "MSFT net income fiscal
+   2024" returned tax-discussion chunks and never surfaced the income
+   statement.
+3. Including the period in the keyword query buried the income statement:
+   it states its label once inside a table with bare year columns, while
+   tax passages repeat "fiscal year 2024" and win on term frequency.
+
+All three were found by inspecting what the tool actually retrieved, at
+zero API cost. The fix — keyword retrieval, form filter, period excluded
+from the query text — produces the correct figures (Microsoft FY2024
+$88,136M → FY2025 $101,832M, +15.54%).

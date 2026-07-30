@@ -22,6 +22,7 @@ from rag.vector_search import VectorIndex
 from rag.query_analysis import infer_filters
 from rag.hybrid_search import HybridIndex
 from rag.llm_query_analysis import infer_filters_llm, rewrite_query
+from rag.rerank import RerankedIndex
 
 EVAL_FILE = Path("data/eval/eval_set.json")
 OUT_FILE = Path("data/eval/retrieval_results.json")
@@ -65,6 +66,7 @@ def main() -> None:
     kw_index = build_index(chunks)
     vec_index = VectorIndex()
     hybrid = HybridIndex(kw_index, vec_index)
+    reranked = RerankedIndex(vec_index)
     # Vector-leaning variant: dense retrieval measures better on
     # hand-written questions, so the neutral 1:1 fusion may be giving
     # keyword too much say. Tested rather than assumed.
@@ -101,6 +103,11 @@ def main() -> None:
         "vector+rule_filter_on_rewrite": lambda q, it: (
             lambda rq: vec_index.search(rq, infer_filters(rq) or None, MAX_K)
         )(rewrite_query(q)),
+        "vector+rule_filter": lambda q, it: vec_index.search(
+            q, infer_filters(q) or None, MAX_K),
+        "vector+rule_filter+rerank": lambda q, it: reranked.search(
+            q, infer_filters(q) or None, MAX_K),
+        
     }
 
     

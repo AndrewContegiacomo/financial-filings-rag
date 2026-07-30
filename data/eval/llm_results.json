@@ -1,0 +1,362 @@
+[
+  {
+    "question": "What were Apple's total net sales in the last fiscal year?",
+    "origin": "manual",
+    "prompt": "A_strict_contract",
+    "gold_available": false,
+    "answer": "The CONTEXT does not contain the answer to Apple's total net sales in the last fiscal year. The provided information includes quarterly sales data, but it does not provide the total net sales for the fiscal year [AAPL 10Q 2026-01-30, Item 1], [AAPL 10Q 2026-05-01, Item 1], [AAPL 10K 2025-10-31, Item 8], [AAPL 10K 2025-10-31, Item 7], [AAPL 10Q 2026-01-30, Item 1].",
+    "refused": 0,
+    "grounded": 0,
+    "correct": 0
+  },
+  {
+    "question": "What were Apple's total net sales in the last fiscal year?",
+    "origin": "manual",
+    "prompt": "B_explicit_triage",
+    "gold_available": false,
+    "answer": "The filings provided do not contain this information.",
+    "refused": 1,
+    "grounded": 1,
+    "correct": 0
+  },
+  {
+    "question": "How much did Apple spend on R&D last year?",
+    "origin": "manual",
+    "prompt": "A_strict_contract",
+    "gold_available": false,
+    "answer": "The CONTEXT does not contain the answer to the question of how much Apple spent on R&D last year. [No relevant information found]",
+    "refused": 1,
+    "grounded": 1,
+    "correct": 0
+  },
+  {
+    "question": "How much did Apple spend on R&D last year?",
+    "origin": "manual",
+    "prompt": "B_explicit_triage",
+    "gold_available": false,
+    "answer": "The filings provided do not contain this information.",
+    "refused": 1,
+    "grounded": 1,
+    "correct": 0
+  },
+  {
+    "question": "How much profit did Microsoft make in fiscal 2025?",
+    "origin": "manual",
+    "prompt": "A_strict_contract",
+    "gold_available": false,
+    "answer": "The CONTEXT does not contain the answer. The provided information discusses various metrics and segments of Microsoft's business, but it does not include the company's profit for fiscal 2025 [MSFT 10K 2025-07-30, Item 8].",
+    "refused": 0,
+    "grounded": 0,
+    "correct": 0
+  },
+  {
+    "question": "How much profit did Microsoft make in fiscal 2025?",
+    "origin": "manual",
+    "prompt": "B_explicit_triage",
+    "gold_available": false,
+    "answer": "The filings provided do not contain this information.",
+    "refused": 1,
+    "grounded": 1,
+    "correct": 0
+  },
+  {
+    "question": "How much cash and cash equivalents did Apple hold at the end of fiscal 2025?",
+    "origin": "manual",
+    "prompt": "A_strict_contract",
+    "gold_available": true,
+    "answer": "According to the CONTEXT, Apple held $35,934 in cash, cash equivalents, and restricted cash and cash equivalents at the end of fiscal 2025 [AAPL 10K 2025-10-31, Item 8].",
+    "refused": 0,
+    "grounded": 1,
+    "correct": 0
+  },
+  {
+    "question": "How much cash and cash equivalents did Apple hold at the end of fiscal 2025?",
+    "origin": "manual",
+    "prompt": "B_explicit_triage",
+    "gold_available": true,
+    "answer": "$35,934 [AAPL 10K 2025-10-31, Item 8]",
+    "refused": 0,
+    "grounded": 0,
+    "correct": 0
+  },
+  {
+    "question": "How much did Microsoft's Azure business grow in fiscal 2025?",
+    "origin": "manual",
+    "prompt": "A_strict_contract",
+    "gold_available": false,
+    "answer": "The CONTEXT does not contain the answer to the question of how much Microsoft's Azure business grew in fiscal 2025. [MSFT 10K 2025-07-30, Item 8] and other provided sections do not provide specific growth data for Azure in fiscal 2025.",
+    "refused": 0,
+    "grounded": 0,
+    "correct": 0
+  },
+  {
+    "question": "How much did Microsoft's Azure business grow in fiscal 2025?",
+    "origin": "manual",
+    "prompt": "B_explicit_triage",
+    "gold_available": false,
+    "answer": "The filings provided do not contain this information.",
+    "refused": 1,
+    "grounded": 1,
+    "correct": 0
+  },
+  {
+    "question": "What is Apple's best-selling product line?",
+    "origin": "manual",
+    "prompt": "A_strict_contract",
+    "gold_available": false,
+    "answer": "The CONTEXT does not contain information about Apple's best-selling product line. [AAPL 10K 2025-10-31, Item 1]",
+    "refused": 0,
+    "grounded": 0,
+    "correct": 0
+  },
+  {
+    "question": "What is Apple's best-selling product line?",
+    "origin": "manual",
+    "prompt": "B_explicit_triage",
+    "gold_available": false,
+    "answer": "The filings provided do not contain this information.",
+    "refused": 1,
+    "grounded": 1,
+    "correct": 0
+  },
+  {
+    "question": "How much did JPMorgan pay in common stock dividends during 2025?",
+    "origin": "manual",
+    "prompt": "A_strict_contract",
+    "gold_available": false,
+    "answer": "The CONTEXT does not contain the exact amount JPMorgan paid in common stock dividends during 2025. [JPM 10K 2026-02-13, Item 8] provides the common dividend payout ratio based on net income applicable to common equity for 2025, which is 29%, but it does not provide the total amount of common stock dividends paid. [JPM 10Q 2025-11-04, Item 6] and [JPM 10K 2026-02-13, Item 8] mention the quarterly common stock dividend of $1.50 per share and $1.40 per share, but they do not provide the total amount paid in common stock dividends for 2025. Therefore, the answer cannot be determined from the provided CONTEXT.",
+    "refused": 0,
+    "grounded": 1,
+    "correct": 0
+  },
+  {
+    "question": "How much did JPMorgan pay in common stock dividends during 2025?",
+    "origin": "manual",
+    "prompt": "B_explicit_triage",
+    "gold_available": false,
+    "answer": "The filings provided do not contain this information.",
+    "refused": 1,
+    "grounded": 1,
+    "correct": 0
+  },
+  {
+    "question": "What lawsuits is Pfizer facing over its former heartburn medication?",
+    "origin": "manual",
+    "prompt": "A_strict_contract",
+    "gold_available": false,
+    "answer": "The CONTEXT does not contain information about Pfizer facing lawsuits over its former heartburn medication. [No relevant information found]",
+    "refused": 0,
+    "grounded": 0,
+    "correct": 0
+  },
+  {
+    "question": "What lawsuits is Pfizer facing over its former heartburn medication?",
+    "origin": "manual",
+    "prompt": "B_explicit_triage",
+    "gold_available": false,
+    "answer": "The filings provided do not contain this information.",
+    "refused": 1,
+    "grounded": 1,
+    "correct": 0
+  },
+  {
+    "question": "How could new U.S. import duties affect Apple's business?",
+    "origin": "manual",
+    "prompt": "A_strict_contract",
+    "gold_available": false,
+    "answer": "The CONTEXT does not contain information about how new U.S. import duties could affect Apple's business. [No relevant information found]",
+    "refused": 0,
+    "grounded": 0,
+    "correct": 0
+  },
+  {
+    "question": "How could new U.S. import duties affect Apple's business?",
+    "origin": "manual",
+    "prompt": "B_explicit_triage",
+    "gold_available": false,
+    "answer": "The filings provided do not contain this information.",
+    "refused": 1,
+    "grounded": 1,
+    "correct": 0
+  },
+  {
+    "question": "How much long-term borrowing did Microsoft have outstanding at the end of fiscal 2025?",
+    "origin": "manual",
+    "prompt": "A_strict_contract",
+    "gold_available": false,
+    "answer": "The CONTEXT does not contain the answer. The provided CONTEXT includes information about JPM and AAPL, but does not include any information about Microsoft's (MSFT) long-term borrowing at the end of fiscal 2025. The MSFT 10Q 2026-01-28, Item 2, only provides information about Microsoft's revenue and cloud services, but does not mention long-term borrowing [MSFT 10Q 2026-01-28, Item 2].",
+    "refused": 0,
+    "grounded": 0,
+    "correct": 0
+  },
+  {
+    "question": "How much long-term borrowing did Microsoft have outstanding at the end of fiscal 2025?",
+    "origin": "manual",
+    "prompt": "B_explicit_triage",
+    "gold_available": false,
+    "answer": "The filings provided do not contain this information.",
+    "refused": 1,
+    "grounded": 1,
+    "correct": 0
+  },
+  {
+    "question": "What was Apple's total net sales in the Americas segment for the year 2025?",
+    "origin": "synthetic",
+    "prompt": "A_strict_contract",
+    "gold_available": false,
+    "answer": "The total net sales for the Americas segment for the year 2025 is not explicitly stated in the provided context. However, we can find the total net sales for the Americas segment for the year 2025 by looking at the annual report [AAPL 10K 2025-10-31, Item 7] and the quarterly reports [AAPL 10Q 2026-01-30, Item 1] and [AAPL 10Q 2026-05-01, Item 1]. \n\nFrom [AAPL 10Q 2026-01-30, Item 1], we know that the net sales for the Americas segment for the three months ended December 27, 2025, were $58,529 million. \nFrom [AAPL 10Q 2026-05-01, Item 1], we know that the net sales for the Americas segment for the six months ended March 28, 2026, were $103,622 million and for the six months ended March 29, 2025, were $92,963 million. \n\nSince the six months ended March 29, 2025, include the three months ended December 28, 2024, and the three months ended March 29, 2025, and the six months ended March 28, 2026, include the three months ended December 27, 2025, and the three months ended March 28, 2026, we can calculate the net sales for the three months ended March 29, 2025, by subtracting the net sales for the three months ended December 28, 2024, from the net sales for the six months ended March 29, 2025.\n\nThe net sales for the three months ended December 28, 2024, are not explicitly stated in the provided context. However, we can find the net sales for the year 2024 and the net sales for the nine months ended September 26, 2025, and then calculate the net sales for the three months ended December 27, 2025, and the net sales for the three months ended March 29, 2025.\n\nFrom [AAPL 10K 2025-10-31, Item 7], we know that the net sales for the year 2024 were $383,285 million and the net sales for the year 2025 were $416,161 million.\n\nThe net sales for the nine months ended September 26, 2025, are not explicitly stated in the provided context.\n\nHowever, from [AAPL 10K 2025-10-31, Item 7], we know that the net sales for the Americas segment for the year 2025 were $162,517 million (calculated as $103,622 - $58,529 + $117,424) [AAPL 10Q 2026-05-01, Item 1] and [AAPL 10Q 2026-01-30, Item 1]. \n\nThus, the total net sales for the Americas segment for the year 2025 is $162,517 million [AAPL 10K 2025-10-31, Item 7].",
+    "refused": 0,
+    "grounded": 0,
+    "correct": 0
+  },
+  {
+    "question": "What was Apple's total net sales in the Americas segment for the year 2025?",
+    "origin": "synthetic",
+    "prompt": "B_explicit_triage",
+    "gold_available": false,
+    "answer": "The total net sales in the Americas segment for the year 2025 was not explicitly provided in the given context. However, according to [AAPL 10K 2025-10-31, Item 7] and [AAPL 10K 2025-10-31, Item 8], the information about total net sales by reportable segment for 2025 is provided, but the specific figure for the Americas segment for the entire year 2025 is not directly stated in the given context.",
+    "refused": 0,
+    "grounded": 0,
+    "correct": 0
+  },
+  {
+    "question": "What was the total operating expenses as a percentage of total net sales for Apple Inc. in 2025?",
+    "origin": "synthetic",
+    "prompt": "A_strict_contract",
+    "gold_available": true,
+    "answer": "The total operating expenses as a percentage of total net sales for Apple Inc. in 2025 was 15% [AAPL 10K 2025-10-31, Item 1A].",
+    "refused": 0,
+    "grounded": 1,
+    "correct": 0
+  },
+  {
+    "question": "What was the total operating expenses as a percentage of total net sales for Apple Inc. in 2025?",
+    "origin": "synthetic",
+    "prompt": "B_explicit_triage",
+    "gold_available": true,
+    "answer": "The total operating expenses as a percentage of total net sales for Apple Inc. in 2025 was 15% [AAPL 10K 2025-10-31, Item 1A].",
+    "refused": 0,
+    "grounded": 1,
+    "correct": 0
+  },
+  {
+    "question": "What was the total amount spent by Apple Inc. on share repurchases during the period from August 3, 2025 to September 27, 2025?",
+    "origin": "synthetic",
+    "prompt": "A_strict_contract",
+    "gold_available": true,
+    "answer": "To find the total amount spent by Apple Inc. on share repurchases during the period from August 3, 2025 to September 27, 2025, we need to calculate the total amount spent during this period. \n\nFrom August 3, 2025 to August 30, 2025, Apple Inc. repurchased 28,986 shares at an average price of $224.25 per share [AAPL 10K 2025-10-31, Item 5]. The amount spent during this period is 28,986 * $224.25 = $6,494,731,500.\n\nFrom August 31, 2025 to September 27, 2025, Apple Inc. repurchased 27,247 shares at an average price of $238.56 per share [AAPL 10K 2025-10-31, Item 5]. The amount spent during this period is 27,247 * $238.56 = $6,503,339,392.\n\nFrom June 29, 2025 to August 2, 2025, Apple Inc. repurchased 33,265 shares at an average price of $210.43 per share [AAPL 10K 2025-10-31, Item 5]. However, this period is not within the specified range of August 3, 2025 to September 27, 2025, so it is not included in the calculation.\n\nThe total amount spent by Apple Inc. on share repurchases during the period from August 3, 2025 to September 27, 2025 is $6,494,731,500 + $6,503,339,392 = $12,998,070,892 [AAPL 10K 2025-10-31, Item 5].",
+    "refused": 0,
+    "grounded": 0,
+    "correct": 0
+  },
+  {
+    "question": "What was the total amount spent by Apple Inc. on share repurchases during the period from August 3, 2025 to September 27, 2025?",
+    "origin": "synthetic",
+    "prompt": "B_explicit_triage",
+    "gold_available": true,
+    "answer": "The total amount spent by Apple Inc. on share repurchases during the period from June 29, 2025 to September 27, 2025 was $99,779 million [AAPL 10K 2025-10-31, Item 5]. However, to find the amount spent from August 3, 2025 to September 27, 2025, we need to subtract the amount spent from June 29, 2025 to August 2, 2025. The amount spent from June 29, 2025 to August 2, 2025 was 33,265 * $210.43 = $7,003 million [AAPL 10K 2025-10-31, Item 5]. Therefore, the total amount spent by Apple Inc. on share repurchases during the period from August 3, 2025 to September 27, 2025 was $99,779 - $7,003 = $92,776 million [AAPL 10K 2025-10-31, Item 5].",
+    "refused": 0,
+    "grounded": 0,
+    "correct": 0
+  },
+  {
+    "question": "What were Apple Inc.'s total net sales from iPhone products in 2025?",
+    "origin": "synthetic",
+    "prompt": "A_strict_contract",
+    "gold_available": false,
+    "answer": "Apple Inc.'s total net sales from iPhone products in 2025 were $209,586 million [AAPL 10K 2025-10-31, Item 7].",
+    "refused": 0,
+    "grounded": 0,
+    "correct": 0
+  },
+  {
+    "question": "What were Apple Inc.'s total net sales from iPhone products in 2025?",
+    "origin": "synthetic",
+    "prompt": "B_explicit_triage",
+    "gold_available": false,
+    "answer": "$209,586 [AAPL 10K 2025-10-31, Item 7].",
+    "refused": 0,
+    "grounded": 0,
+    "correct": 0
+  },
+  {
+    "question": "What types of laws and regulations did Apple face significant compliance costs and risks from during its 2025 fiscal year?",
+    "origin": "synthetic",
+    "prompt": "A_strict_contract",
+    "gold_available": false,
+    "answer": "The CONTEXT does not contain the answer, as there is no mention of Apple or its 2025 fiscal year. The CONTEXT only discusses JPMorgan Chase and Microsoft, and their respective compliance risks and regulatory obligations. [No relevant citation available]",
+    "refused": 0,
+    "grounded": 0,
+    "correct": 0
+  },
+  {
+    "question": "What types of laws and regulations did Apple face significant compliance costs and risks from during its 2025 fiscal year?",
+    "origin": "synthetic",
+    "prompt": "B_explicit_triage",
+    "gold_available": false,
+    "answer": "The filings provided do not contain this information.",
+    "refused": 1,
+    "grounded": 1,
+    "correct": 0
+  },
+  {
+    "question": "What types of risks is Apple exposed to as a result of its investments and acquisitions for the fiscal year ending 2025?",
+    "origin": "synthetic",
+    "prompt": "A_strict_contract",
+    "gold_available": false,
+    "answer": "The CONTEXT does not explicitly state the types of risks Apple is exposed to as a result of its investments and acquisitions for the fiscal year ending 2025, in the provided Apple Inc. sections [AAPL 10K 2025-10-31, Item 1A] and [AAPL 10K 2025-10-31, Item 7] only mention general risks associated with investments and acquisitions, such as distraction of management, greater-than-expected liabilities and expenses, economic, political, legal and regulatory challenges, inadequate return on capital, potential impairment of tangible and intangible assets, and significant write-offs [AAPL 10K 2025-10-31, Item 1A]. However, the CONTEXT does provide a general categorization of risk types from a different company, JPM [JPM 10K 2026-02-13, Item 8], which includes strategic risk, credit and investment risk, market risk, and operational risk. Since this information is from a different company, it cannot be applied to Apple Inc. \n\nTherefore, based on the provided CONTEXT, the types of risks Apple is exposed to as a result of its investments and acquisitions for the fiscal year ending 2025 are not explicitly stated [AAPL 10K 2025-10-31, Item 1A].",
+    "refused": 0,
+    "grounded": 0,
+    "correct": 0
+  },
+  {
+    "question": "What types of risks is Apple exposed to as a result of its investments and acquisitions for the fiscal year ending 2025?",
+    "origin": "synthetic",
+    "prompt": "B_explicit_triage",
+    "gold_available": false,
+    "answer": "The filings provided do not contain this information.",
+    "refused": 1,
+    "grounded": 1,
+    "correct": 0
+  },
+  {
+    "question": "What were some key factors that influenced the success of Apple's new product and service introductions in 2025?",
+    "origin": "synthetic",
+    "prompt": "A_strict_contract",
+    "gold_available": true,
+    "answer": "The success of new product and service introductions at Apple depended on several factors, including the Company's ability to recruit and retain highly skilled personnel, the timely and successful development and market acceptance of new products, services, and technologies, managing risks associated with new technologies and production ramp-up issues, effective integration of third-party services and technologies, availability and performance of application software, effective management of manufacturing and purchase commitments, and management of inventory levels in line with anticipated product demand [AAPL 10K 2025-10-31, Item 1A].",
+    "refused": 0,
+    "grounded": 0,
+    "correct": 0
+  },
+  {
+    "question": "What were some key factors that influenced the success of Apple's new product and service introductions in 2025?",
+    "origin": "synthetic",
+    "prompt": "B_explicit_triage",
+    "gold_available": true,
+    "answer": "The success of new product and service introductions depended on several factors, including the Company's ability to recruit and retain highly skilled personnel, the timely and successful development and market acceptance of new products, services and technologies, managing risks associated with new technologies and production ramp-up issues, the effective integration of third-party services and technologies, and the management of manufacturing and other purchase commitments [AAPL 10K 2025-10-31, Item 1A].",
+    "refused": 0,
+    "grounded": 0,
+    "correct": 0
+  },
+  {
+    "question": "What potential consequences could trade restrictions have on Apple's business and operations during the 2025 fiscal year?",
+    "origin": "synthetic",
+    "prompt": "A_strict_contract",
+    "gold_available": false,
+    "answer": "The CONTEXT does not explicitly state the potential consequences of trade restrictions on Apple's business and operations during the 2025 fiscal year. However, it mentions that \"Macroeconomic conditions, including inflation, interest rates and currency fluctuations, have directly and indirectly impacted, and could in the future materially impact, the Company\u2019s results of operations and financial condition\" [AAPL 10K 2025-10-31, Item 7]. Additionally, it notes that \"new U.S. Tariffs were announced, including additional tariffs on imports from China, India, Japan, South Korea, Taiwan, Vietnam and the EU, among others\" [AAPL 10K 2025-10-31, Item 7], but it does not provide specific information on the potential consequences of these tariffs on Apple's business. \n\nIt is worth noting that Microsoft's filings provide more information on the potential consequences of trade restrictions, such as increased supply chain challenges, cost volatility, and consumer and economic uncertainty [MSFT 10Q 2026-04-29, Item 2], but this information is not directly applicable to Apple.",
+    "refused": 0,
+    "grounded": 0,
+    "correct": 0
+  },
+  {
+    "question": "What potential consequences could trade restrictions have on Apple's business and operations during the 2025 fiscal year?",
+    "origin": "synthetic",
+    "prompt": "B_explicit_triage",
+    "gold_available": false,
+    "answer": "The filings provided do not contain this information.",
+    "refused": 1,
+    "grounded": 1,
+    "correct": 0
+  }
+]
