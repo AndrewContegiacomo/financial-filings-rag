@@ -1,7 +1,6 @@
-.env
 data/raw/
-data/processed/
+data/processed/query_analysis_cache.json
+.env
 .DS_Store
-notes.md
-rag/__pycache__/
-evaluation/__pycache__/
+.venv/
+__pycache__/
