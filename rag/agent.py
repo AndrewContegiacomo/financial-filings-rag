@@ -7,17 +7,10 @@ narrative questions ("what risks does X face") — this adds the ability
 to answer quantitative and comparative ones without the model doing math.
 """
 import json
-import os
 
-from dotenv import load_dotenv
-from groq import Groq
-
+from rag.llm_client import call_llm
 from rag.tools import TOOL_SCHEMAS, TOOL_FUNCTIONS
 
-load_dotenv()
-client = Groq(api_key=os.getenv("GROQ_API_KEY"))
-
-MODEL = "llama-3.3-70b-versatile"
 MAX_TURNS = 5  # guard against a model looping on tool calls
 
 SYSTEM = """You are a financial analyst assistant working with SEC
@@ -27,6 +20,10 @@ Pfizer (PFE).
 Use the tools to obtain figures. Never calculate a value yourself: if a
 question involves a change, growth, or difference, call compare_periods
 and report what it returns.
+
+If a tool rejects a lookup as implausible, do not work around it by
+calling lookup_metric for the same metric — retry with a more specific
+metric name, or report that the figure could not be established.
 
 Answer only from tool results. Cite the source tag each figure came
 from. If a tool reports a figure was not found, say so plainly."""
@@ -39,12 +36,11 @@ def run(question: str, verbose: bool = True) -> str:
     ]
 
     for _ in range(MAX_TURNS):
-        resp = client.chat.completions.create(
-            model=MODEL, messages=messages,
-            tools=TOOL_SCHEMAS, tool_choice="auto",
-            temperature=0.0,
-        )
-        msg = resp.choices[0].message
+        msg = call_llm(messages, tools=TOOL_SCHEMAS, tool_choice="auto")
+        if msg is None:
+            return ("The language model is temporarily unavailable. "
+                    "Please try again in a moment.")
+
         messages.append(msg)
 
         if not msg.tool_calls:

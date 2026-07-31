@@ -145,6 +145,12 @@ mismatched scopes. A code-level guard rejects an extraction whose
 declared period doesn't match the requested one, which is the failure
 mode of three-year comparative tables.
 
+**API access** is centralized in `rag/llm_client.py`, which retries
+transient failures (rate limits, capacity errors) with exponential
+backoff and returns `None` on persistent failure so callers degrade
+into a message rather than an exception. The RAG path still displays
+retrieved passages when generation is unavailable.
+
 ## How to run
 
 ### Prerequisites
@@ -390,6 +396,13 @@ absent" — which inflates the refusal metric in B's favour.
 - **Free-tier token budget (100k/day)** constrains generation
   evaluation subset size. This is an operational limit, not a
   methodological choice.
+- **Guards are per-tool, and the model can route around them.** A
+  plausibility check rejects comparisons whose two values differ by more
+  than 10x. Asked about Pfizer revenue, the model was blocked by that
+  check and then obtained the same wrong figure through the
+  single-figure lookup tool, which has no equivalent guard. Validation
+  currently sits where a value is consumed rather than where it is
+  produced.
 
   ## Retrieval improvements: what was adopted and what wasn't
 

@@ -9,35 +9,17 @@ scopes. The model is unreliable at arithmetic and reliable at deciding
 what to look up, so the split follows that boundary. Numbers are
 extracted verbatim and every derived figure is computed by code.
 """
-import os
+import json
 import re
 
-from dotenv import load_dotenv
-from groq import Groq
-
-from rag.query_analysis import infer_ticker
-from rag.vector_search import VectorIndex
+from rag.llm_client import call_llm_text
 from rag.rag import format_context
 from rag.query_analysis import infer_form
 from rag.search import load_chunks, build_index, keyword_search
 
-
-
-
-load_dotenv()
-client = Groq(api_key=os.getenv("GROQ_API_KEY"))
-
-MODEL = "llama-3.3-70b-versatile"
 LOOKUP_K = 8
 
-_index = None
 _kw_index = None
-
-def get_index() -> VectorIndex:
-    global _index
-    if _index is None:
-        _index = VectorIndex()
-    return _index
 
 
 EXTRACT_PROMPT = """Extract one specific figure from these SEC filing
@@ -86,6 +68,7 @@ def get_index():
         _kw_index = build_index(load_chunks())
     return _kw_index
 
+
 def _period_matches(requested: str, stated: str | None) -> bool:
     """Cross-check the period the model says it read against the one asked for.
 
@@ -105,6 +88,24 @@ def _period_matches(requested: str, stated: str | None) -> bool:
         return True
     return bool(years & stated_years)
 
+def _form_for_period(period: str) -> str | None:
+    """Form type for a tool 'period' argument.
+
+    Stricter than the general rule: here a bare year ("2024") means the
+    annual report. The general query rules abstain on it — correctly,
+    since a user question mentioning 2024 could target either document —
+    but a tool parameter comes from a schema that asks for a reporting
+    period, so the annual reading is the safe default. Without this,
+    "from 2024 to 2025" ran unfiltered and pulled a $771M line item out
+    of a 10-Q as Pfizer's annual revenue.
+    """
+    form = infer_form(period)
+    if form:
+        return form
+    if re.fullmatch(r"\s*(fy)?\s*20\d\d\s*", period.strip(), re.IGNORECASE):
+        return "10K"
+    return None
+
 def lookup_metric(ticker: str, metric: str, period: str) -> dict:
     """Retrieve and extract a single stated figure.
 
@@ -118,7 +119,7 @@ def lookup_metric(ticker: str, metric: str, period: str) -> dict:
     # extractor happily reads a six-month figure out of a 10-Q and labels
     # it as a fiscal year value — observed, not hypothetical.
     filters = {"ticker": ticker}
-    form = infer_form(period)
+    form = _form_for_period(period)
     if form:
         filters["form"] = form
 
@@ -131,18 +132,18 @@ def lookup_metric(ticker: str, metric: str, period: str) -> dict:
     # income statement ranks first.
     results = keyword_search(get_index(), metric, filters, LOOKUP_K)
 
-    resp = client.chat.completions.create(
-        model=MODEL,
-        messages=[{"role": "user", "content": EXTRACT_PROMPT.format(
-            ticker=ticker, metric=metric, period=period,
-            context=format_context(results),
-        )}],
-        temperature=0.0,
-    )
-    raw = resp.choices[0].message.content
+    raw = call_llm_text(EXTRACT_PROMPT.format(
+        ticker=ticker, metric=metric, period=period,
+        context=format_context(results),
+    ))
+    if raw is None:
+        return {"value": None, "error": "extraction service unavailable"}
+
+    # The model is asked for bare JSON but occasionally wraps it in prose
+    # or a fenced block; take the outermost object it emitted.
     match = re.search(r"\{.*\}", raw, re.DOTALL)
-    if not match:
-        return {"value": None, "error": "unparseable extraction"}
+    if match is None:
+        return {"value": None, "error": "no JSON in extraction response"}
 
     try:
         extracted = json.loads(match.group())
@@ -182,6 +183,29 @@ def compare_periods(ticker: str, metric: str,
             "error": "figure not found for one or both periods",
             period_a: a, period_b: b,
         }
+        
+    # Two values of the same metric one period apart should be within an
+    # order of magnitude of each other. A 10x gap almost always means one
+    # lookup landed on a different line item — Pfizer "revenue" returned
+    # $771M (a product-returns adjustment buried in the notes) against
+    # ~$63B of actual total revenue. Retrieval cannot currently tell a
+    # total from a footnote for generic metric names, so this refuses to
+    # compute rather than reporting a confident +887%.
+    MAX_RATIO = 10.0
+
+    va, vb = a["value"], b["value"]
+    if va and vb:
+        ratio = max(abs(va), abs(vb)) / min(abs(va), abs(vb))
+        if ratio > MAX_RATIO:
+            return {
+                "error": (
+                    f"implausible comparison: {metric} reported as {va} for "
+                    f"{period_a} and {vb} for {period_b} — a {ratio:.0f}x gap "
+                    f"suggests one figure is a different line item. "
+                    f"Try a more specific metric name."
+                ),
+                "rejected": {period_a: a, period_b: b},
+            }
 
     change = b["value"] - a["value"]
     pct = (change / a["value"] * 100) if a["value"] else None

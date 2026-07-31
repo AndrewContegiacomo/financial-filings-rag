@@ -13,18 +13,11 @@ consume most of the free tier's daily token budget. With it, only new
 questions cost anything.
 """
 import json
-import os
 from pathlib import Path
 
-from dotenv import load_dotenv
-from groq import Groq
-
 from rag.query_analysis import infer_ticker, infer_form
+from rag.llm_client import call_llm_text
 
-load_dotenv()
-client = Groq(api_key=os.getenv("GROQ_API_KEY"))
-
-MODEL = "llama-3.3-70b-versatile"
 CACHE_FILE = Path("data/processed/query_analysis_cache.json")
 
 FORM_PROMPT = """A user is asking a question about SEC filings. Decide
@@ -79,12 +72,13 @@ _cache = _load_cache()
 def _ask(prompt: str, cache_key: str) -> str:
     if cache_key in _cache:
         return _cache[cache_key]
-    resp = client.chat.completions.create(
-        model=MODEL,
-        messages=[{"role": "user", "content": prompt}],
-        temperature=0.0,
-    )
-    out = resp.choices[0].message.content.strip()
+
+    out = call_llm_text(prompt)
+    if out is None:
+        # Don't cache failures: a transient 503 would otherwise poison
+        # the cache entry permanently.
+        return ""
+
     _cache[cache_key] = out
     _save_cache(_cache)
     return out

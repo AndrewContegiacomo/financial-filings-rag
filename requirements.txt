@@ -5,3 +5,4 @@ beautifulsoup4==4.12.3
 python-dotenv==1.0.1
 tqdm==4.67.1
 minsearch==0.0.4
+streamlit==1.41.1
