@@ -1,8 +1,21 @@
-groq==0.13.0
+--extra-index-url https://download.pytorch.org/whl/cpu
+
+# Retrieval
+minsearch==0.0.4
 sentence-transformers==3.3.1
+torch==2.12.1
+numpy==2.5.0
+
+# Generation
+groq==0.13.0
+
+# Ingestion
 requests==2.32.3
 beautifulsoup4==4.12.3
+
+# Interface
+streamlit==1.41.1
+
+# Utilities
 python-dotenv==1.0.1
 tqdm==4.67.1
-minsearch==0.0.4
-streamlit==1.41.1
