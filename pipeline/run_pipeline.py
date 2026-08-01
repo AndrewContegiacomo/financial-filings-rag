@@ -1,10 +1,10 @@
 """
 End-to-end corpus pipeline: download -> chunk -> embed.
 
-IDEMPOTENT BY DESIGN: filings already on disk are not re-downloaded, and
-the expensive stages (chunking, embedding) run only when something new
-arrived. Re-running with no new filings costs four API calls to EDGAR
-and nothing else.
+CORPUS MEMBERSHIP is defined by data/corpus_manifest.json, not by what
+happens to be on disk. The expensive stages run only when the manifest
+grows or when artifacts are missing, so a re-run with nothing new costs
+four EDGAR index calls and nothing else.
 
 INVARIANT — CHUNKING PARAMETERS ARE FROZEN: chunk IDs are
 {filename}_{index}, so adding a new filing leaves existing IDs
@@ -24,20 +24,36 @@ import time
 from datetime import datetime, timezone
 from pathlib import Path
 
-RAW_DIR = Path("data/raw")
-PROCESSED_DIR = Path("data/processed")
-MANIFEST = PROCESSED_DIR / "pipeline_manifest.json"
+# Anchor paths to the project root: this module runs via `python -m` from
+# the repo root locally and from a different cwd in CI.
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+RAW_DIR = PROJECT_ROOT / "data/raw"
+PROCESSED_DIR = PROJECT_ROOT / "data/processed"
+CORPUS_MANIFEST = PROJECT_ROOT / "data/corpus_manifest.json"
+RUN_LOG = PROCESSED_DIR / "pipeline_manifest.json"
 
 
-def load_manifest() -> dict:
-    if MANIFEST.exists():
-        return json.loads(MANIFEST.read_text(encoding="utf-8"))
-    return {"runs": [], "known_filings": []}
+def load_run_log() -> dict:
+    if RUN_LOG.exists():
+        return json.loads(RUN_LOG.read_text(encoding="utf-8"))
+    return {"runs": []}
 
 
-def save_manifest(manifest: dict) -> None:
+def save_run_log(log: dict) -> None:
     PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
-    MANIFEST.write_text(json.dumps(manifest, indent=2), encoding="utf-8")
+    RUN_LOG.write_text(json.dumps(log, indent=2), encoding="utf-8")
+
+
+def count_manifest_filings() -> int:
+    """Number of filings the corpus manifest declares.
+
+    Growth here means genuinely new filings. The previous check compared
+    files on disk before and after downloading, which reported all 14 as
+    "new" on a clean checkout — correct locally, misleading in CI.
+    """
+    if not CORPUS_MANIFEST.exists():
+        return 0
+    return len(json.loads(CORPUS_MANIFEST.read_text(encoding="utf-8"))["filings"])
 
 
 def run_stage(name: str, command: list[str]) -> dict:
@@ -58,31 +74,34 @@ def run_stage(name: str, command: list[str]) -> dict:
     return {"stage": name, "status": status, "seconds": round(elapsed, 1)}
 
 
-def main() -> None:
-    manifest = load_manifest()
-    known = set(manifest["known_filings"])
+def abort(log: dict, run: dict, reason: str) -> None:
+    """Record a failed run and exit non-zero so CI reports the failure."""
+    run["result"] = reason
+    log["runs"].append(run)
+    save_run_log(log)
+    sys.exit(1)
 
+
+def main() -> None:
+    log = load_run_log()
     run = {
         "started_at": datetime.now(timezone.utc).isoformat(),
         "stages": [],
     }
 
-    # Stage 1: download 
-    # download_filings.py overwrites existing files, which is harmless but
-    # wasteful. We detect novelty by comparing the file set before/after.
-    before = {p.name for p in RAW_DIR.glob("*.html")} if RAW_DIR.exists() else set()
+    # Stage 1: discover and download 
+    manifest_before = count_manifest_filings()
 
-    stage = run_stage("download", [sys.executable, "ingestion/download_filings.py"])
+    stage = run_stage("download",
+                      [sys.executable, "ingestion/download_filings.py"])
     run["stages"].append(stage)
     if stage["status"] == "failed":
-        run["result"] = "aborted: download failed"
-        manifest["runs"].append(run)
-        save_manifest(manifest)
-        sys.exit(1)
+        abort(log, run, "aborted: download failed")
 
-    after = {p.name for p in RAW_DIR.glob("*.html")}
-    new_filings = sorted(after - before)
-    run["new_filings"] = new_filings
+    manifest_after = count_manifest_filings()
+    new_count = manifest_after - manifest_before
+    run["new_filings"] = new_count
+    run["corpus_filings"] = manifest_after
 
     # Decide whether the expensive stages are needed
     artifacts_exist = (
@@ -90,19 +109,20 @@ def main() -> None:
         and (PROCESSED_DIR / "embeddings.npy").exists()
     )
 
-    if not new_filings and artifacts_exist and after == known:
+    if new_count == 0 and artifacts_exist:
         print("\nNo new filings and artifacts are current — nothing to rebuild.")
         run["result"] = "no-op"
-        manifest["runs"].append(run)
-        save_manifest(manifest)
+        log["runs"].append(run)
+        save_run_log(log)
         return
 
-    if new_filings:
-        print(f"\nNew filings: {', '.join(new_filings)}")
-    elif not artifacts_exist:
-        print("\nArtifacts missing — rebuilding from existing filings.")
+    if new_count:
+        print(f"\n{new_count} new filing(s) in manifest.")
+    else:
+        # Clean checkout: manifest unchanged but nothing built yet.
+        print("\nArtifacts missing — rebuilding from manifest.")
 
-    # Stage 2 & 3: chunk and embed (always together)
+    # Stages 2 & 3: chunk and embed (always together)
     for name, script in [
         ("chunk", ["ingestion/chunk_filings.py"]),
         ("embed", ["-m", "rag.vector_search"]),
@@ -114,22 +134,20 @@ def main() -> None:
             # potentially out of sync. VectorIndex asserts on length
             # mismatch, so the app fails loudly rather than serving
             # misaligned results.
-            run["result"] = f"aborted: {name} failed"
-            manifest["runs"].append(run)
-            save_manifest(manifest)
-            sys.exit(1)
+            abort(log, run, f"aborted: {name} failed")
 
     # Record success
-    chunks = json.loads((PROCESSED_DIR / "chunks.json").read_text(encoding="utf-8"))
+    chunks = json.loads(
+        (PROCESSED_DIR / "chunks.json").read_text(encoding="utf-8")
+    )
     run["result"] = "rebuilt"
     run["chunk_count"] = len(chunks)
     run["finished_at"] = datetime.now(timezone.utc).isoformat()
 
-    manifest["known_filings"] = sorted(after)
-    manifest["runs"] = (manifest["runs"] + [run])[-20:]   # keep last 20
-    save_manifest(manifest)
+    log["runs"] = (log["runs"] + [run])[-20:]   # keep the last 20 runs
+    save_run_log(log)
 
-    print(f"\nPipeline complete: {len(after)} filings, {len(chunks)} chunks.")
+    print(f"\nPipeline complete: {manifest_after} filings, {len(chunks)} chunks.")
 
 
 if __name__ == "__main__":

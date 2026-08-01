@@ -98,43 +98,17 @@
       "result": "no-op"
     },
     {
-      "started_at": "2026-08-01T19:17:35.445906+00:00",
+      "started_at": "2026-08-01T19:31:39.016826+00:00",
       "stages": [
         {
           "stage": "download",
           "status": "ok",
-          "seconds": 4.7
-        },
-        {
-          "stage": "chunk",
-          "status": "ok",
-          "seconds": 26.2
-        },
-        {
-          "stage": "embed",
-          "status": "ok",
-          "seconds": 208.3
+          "seconds": 2.4
         }
       ],
-      "new_filings": [
-        "AAPL_10K_2025-10-31.html",
-        "AAPL_10Q_2026-01-30.html",
-        "AAPL_10Q_2026-05-01.html",
-        "AAPL_10Q_2026-07-31.html",
-        "JPM_10K_2026-02-13.html",
-        "JPM_10Q_2025-11-04.html",
-        "JPM_10Q_2026-05-01.html",
-        "MSFT_10K_2025-07-30.html",
-        "MSFT_10K_2026-07-29.html",
-        "MSFT_10Q_2026-01-28.html",
-        "MSFT_10Q_2026-04-29.html",
-        "PFE_10K_2026-02-26.html",
-        "PFE_10Q_2025-11-04.html",
-        "PFE_10Q_2026-05-05.html"
-      ],
-      "result": "rebuilt",
-      "chunk_count": 5034,
-      "finished_at": "2026-08-01T19:21:34.662938+00:00"
+      "new_filings": 0,
+      "corpus_filings": 14,
+      "result": "no-op"
     }
   ],
   "known_filings": [

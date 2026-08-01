@@ -6,14 +6,15 @@
 name: Update corpus
 
 on:
+  # Weekly refresh. Safe on a clean checkout since the corpus is defined
+  # by data/corpus_manifest.json rather than by "the N most recent
+  # filings" — the runner reconstructs exactly the same set.
   schedule:
-    # Weekly, Monday 06:00 UTC. Filings appear quarterly at most, so
-    # daily runs would be noise; weekly bounds staleness to a few days.
     - cron: "0 6 * * 1"
-  workflow_dispatch:        # manual trigger, for testing
+  workflow_dispatch:
 
 permissions:
-  contents: write           # required to commit artifacts back
+  contents: write
 
 jobs:
   refresh:
@@ -38,10 +39,13 @@ jobs:
         run: |
           git config user.name "corpus-bot"
           git config user.email "actions@github.com"
-          git add data/processed/chunks.json \
-                  data/processed/embeddings.npy \
-                  data/processed/pipeline_manifest.json
-          # Exit cleanly when nothing changed: a no-op run is a success,
-          # not a failure.
-          git diff --staged --quiet || git commit -m "chore: refresh corpus from EDGAR"
-          git push
+          # Embeddings differ in their last bits across architectures, so
+          # committing them unconditionally produces a commit on every
+          # run even when nothing changed. Gate on chunks.json, which is
+          # deterministic given the same inputs.
+          git add data/processed/chunks.json data/processed/pipeline_manifest.json
+          if ! git diff --staged --quiet; then
+            git add data/processed/embeddings.npy
+            git commit -m "chore: refresh corpus from EDGAR"
+            git push
+          fi
