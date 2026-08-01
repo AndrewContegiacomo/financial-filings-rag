@@ -10,8 +10,10 @@ from pathlib import Path
 import numpy as np
 from sentence_transformers import SentenceTransformer
 
-CHUNKS_FILE = Path("data/processed/chunks.json")
-EMB_FILE = Path("data/processed/embeddings.npy")
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+CHUNKS_FILE = PROJECT_ROOT / "data/processed/chunks.json"
+EMB_FILE = PROJECT_ROOT / "data/processed/embeddings.npy"
 
 # Small, fast, runs locally on Apple Silicon. Its 256-token input limit
 # is what dictated our 200-word chunk size back in the chunking phase.
@@ -50,11 +52,16 @@ def build_embeddings() -> None:
 
 class VectorIndex:
     def __init__(self):
+        if not CHUNKS_FILE.exists() or not EMB_FILE.exists():
+            raise FileNotFoundError(
+                f"Corpus artifacts missing ({CHUNKS_FILE}, {EMB_FILE}). "
+                "Run: python -m pipeline.run_pipeline"
+            )
         self.chunks = json.loads(CHUNKS_FILE.read_text(encoding="utf-8"))
         self.emb = np.load(EMB_FILE)
         assert len(self.chunks) == self.emb.shape[0], (
             "chunks.json and embeddings.npy are out of sync — "
-            "re-run build_embeddings() after changing the corpus"
+            "re-run the pipeline after changing the corpus"
         )
 
     def search(self, query: str, filters: dict | None = None,

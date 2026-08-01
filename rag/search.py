@@ -4,7 +4,8 @@ from pathlib import Path
 
 from minsearch import Index
 
-CHUNKS_FILE = Path("data/processed/chunks.json")
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+CHUNKS_FILE = PROJECT_ROOT / "data/processed/chunks.json"
 
 
 def load_chunks() -> list[dict]:

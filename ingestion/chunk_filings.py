@@ -15,8 +15,13 @@ from pathlib import Path
 from bs4 import BeautifulSoup
 from tqdm import tqdm
 
-RAW_DIR = Path("../data/raw")
-OUT_FILE = Path("../data/processed/chunks.json")
+# Anchor paths to the project root rather than the working directory:
+# these scripts run both directly and as subprocesses of the pipeline,
+# and a relative path silently resolves differently depending on where
+# the caller started.
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+RAW_DIR = PROJECT_ROOT / "data/raw"
+OUT_FILE = PROJECT_ROOT / "data/processed/chunks.json"
 
 # Chunk size is dictated by the embedding model:
 # all-MiniLM-L6-v2 truncates input at 256 tokens (~200 English words).
@@ -95,7 +100,10 @@ def chunk_text(text: str) -> list[dict]:
         # LAST one is the section the following text belongs to.
         matches = ITEM_RE.findall(piece)
         if matches:
-            current_item = f"Item {matches[-1].upper()}"
+            # ITEM_RE has two capture groups (number, optional 'A'), so
+            # findall returns tuples like ('1', 'A') — join them back
+            # into "1A" before formatting.
+            current_item = f"Item {''.join(matches[-1]).upper()}"
 
         chunks.append({"text": piece, "section": current_item})
 

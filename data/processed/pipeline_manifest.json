@@ -1,0 +1,93 @@
+{
+  "runs": [
+    {
+      "started_at": "2026-07-31T13:59:00.082556+00:00",
+      "stages": [
+        {
+          "stage": "download",
+          "status": "ok",
+          "seconds": 9.6
+        },
+        {
+          "stage": "chunk",
+          "status": "failed",
+          "seconds": 0.1
+        }
+      ],
+      "new_filings": [
+        "AAPL_10Q_2026-07-31.html",
+        "MSFT_10K_2026-07-29.html"
+      ],
+      "result": "aborted: chunk failed"
+    },
+    {
+      "started_at": "2026-07-31T14:02:51.145504+00:00",
+      "stages": [
+        {
+          "stage": "download",
+          "status": "ok",
+          "seconds": 9.5
+        },
+        {
+          "stage": "chunk",
+          "status": "failed",
+          "seconds": 0.3
+        }
+      ],
+      "new_filings": [],
+      "result": "aborted: chunk failed"
+    },
+    {
+      "started_at": "2026-07-31T14:05:48.858114+00:00",
+      "stages": [
+        {
+          "stage": "download",
+          "status": "ok",
+          "seconds": 12.8
+        },
+        {
+          "stage": "chunk",
+          "status": "ok",
+          "seconds": 9.8
+        },
+        {
+          "stage": "embed",
+          "status": "ok",
+          "seconds": 40.0
+        }
+      ],
+      "new_filings": [],
+      "result": "rebuilt",
+      "chunk_count": 5034,
+      "finished_at": "2026-07-31T14:06:51.502970+00:00"
+    },
+    {
+      "started_at": "2026-07-31T14:07:22.903993+00:00",
+      "stages": [
+        {
+          "stage": "download",
+          "status": "ok",
+          "seconds": 8.7
+        }
+      ],
+      "new_filings": [],
+      "result": "no-op"
+    }
+  ],
+  "known_filings": [
+    "AAPL_10K_2025-10-31.html",
+    "AAPL_10Q_2026-01-30.html",
+    "AAPL_10Q_2026-05-01.html",
+    "AAPL_10Q_2026-07-31.html",
+    "JPM_10K_2026-02-13.html",
+    "JPM_10Q_2025-11-04.html",
+    "JPM_10Q_2026-05-01.html",
+    "MSFT_10K_2025-07-30.html",
+    "MSFT_10K_2026-07-29.html",
+    "MSFT_10Q_2026-01-28.html",
+    "MSFT_10Q_2026-04-29.html",
+    "PFE_10K_2026-02-26.html",
+    "PFE_10Q_2025-11-04.html",
+    "PFE_10Q_2026-05-05.html"
+  ]
+}

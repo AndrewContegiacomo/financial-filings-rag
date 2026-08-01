@@ -1,0 +1,47 @@
+# Scheduled corpus refresh.
+#
+# Committing regenerated artifacts back to the repo is what triggers a
+# Streamlit Cloud redeploy — the schedule, the pipeline and the
+# deployment are one chain rather than three separate mechanisms.
+name: Update corpus
+
+on:
+  schedule:
+    # Weekly, Monday 06:00 UTC. Filings appear quarterly at most, so
+    # daily runs would be noise; weekly bounds staleness to a few days.
+    - cron: "0 6 * * 1"
+  workflow_dispatch:        # manual trigger, for testing
+
+permissions:
+  contents: write           # required to commit artifacts back
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run pipeline
+        env:
+          SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
+        run: python -m pipeline.run_pipeline
+
+      - name: Commit updated artifacts
+        run: |
+          git config user.name "corpus-bot"
+          git config user.email "actions@github.com"
+          git add data/processed/chunks.json \
+                  data/processed/embeddings.npy \
+                  data/processed/pipeline_manifest.json
+          # Exit cleanly when nothing changed: a no-op run is a success,
+          # not a failure.
+          git diff --staged --quiet || git commit -m "chore: refresh corpus from EDGAR"
+          git push

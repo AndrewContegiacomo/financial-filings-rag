@@ -1,5 +1,22 @@
 # Financial Filings RAG
 
+> 🔗 **Live demo:** https://financial-filings-rag-rlcq58txd8kpc6p2blkajz.streamlit.app/
+>
+> Runs on a free-tier API key with a daily token budget. If the app
+> reports the model unavailable, the quota is exhausted — the code and
+> evaluation results below are unaffected.
+
+![Interface](docs/screenshot-answer.png)
+
+*The question uses everyday wording ("heartburn medication"); the filings
+only ever say "Zantac". Each claim carries the filing and section it
+came from.*
+
+![Sources](docs/screenshot-sources.png)
+
+*Every answer exposes the retrieved passages, so any claim can be checked
+against the source text.*
+
 A RAG application with agentic capabilities for querying SEC filings
 (10-K / 10-Q) in natural language, with source-cited answers.
 
@@ -403,6 +420,15 @@ absent" — which inflates the refusal metric in B's favour.
   single-figure lookup tool, which has no equivalent guard. Validation
   currently sits where a value is consumed rather than where it is
   produced.
+- **Retrieval degrades** when the corpus contains multiple editions of the
+  same filing.** The scheduled pipeline added Microsoft's FY2026 10-K,
+  and questions about fiscal 2025 now retrieve the FY2026 MD&A first —
+  the same section of the same document, one year later, near-identical
+  in wording and differing only in figures. Manual-subset hit@5 fell from
+  0.400 to 0.100 (0.800 to 0.600 expanded). Metadata filtering assumed
+  one 10-K per company, an assumption never stated and broken by the
+  first automated ingestion run. The fix is a `fiscal_year` filter
+  dimension; it is scoped but not implemented.
 
   ## Retrieval improvements: what was adopted and what wasn't
 

@@ -20,6 +20,14 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+# Anchor paths to the project root rather than the working directory:
+# these scripts run both directly and as subprocesses of the pipeline,
+# and a relative path silently resolves differently depending on where
+# the caller started.
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+RAW_DIR = PROJECT_ROOT / "data/raw"
+OUT_FILE = PROJECT_ROOT / "data/processed/chunks.json"
+
 # Configuration 
 
 # The SEC requires a real contact in the User-Agent so they can reach
