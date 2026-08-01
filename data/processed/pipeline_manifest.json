@@ -84,6 +84,18 @@
       ],
       "new_filings": [],
       "result": "no-op"
+    },
+    {
+      "started_at": "2026-08-01T19:14:27.129367+00:00",
+      "stages": [
+        {
+          "stage": "download",
+          "status": "ok",
+          "seconds": 2.7
+        }
+      ],
+      "new_filings": [],
+      "result": "no-op"
     }
   ],
   "known_filings": [
