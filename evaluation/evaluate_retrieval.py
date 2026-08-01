@@ -23,6 +23,7 @@ from rag.query_analysis import infer_filters
 from rag.hybrid_search import HybridIndex
 from rag.llm_query_analysis import infer_filters_llm, rewrite_query
 from rag.rerank import RerankedIndex
+from rag.augmented_search import AugmentedIndex
 
 EVAL_FILE = Path("data/eval/eval_set.json")
 OUT_FILE = Path("data/eval/retrieval_results.json")
@@ -72,11 +73,12 @@ def main() -> None:
     # keyword too much say. Tested rather than assumed.
     hybrid_vw = HybridIndex(kw_index, vec_index,
                             keyword_weight=0.5, vector_weight=1.0)
+    augmented = AugmentedIndex(vec_index, kw_index, n_keyword=3)
 
     # Each configuration is a function: question + item -> ranked chunks.
     # 'item' is passed so oracle configs can read the gold's metadata.
     configs = {
-        "keyword": lambda q, it: keyword_search(kw_index, q, None, MAX_K),
+                "keyword": lambda q, it: keyword_search(kw_index, q, None, MAX_K),
         "vector": lambda q, it: vec_index.search(q, None, MAX_K),
         # Rule-based filters: what the system can actually infer from the
         # question, with no privileged information.
@@ -106,6 +108,8 @@ def main() -> None:
         "vector+rule_filter": lambda q, it: vec_index.search(
             q, infer_filters(q) or None, MAX_K),
         "vector+rule_filter+rerank": lambda q, it: reranked.search(
+            q, infer_filters(q) or None, MAX_K),
+        "augmented+rule_filter": lambda q, it: augmented.search(
             q, infer_filters(q) or None, MAX_K),
         
     }
@@ -159,7 +163,7 @@ def main() -> None:
 
     print("\n=== BY KIND (strict, hit_rate@5) ===")
     for value, per_config in results["strict"]["kind"].items():
-        n = per_config["keyword"]["n"]
+        n = next(iter(per_config.values()))["n"]
         print(f"{str(value):<12} (n={n:>2})  " + "  ".join(
             f"{name}={s['hit_rate@5']:.3f}" for name, s in per_config.items()))
 

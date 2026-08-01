@@ -1,0 +1,130 @@
+{
+  "filings": {
+    "0000078003-25-000150": {
+      "accession": "0000078003-25-000150",
+      "cik": "0000078003",
+      "document": "pfe-20250928.htm",
+      "filing_date": "2025-11-04",
+      "form": "10-Q",
+      "report_date": "2025-09-28",
+      "ticker": "PFE"
+    },
+    "0000078003-26-000026": {
+      "accession": "0000078003-26-000026",
+      "cik": "0000078003",
+      "document": "pfe-20251231.htm",
+      "filing_date": "2026-02-26",
+      "form": "10-K",
+      "report_date": "2025-12-31",
+      "ticker": "PFE"
+    },
+    "0000078003-26-000054": {
+      "accession": "0000078003-26-000054",
+      "cik": "0000078003",
+      "document": "pfe-20260329.htm",
+      "filing_date": "2026-05-05",
+      "form": "10-Q",
+      "report_date": "2026-03-29",
+      "ticker": "PFE"
+    },
+    "0000320193-25-000079": {
+      "accession": "0000320193-25-000079",
+      "cik": "0000320193",
+      "document": "aapl-20250927.htm",
+      "filing_date": "2025-10-31",
+      "form": "10-K",
+      "report_date": "2025-09-27",
+      "ticker": "AAPL"
+    },
+    "0000320193-26-000006": {
+      "accession": "0000320193-26-000006",
+      "cik": "0000320193",
+      "document": "aapl-20251227.htm",
+      "filing_date": "2026-01-30",
+      "form": "10-Q",
+      "report_date": "2025-12-27",
+      "ticker": "AAPL"
+    },
+    "0000320193-26-000013": {
+      "accession": "0000320193-26-000013",
+      "cik": "0000320193",
+      "document": "aapl-20260328.htm",
+      "filing_date": "2026-05-01",
+      "form": "10-Q",
+      "report_date": "2026-03-28",
+      "ticker": "AAPL"
+    },
+    "0000320193-26-000020": {
+      "accession": "0000320193-26-000020",
+      "cik": "0000320193",
+      "document": "aapl-20260627.htm",
+      "filing_date": "2026-07-31",
+      "form": "10-Q",
+      "report_date": "2026-06-27",
+      "ticker": "AAPL"
+    },
+    "0000950170-25-100235": {
+      "accession": "0000950170-25-100235",
+      "cik": "0000789019",
+      "document": "msft-20250630.htm",
+      "filing_date": "2025-07-30",
+      "form": "10-K",
+      "report_date": "2025-06-30",
+      "ticker": "MSFT"
+    },
+    "0001193125-26-027207": {
+      "accession": "0001193125-26-027207",
+      "cik": "0000789019",
+      "document": "msft-20251231.htm",
+      "filing_date": "2026-01-28",
+      "form": "10-Q",
+      "report_date": "2025-12-31",
+      "ticker": "MSFT"
+    },
+    "0001193125-26-191507": {
+      "accession": "0001193125-26-191507",
+      "cik": "0000789019",
+      "document": "msft-20260331.htm",
+      "filing_date": "2026-04-29",
+      "form": "10-Q",
+      "report_date": "2026-03-31",
+      "ticker": "MSFT"
+    },
+    "0001193125-26-323660": {
+      "accession": "0001193125-26-323660",
+      "cik": "0000789019",
+      "document": "msft-20260630.htm",
+      "filing_date": "2026-07-29",
+      "form": "10-K",
+      "report_date": "2026-06-30",
+      "ticker": "MSFT"
+    },
+    "0001628280-25-048859": {
+      "accession": "0001628280-25-048859",
+      "cik": "0000019617",
+      "document": "jpm-20250930.htm",
+      "filing_date": "2025-11-04",
+      "form": "10-Q",
+      "report_date": "2025-09-30",
+      "ticker": "JPM"
+    },
+    "0001628280-26-008131": {
+      "accession": "0001628280-26-008131",
+      "cik": "0000019617",
+      "document": "jpm-20251231.htm",
+      "filing_date": "2026-02-13",
+      "form": "10-K",
+      "report_date": "2025-12-31",
+      "ticker": "JPM"
+    },
+    "0001628280-26-029344": {
+      "accession": "0001628280-26-029344",
+      "cik": "0000019617",
+      "document": "jpm-20260331.htm",
+      "filing_date": "2026-05-01",
+      "form": "10-Q",
+      "report_date": "2026-03-31",
+      "ticker": "JPM"
+    }
+  }
+}

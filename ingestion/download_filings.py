@@ -1,16 +1,27 @@
 """
-Downloads the latest 10-K and 10-Q filings from SEC EDGAR for a
-configured set of companies.
+Downloads the filings listed in the corpus manifest, and discovers new
+ones from SEC EDGAR.
 
-EDGAR is a free, public API with two requirements we must honor:
-  1. A User-Agent header identifying who is making the requests
-     (loaded from .env — it's personal config, not code).
-  2. A rate limit of max 10 requests/second.
+WHY A MANIFEST: the corpus used to be defined implicitly as "the N most
+recent filings per form, plus whatever happened to be on disk". That
+worked locally, where old files accumulated, and broke the first time
+the pipeline ran on a clean checkout: the runner downloaded only the
+latest N, silently dropping older filings that the evaluation set
+references.
 
-Output: one HTML file per filing in data/raw/, named with the
-convention TICKER_FORM_DATE.html so that downstream steps can recover
-metadata from the filename alone.
+The manifest makes membership explicit and versioned. Filings are keyed
+by SEC accession number — unique, immutable, and independent of how
+recent they are. Discovery ADDS to the manifest and never removes:
+a filing that once belonged to the corpus stays in it, so gold chunk IDs
+remain valid as new filings arrive.
+
+The manifest also records reportDate (the period covered) alongside
+filingDate (when it was submitted). These differ by months and only the
+former identifies the fiscal year — Microsoft's FY2026 10-K was filed in
+July 2026 for a year ended June 2026, Apple's FY2025 10-K in October
+2025 for a year ended September 2025.
 """
+import json
 import os
 import time
 from pathlib import Path
@@ -20,24 +31,12 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# Anchor paths to the project root rather than the working directory:
-# these scripts run both directly and as subprocesses of the pipeline,
-# and a relative path silently resolves differently depending on where
-# the caller started.
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 RAW_DIR = PROJECT_ROOT / "data/raw"
-OUT_FILE = PROJECT_ROOT / "data/processed/chunks.json"
+MANIFEST_FILE = PROJECT_ROOT / "data/corpus_manifest.json"
 
-# Configuration 
-
-# The SEC requires a real contact in the User-Agent so they can reach
-# you if your script misbehaves. It lives in .env because it varies per
-# person: anyone cloning this repo should plug in their OWN contact
-# without touching the source code.
 SEC_USER_AGENT = os.getenv("SEC_USER_AGENT")
 if not SEC_USER_AGENT:
-    # Fail fast at startup with an actionable message, instead of
-    # letting the SEC reject us mid-run with an opaque 403.
     raise SystemExit(
         "Missing SEC_USER_AGENT in .env "
         "(format: 'Name Surname email@example.com'). "
@@ -46,103 +45,137 @@ if not SEC_USER_AGENT:
 
 HEADERS = {"User-Agent": SEC_USER_AGENT}
 
-# Companies were chosen across different sectors (tech hardware,
-# software, banking, pharma) on purpose: a corpus where documents
-# discuss different topics vs. overlapping ones (AAPL/MSFT) lets the
-# evaluation phase observe retrieval behaving in both regimes.
-# The CIK (Central Index Key) is the SEC's 10-digit company identifier.
 COMPANIES = {
-    "AAPL": "0000320193",   # Apple
-    "MSFT": "0000789019",   # Microsoft
-    "JPM":  "0000019617",   # JPMorgan Chase
-    "PFE":  "0000078003",   # Pfizer
+    "AAPL": "0000320193",
+    "MSFT": "0000789019",
+    "JPM":  "0000019617",
+    "PFE":  "0000078003",
 }
 
-# One annual report (10-K) plus two quarterlies (10-Q) per company:
-# multiple periods are what enables the agentic year-over-year /
-# quarter-over-quarter comparisons planned for Phase 4.
-WANTED = {"10-K": 1, "10-Q": 2}
+# How many recent filings of each type to DISCOVER. This bounds growth
+# per run; it no longer defines the corpus, which is the manifest.
+DISCOVER = {"10-K": 1, "10-Q": 2}
 
-OUT_DIR = Path("data/raw")
-# ----------------------------------------------------------------------
+
+def load_manifest() -> dict:
+    if MANIFEST_FILE.exists():
+        return json.loads(MANIFEST_FILE.read_text(encoding="utf-8"))
+    return {"filings": {}}
+
+
+def save_manifest(manifest: dict) -> None:
+    MANIFEST_FILE.parent.mkdir(parents=True, exist_ok=True)
+    MANIFEST_FILE.write_text(json.dumps(manifest, indent=2, sort_keys=True),
+                             encoding="utf-8")
 
 
 def get_filings_index(cik: str) -> dict:
-    """Fetch the master index of ALL filings for one company.
-
-    This endpoint returns metadata only (types, dates, accession
-    numbers) — not the documents themselves. From this index we build
-    the URLs of the actual documents.
-    """
     url = f"https://data.sec.gov/submissions/CIK{cik}.json"
     resp = requests.get(url, headers=HEADERS, timeout=30)
-    resp.raise_for_status()  # turn HTTP errors into visible exceptions
+    resp.raise_for_status()
     return resp.json()
 
 
-def pick_filings(index: dict) -> list[dict]:
-    """Select the N most recent filings of each wanted type.
+def discover(ticker: str, cik: str, manifest: dict) -> list[str]:
+    """Add newly published filings to the manifest. Returns added keys.
 
-    EDGAR returns the index in a COLUMNAR format: instead of a list of
-    filing objects, it gives parallel lists ('form', 'accessionNumber',
-    ...) all of the same length, already sorted newest-first. zip()
-    stitches them back together row by row. This layout is a common
-    API optimization to shrink JSON payloads.
+    EDGAR returns its index in columnar form — parallel lists, newest
+    first — so zip() reassembles them row by row.
     """
+    index = get_filings_index(cik)
     recent = index["filings"]["recent"]
-    picked, counts = [], {k: 0 for k in WANTED}
+    counts = {k: 0 for k in DISCOVER}
+    added = []
 
-    for form, acc, doc, date in zip(
+    for form, acc, doc, filed, reported in zip(
         recent["form"], recent["accessionNumber"],
         recent["primaryDocument"], recent["filingDate"],
+        recent["reportDate"],
     ):
-        if form in WANTED and counts[form] < WANTED[form]:
-            picked.append(
-                {"form": form, "accession": acc, "document": doc, "date": date}
-            )
-            counts[form] += 1
-        # Early exit once we have everything we need — no reason to
-        # walk through years of remaining filing history.
-        if all(counts[f] >= n for f, n in WANTED.items()):
+        if form not in DISCOVER or counts[form] >= DISCOVER[form]:
+            continue
+        counts[form] += 1
+
+        if acc in manifest["filings"]:
+            continue
+
+        manifest["filings"][acc] = {
+            "ticker": ticker,
+            "cik": cik,
+            "form": form,
+            "accession": acc,
+            "document": doc,
+            "filing_date": filed,
+            "report_date": reported,   # the period covered, not the submission
+        }
+        added.append(acc)
+
+        if all(counts[f] >= n for f, n in DISCOVER.items()):
             break
-    return picked
+
+    return added
 
 
-def download_filing(cik: str, filing: dict, ticker: str) -> None:
-    """Download the main HTML document of a single filing.
+def filename_for(entry: dict) -> str:
+    """TICKER_FORM_FILINGDATE.html — the convention chunking parses.
 
-    The archive URL is built from the accession number (with dashes
-    stripped) and the primary document name found in the index.
+    Kept unchanged despite report_date now being available: chunk IDs
+    derive from this filename, and changing it would invalidate every
+    gold ID in the evaluation set.
     """
-    acc_clean = filing["accession"].replace("-", "")
+    form = entry["form"].replace("-", "")
+    return f"{entry['ticker']}_{form}_{entry['filing_date']}.html"
+
+
+def download(entry: dict) -> bool:
+    """Fetch a filing unless it is already on disk. Returns True if
+    downloaded."""
+    out_path = RAW_DIR / filename_for(entry)
+    if out_path.exists():
+        return False
+
+    acc_clean = entry["accession"].replace("-", "")
     url = (
         f"https://www.sec.gov/Archives/edgar/data/"
-        f"{int(cik)}/{acc_clean}/{filing['document']}"
+        f"{int(entry['cik'])}/{acc_clean}/{entry['document']}"
     )
     resp = requests.get(url, headers=HEADERS, timeout=60)
     resp.raise_for_status()
 
-    # Filename convention TICKER_FORM_DATE.html: the filename IS the
-    # metadata store. The chunking step parses it to tag every chunk
-    # with ticker/form/date, which ultimately powers source citations
-    # in the RAG answers.
-    fname = f"{ticker}_{filing['form'].replace('-', '')}_{filing['date']}.html"
-    out_path = OUT_DIR / fname
     out_path.write_text(resp.text, encoding="utf-8")
-    print(f"  ✓ {fname}  ({len(resp.text)/1e6:.1f} MB)")
+    print(f"  ↓ {out_path.name}  ({len(resp.text)/1e6:.1f} MB)")
+    return True
 
 
 def main() -> None:
-    OUT_DIR.mkdir(parents=True, exist_ok=True)
+    RAW_DIR.mkdir(parents=True, exist_ok=True)
+    manifest = load_manifest()
+    before = len(manifest["filings"])
+
+    print("Discovering new filings...")
     for ticker, cik in COMPANIES.items():
-        print(f"\n{ticker} (CIK {cik})")
-        index = get_filings_index(cik)
-        for filing in pick_filings(index):
-            download_filing(cik, filing, ticker)
-            # Stay far below the SEC's 10 req/s limit. Overkill for 12
-            # downloads, but the politeness is built in for when this
-            # becomes an automated pipeline in Phase 6.
+        added = discover(ticker, cik, manifest)
+        if added:
+            for acc in added:
+                e = manifest["filings"][acc]
+                print(f"  + {ticker} {e['form']} filed {e['filing_date']} "
+                      f"(period {e['report_date']})")
+        time.sleep(0.2)   # stay well under the SEC's 10 req/s limit
+
+    save_manifest(manifest)
+
+    print(f"\nManifest: {len(manifest['filings'])} filings "
+          f"({len(manifest['filings']) - before} new)")
+
+    print("\nDownloading missing files...")
+    fetched = 0
+    for entry in manifest["filings"].values():
+        if download(entry):
+            fetched += 1
             time.sleep(0.2)
+
+    print(f"{fetched} downloaded, "
+          f"{len(manifest['filings']) - fetched} already present.")
 
 
 if __name__ == "__main__":
