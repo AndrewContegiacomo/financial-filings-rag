@@ -4,3 +4,4 @@ data/processed/query_analysis_cache.json
 .DS_Store
 .venv/
 __pycache__/
+notes.md
