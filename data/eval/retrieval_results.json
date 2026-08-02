@@ -20,21 +20,21 @@
         "n": 82
       },
       "keyword+rule_filter": {
-        "hit_rate@1": 0.244,
-        "mrr@1": 0.244,
-        "hit_rate@5": 0.415,
-        "mrr@5": 0.305,
-        "hit_rate@10": 0.561,
-        "mrr@10": 0.327,
+        "hit_rate@1": 0.195,
+        "mrr@1": 0.195,
+        "hit_rate@5": 0.378,
+        "mrr@5": 0.259,
+        "hit_rate@10": 0.5,
+        "mrr@10": 0.277,
         "n": 82
       },
       "vector+rule_filter": {
-        "hit_rate@1": 0.085,
-        "mrr@1": 0.085,
-        "hit_rate@5": 0.207,
-        "mrr@5": 0.13,
-        "hit_rate@10": 0.378,
-        "mrr@10": 0.154,
+        "hit_rate@1": 0.11,
+        "mrr@1": 0.11,
+        "hit_rate@5": 0.244,
+        "mrr@5": 0.152,
+        "hit_rate@10": 0.305,
+        "mrr@10": 0.16,
         "n": 82
       },
       "keyword+oracle_filter": {
@@ -65,21 +65,21 @@
         "n": 82
       },
       "hybrid+rule_filter": {
-        "hit_rate@1": 0.146,
-        "mrr@1": 0.146,
-        "hit_rate@5": 0.39,
-        "mrr@5": 0.239,
-        "hit_rate@10": 0.476,
-        "mrr@10": 0.249,
+        "hit_rate@1": 0.134,
+        "mrr@1": 0.134,
+        "hit_rate@5": 0.317,
+        "mrr@5": 0.207,
+        "hit_rate@10": 0.415,
+        "mrr@10": 0.22,
         "n": 82
       },
       "hybrid_vw+rule_filter": {
         "hit_rate@1": 0.122,
         "mrr@1": 0.122,
-        "hit_rate@5": 0.329,
-        "mrr@5": 0.198,
-        "hit_rate@10": 0.402,
-        "mrr@10": 0.206,
+        "hit_rate@5": 0.268,
+        "mrr@5": 0.181,
+        "hit_rate@10": 0.329,
+        "mrr@10": 0.188,
         "n": 82
       },
       "vector+llm_filter": {
@@ -92,12 +92,12 @@
         "n": 82
       },
       "vector+rule_filter+rewrite": {
-        "hit_rate@1": 0.073,
-        "mrr@1": 0.073,
-        "hit_rate@5": 0.268,
-        "mrr@5": 0.141,
-        "hit_rate@10": 0.341,
-        "mrr@10": 0.151,
+        "hit_rate@1": 0.085,
+        "mrr@1": 0.085,
+        "hit_rate@5": 0.256,
+        "mrr@5": 0.145,
+        "hit_rate@10": 0.354,
+        "mrr@10": 0.157,
         "n": 82
       },
       "vector+llm_filter+rewrite": {
@@ -110,30 +110,30 @@
         "n": 82
       },
       "vector+rule_filter_on_rewrite": {
-        "hit_rate@1": 0.073,
-        "mrr@1": 0.073,
-        "hit_rate@5": 0.28,
-        "mrr@5": 0.144,
-        "hit_rate@10": 0.341,
-        "mrr@10": 0.153,
-        "n": 82
-      },
-      "vector+rule_filter+rerank": {
-        "hit_rate@1": 0.11,
-        "mrr@1": 0.11,
-        "hit_rate@5": 0.28,
-        "mrr@5": 0.18,
-        "hit_rate@10": 0.354,
-        "mrr@10": 0.191,
-        "n": 82
-      },
-      "augmented+rule_filter": {
         "hit_rate@1": 0.085,
         "mrr@1": 0.085,
         "hit_rate@5": 0.256,
-        "mrr@5": 0.143,
-        "hit_rate@10": 0.476,
-        "mrr@10": 0.172,
+        "mrr@5": 0.148,
+        "hit_rate@10": 0.354,
+        "mrr@10": 0.16,
+        "n": 82
+      },
+      "vector+rule_filter+rerank": {
+        "hit_rate@1": 0.085,
+        "mrr@1": 0.085,
+        "hit_rate@5": 0.232,
+        "mrr@5": 0.14,
+        "hit_rate@10": 0.293,
+        "mrr@10": 0.149,
+        "n": 82
+      },
+      "augmented+rule_filter": {
+        "hit_rate@1": 0.11,
+        "mrr@1": 0.11,
+        "hit_rate@5": 0.305,
+        "mrr@5": 0.166,
+        "hit_rate@10": 0.439,
+        "mrr@10": 0.183,
         "n": 82
       }
     },
@@ -160,19 +160,19 @@
         "keyword+rule_filter": {
           "hit_rate@1": 0.205,
           "mrr@1": 0.205,
-          "hit_rate@5": 0.41,
-          "mrr@5": 0.274,
+          "hit_rate@5": 0.436,
+          "mrr@5": 0.288,
           "hit_rate@10": 0.538,
-          "mrr@10": 0.295,
+          "mrr@10": 0.304,
           "n": 39
         },
         "vector+rule_filter": {
-          "hit_rate@1": 0.051,
-          "mrr@1": 0.051,
-          "hit_rate@5": 0.179,
-          "mrr@5": 0.097,
+          "hit_rate@1": 0.103,
+          "mrr@1": 0.103,
+          "hit_rate@5": 0.231,
+          "mrr@5": 0.15,
           "hit_rate@10": 0.256,
-          "mrr@10": 0.109,
+          "mrr@10": 0.154,
           "n": 39
         },
         "keyword+oracle_filter": {
@@ -203,21 +203,21 @@
           "n": 39
         },
         "hybrid+rule_filter": {
-          "hit_rate@1": 0.103,
-          "mrr@1": 0.103,
+          "hit_rate@1": 0.128,
+          "mrr@1": 0.128,
           "hit_rate@5": 0.333,
-          "mrr@5": 0.193,
+          "mrr@5": 0.209,
           "hit_rate@10": 0.462,
-          "mrr@10": 0.209,
+          "mrr@10": 0.227,
           "n": 39
         },
         "hybrid_vw+rule_filter": {
-          "hit_rate@1": 0.103,
-          "mrr@1": 0.103,
-          "hit_rate@5": 0.256,
-          "mrr@5": 0.163,
+          "hit_rate@1": 0.128,
+          "mrr@1": 0.128,
+          "hit_rate@5": 0.282,
+          "mrr@5": 0.188,
           "hit_rate@10": 0.308,
-          "mrr@10": 0.169,
+          "mrr@10": 0.191,
           "n": 39
         },
         "vector+llm_filter": {
@@ -233,9 +233,9 @@
           "hit_rate@1": 0.051,
           "mrr@1": 0.051,
           "hit_rate@5": 0.231,
-          "mrr@5": 0.105,
-          "hit_rate@10": 0.282,
-          "mrr@10": 0.113,
+          "mrr@5": 0.126,
+          "hit_rate@10": 0.333,
+          "mrr@10": 0.14,
           "n": 39
         },
         "vector+llm_filter+rewrite": {
@@ -251,27 +251,27 @@
           "hit_rate@1": 0.051,
           "mrr@1": 0.051,
           "hit_rate@5": 0.231,
-          "mrr@5": 0.105,
-          "hit_rate@10": 0.282,
-          "mrr@10": 0.113,
+          "mrr@5": 0.126,
+          "hit_rate@10": 0.333,
+          "mrr@10": 0.14,
           "n": 39
         },
         "vector+rule_filter+rerank": {
           "hit_rate@1": 0.103,
           "mrr@1": 0.103,
           "hit_rate@5": 0.231,
-          "mrr@5": 0.156,
+          "mrr@5": 0.158,
           "hit_rate@10": 0.282,
-          "mrr@10": 0.165,
+          "mrr@10": 0.167,
           "n": 39
         },
         "augmented+rule_filter": {
-          "hit_rate@1": 0.051,
-          "mrr@1": 0.051,
-          "hit_rate@5": 0.282,
-          "mrr@5": 0.124,
-          "hit_rate@10": 0.436,
-          "mrr@10": 0.145,
+          "hit_rate@1": 0.103,
+          "mrr@1": 0.103,
+          "hit_rate@5": 0.359,
+          "mrr@5": 0.18,
+          "hit_rate@10": 0.487,
+          "mrr@10": 0.196,
           "n": 39
         }
       },
@@ -295,21 +295,21 @@
           "n": 42
         },
         "keyword+rule_filter": {
-          "hit_rate@1": 0.286,
-          "mrr@1": 0.286,
-          "hit_rate@5": 0.429,
-          "mrr@5": 0.34,
-          "hit_rate@10": 0.595,
-          "mrr@10": 0.364,
+          "hit_rate@1": 0.19,
+          "mrr@1": 0.19,
+          "hit_rate@5": 0.333,
+          "mrr@5": 0.239,
+          "hit_rate@10": 0.476,
+          "mrr@10": 0.259,
           "n": 42
         },
         "vector+rule_filter": {
           "hit_rate@1": 0.119,
           "mrr@1": 0.119,
           "hit_rate@5": 0.238,
-          "mrr@5": 0.163,
-          "hit_rate@10": 0.476,
-          "mrr@10": 0.195,
+          "mrr@5": 0.152,
+          "hit_rate@10": 0.333,
+          "mrr@10": 0.164,
           "n": 42
         },
         "keyword+oracle_filter": {
@@ -340,21 +340,21 @@
           "n": 42
         },
         "hybrid+rule_filter": {
-          "hit_rate@1": 0.19,
-          "mrr@1": 0.19,
-          "hit_rate@5": 0.452,
-          "mrr@5": 0.287,
-          "hit_rate@10": 0.5,
-          "mrr@10": 0.291,
+          "hit_rate@1": 0.143,
+          "mrr@1": 0.143,
+          "hit_rate@5": 0.31,
+          "mrr@5": 0.209,
+          "hit_rate@10": 0.381,
+          "mrr@10": 0.219,
           "n": 42
         },
         "hybrid_vw+rule_filter": {
-          "hit_rate@1": 0.143,
-          "mrr@1": 0.143,
-          "hit_rate@5": 0.405,
-          "mrr@5": 0.235,
-          "hit_rate@10": 0.5,
-          "mrr@10": 0.246,
+          "hit_rate@1": 0.119,
+          "mrr@1": 0.119,
+          "hit_rate@5": 0.262,
+          "mrr@5": 0.179,
+          "hit_rate@10": 0.357,
+          "mrr@10": 0.19,
           "n": 42
         },
         "vector+llm_filter": {
@@ -367,12 +367,12 @@
           "n": 42
         },
         "vector+rule_filter+rewrite": {
-          "hit_rate@1": 0.095,
-          "mrr@1": 0.095,
-          "hit_rate@5": 0.31,
-          "mrr@5": 0.178,
-          "hit_rate@10": 0.381,
-          "mrr@10": 0.186,
+          "hit_rate@1": 0.119,
+          "mrr@1": 0.119,
+          "hit_rate@5": 0.262,
+          "mrr@5": 0.16,
+          "hit_rate@10": 0.357,
+          "mrr@10": 0.17,
           "n": 42
         },
         "vector+llm_filter+rewrite": {
@@ -385,30 +385,30 @@
           "n": 42
         },
         "vector+rule_filter_on_rewrite": {
-          "hit_rate@1": 0.095,
-          "mrr@1": 0.095,
-          "hit_rate@5": 0.333,
-          "mrr@5": 0.184,
-          "hit_rate@10": 0.381,
-          "mrr@10": 0.189,
+          "hit_rate@1": 0.119,
+          "mrr@1": 0.119,
+          "hit_rate@5": 0.262,
+          "mrr@5": 0.166,
+          "hit_rate@10": 0.357,
+          "mrr@10": 0.176,
           "n": 42
         },
         "vector+rule_filter+rerank": {
-          "hit_rate@1": 0.119,
-          "mrr@1": 0.119,
-          "hit_rate@5": 0.333,
-          "mrr@5": 0.207,
-          "hit_rate@10": 0.405,
-          "mrr@10": 0.217,
+          "hit_rate@1": 0.071,
+          "mrr@1": 0.071,
+          "hit_rate@5": 0.214,
+          "mrr@5": 0.122,
+          "hit_rate@10": 0.286,
+          "mrr@10": 0.131,
           "n": 42
         },
         "augmented+rule_filter": {
           "hit_rate@1": 0.119,
           "mrr@1": 0.119,
           "hit_rate@5": 0.238,
-          "mrr@5": 0.165,
-          "hit_rate@10": 0.5,
-          "mrr@10": 0.198,
+          "mrr@5": 0.152,
+          "hit_rate@10": 0.381,
+          "mrr@10": 0.17,
           "n": 42
         }
       },
@@ -443,10 +443,10 @@
         "vector+rule_filter": {
           "hit_rate@1": 0.0,
           "mrr@1": 0.0,
-          "hit_rate@5": 0.0,
-          "mrr@5": 0.0,
+          "hit_rate@5": 1.0,
+          "mrr@5": 0.25,
           "hit_rate@10": 1.0,
-          "mrr@10": 0.167,
+          "mrr@10": 0.25,
           "n": 1
         },
         "keyword+oracle_filter": {
@@ -506,10 +506,10 @@
         "vector+rule_filter+rewrite": {
           "hit_rate@1": 0.0,
           "mrr@1": 0.0,
-          "hit_rate@5": 0.0,
-          "mrr@5": 0.0,
+          "hit_rate@5": 1.0,
+          "mrr@5": 0.25,
           "hit_rate@10": 1.0,
-          "mrr@10": 0.167,
+          "mrr@10": 0.25,
           "n": 1
         },
         "vector+llm_filter+rewrite": {
@@ -524,28 +524,28 @@
         "vector+rule_filter_on_rewrite": {
           "hit_rate@1": 0.0,
           "mrr@1": 0.0,
-          "hit_rate@5": 0.0,
-          "mrr@5": 0.0,
+          "hit_rate@5": 1.0,
+          "mrr@5": 0.25,
           "hit_rate@10": 1.0,
-          "mrr@10": 0.167,
+          "mrr@10": 0.25,
           "n": 1
         },
         "vector+rule_filter+rerank": {
           "hit_rate@1": 0.0,
           "mrr@1": 0.0,
-          "hit_rate@5": 0.0,
-          "mrr@5": 0.0,
+          "hit_rate@5": 1.0,
+          "mrr@5": 0.2,
           "hit_rate@10": 1.0,
-          "mrr@10": 0.143,
+          "mrr@10": 0.2,
           "n": 1
         },
         "augmented+rule_filter": {
           "hit_rate@1": 0.0,
           "mrr@1": 0.0,
-          "hit_rate@5": 0.0,
-          "mrr@5": 0.0,
+          "hit_rate@5": 1.0,
+          "mrr@5": 0.2,
           "hit_rate@10": 1.0,
-          "mrr@10": 0.125,
+          "mrr@10": 0.2,
           "n": 1
         }
       }
@@ -571,21 +571,21 @@
           "n": 72
         },
         "keyword+rule_filter": {
-          "hit_rate@1": 0.278,
-          "mrr@1": 0.278,
-          "hit_rate@5": 0.458,
-          "mrr@5": 0.342,
-          "hit_rate@10": 0.611,
-          "mrr@10": 0.365,
+          "hit_rate@1": 0.222,
+          "mrr@1": 0.222,
+          "hit_rate@5": 0.403,
+          "mrr@5": 0.288,
+          "hit_rate@10": 0.542,
+          "mrr@10": 0.308,
           "n": 72
         },
         "vector+rule_filter": {
-          "hit_rate@1": 0.097,
-          "mrr@1": 0.097,
-          "hit_rate@5": 0.222,
-          "mrr@5": 0.143,
-          "hit_rate@10": 0.361,
-          "mrr@10": 0.162,
+          "hit_rate@1": 0.125,
+          "mrr@1": 0.125,
+          "hit_rate@5": 0.236,
+          "mrr@5": 0.158,
+          "hit_rate@10": 0.278,
+          "mrr@10": 0.163,
           "n": 72
         },
         "keyword+oracle_filter": {
@@ -616,21 +616,21 @@
           "n": 72
         },
         "hybrid+rule_filter": {
-          "hit_rate@1": 0.153,
-          "mrr@1": 0.153,
-          "hit_rate@5": 0.417,
-          "mrr@5": 0.253,
-          "hit_rate@10": 0.514,
-          "mrr@10": 0.265,
+          "hit_rate@1": 0.139,
+          "mrr@1": 0.139,
+          "hit_rate@5": 0.333,
+          "mrr@5": 0.217,
+          "hit_rate@10": 0.444,
+          "mrr@10": 0.232,
           "n": 72
         },
         "hybrid_vw+rule_filter": {
           "hit_rate@1": 0.139,
           "mrr@1": 0.139,
-          "hit_rate@5": 0.347,
-          "mrr@5": 0.211,
-          "hit_rate@10": 0.403,
-          "mrr@10": 0.218,
+          "hit_rate@5": 0.264,
+          "mrr@5": 0.189,
+          "hit_rate@10": 0.319,
+          "mrr@10": 0.196,
           "n": 72
         },
         "vector+llm_filter": {
@@ -643,11 +643,11 @@
           "n": 72
         },
         "vector+rule_filter+rewrite": {
-          "hit_rate@1": 0.083,
-          "mrr@1": 0.083,
-          "hit_rate@5": 0.25,
-          "mrr@5": 0.144,
-          "hit_rate@10": 0.292,
+          "hit_rate@1": 0.097,
+          "mrr@1": 0.097,
+          "hit_rate@5": 0.222,
+          "mrr@5": 0.141,
+          "hit_rate@10": 0.306,
           "mrr@10": 0.149,
           "n": 72
         },
@@ -661,30 +661,30 @@
           "n": 72
         },
         "vector+rule_filter_on_rewrite": {
-          "hit_rate@1": 0.083,
-          "mrr@1": 0.083,
-          "hit_rate@5": 0.264,
-          "mrr@5": 0.147,
-          "hit_rate@10": 0.292,
-          "mrr@10": 0.15,
+          "hit_rate@1": 0.097,
+          "mrr@1": 0.097,
+          "hit_rate@5": 0.222,
+          "mrr@5": 0.144,
+          "hit_rate@10": 0.306,
+          "mrr@10": 0.153,
           "n": 72
         },
         "vector+rule_filter+rerank": {
-          "hit_rate@1": 0.125,
-          "mrr@1": 0.125,
-          "hit_rate@5": 0.306,
-          "mrr@5": 0.198,
-          "hit_rate@10": 0.347,
-          "mrr@10": 0.204,
+          "hit_rate@1": 0.097,
+          "mrr@1": 0.097,
+          "hit_rate@5": 0.236,
+          "mrr@5": 0.15,
+          "hit_rate@10": 0.278,
+          "mrr@10": 0.155,
           "n": 72
         },
         "augmented+rule_filter": {
-          "hit_rate@1": 0.097,
-          "mrr@1": 0.097,
-          "hit_rate@5": 0.264,
-          "mrr@5": 0.155,
-          "hit_rate@10": 0.458,
-          "mrr@10": 0.181,
+          "hit_rate@1": 0.125,
+          "mrr@1": 0.125,
+          "hit_rate@5": 0.292,
+          "mrr@5": 0.171,
+          "hit_rate@10": 0.417,
+          "mrr@10": 0.187,
           "n": 72
         }
       },
@@ -710,19 +710,19 @@
         "keyword+rule_filter": {
           "hit_rate@1": 0.0,
           "mrr@1": 0.0,
-          "hit_rate@5": 0.1,
-          "mrr@5": 0.033,
+          "hit_rate@5": 0.2,
+          "mrr@5": 0.053,
           "hit_rate@10": 0.2,
-          "mrr@10": 0.048,
+          "mrr@10": 0.053,
           "n": 10
         },
         "vector+rule_filter": {
           "hit_rate@1": 0.0,
           "mrr@1": 0.0,
-          "hit_rate@5": 0.1,
-          "mrr@5": 0.033,
+          "hit_rate@5": 0.3,
+          "mrr@5": 0.108,
           "hit_rate@10": 0.5,
-          "mrr@10": 0.098,
+          "mrr@10": 0.142,
           "n": 10
         },
         "keyword+oracle_filter": {
@@ -764,10 +764,10 @@
         "hybrid_vw+rule_filter": {
           "hit_rate@1": 0.0,
           "mrr@1": 0.0,
-          "hit_rate@5": 0.2,
-          "mrr@5": 0.1,
+          "hit_rate@5": 0.3,
+          "mrr@5": 0.125,
           "hit_rate@10": 0.4,
-          "mrr@10": 0.123,
+          "mrr@10": 0.135,
           "n": 10
         },
         "vector+llm_filter": {
@@ -782,10 +782,10 @@
         "vector+rule_filter+rewrite": {
           "hit_rate@1": 0.0,
           "mrr@1": 0.0,
-          "hit_rate@5": 0.4,
-          "mrr@5": 0.123,
+          "hit_rate@5": 0.5,
+          "mrr@5": 0.178,
           "hit_rate@10": 0.7,
-          "mrr@10": 0.171,
+          "mrr@10": 0.212,
           "n": 10
         },
         "vector+llm_filter+rewrite": {
@@ -800,28 +800,28 @@
         "vector+rule_filter_on_rewrite": {
           "hit_rate@1": 0.0,
           "mrr@1": 0.0,
-          "hit_rate@5": 0.4,
-          "mrr@5": 0.123,
+          "hit_rate@5": 0.5,
+          "mrr@5": 0.178,
           "hit_rate@10": 0.7,
-          "mrr@10": 0.171,
+          "mrr@10": 0.212,
           "n": 10
         },
         "vector+rule_filter+rerank": {
           "hit_rate@1": 0.0,
           "mrr@1": 0.0,
-          "hit_rate@5": 0.1,
-          "mrr@5": 0.05,
+          "hit_rate@5": 0.2,
+          "mrr@5": 0.07,
           "hit_rate@10": 0.4,
-          "mrr@10": 0.098,
+          "mrr@10": 0.103,
           "n": 10
         },
         "augmented+rule_filter": {
           "hit_rate@1": 0.0,
           "mrr@1": 0.0,
-          "hit_rate@5": 0.2,
-          "mrr@5": 0.058,
+          "hit_rate@5": 0.4,
+          "mrr@5": 0.128,
           "hit_rate@10": 0.6,
-          "mrr@10": 0.107,
+          "mrr@10": 0.153,
           "n": 10
         }
       }
@@ -849,19 +849,19 @@
         "keyword+rule_filter": {
           "hit_rate@1": 0.174,
           "mrr@1": 0.174,
-          "hit_rate@5": 0.391,
-          "mrr@5": 0.254,
+          "hit_rate@5": 0.435,
+          "mrr@5": 0.259,
           "hit_rate@10": 0.565,
-          "mrr@10": 0.28,
+          "mrr@10": 0.279,
           "n": 23
         },
         "vector+rule_filter": {
-          "hit_rate@1": 0.043,
-          "mrr@1": 0.043,
-          "hit_rate@5": 0.174,
-          "mrr@5": 0.096,
+          "hit_rate@1": 0.13,
+          "mrr@1": 0.13,
+          "hit_rate@5": 0.261,
+          "mrr@5": 0.174,
           "hit_rate@10": 0.348,
-          "mrr@10": 0.12,
+          "mrr@10": 0.186,
           "n": 23
         },
         "keyword+oracle_filter": {
@@ -892,21 +892,21 @@
           "n": 23
         },
         "hybrid+rule_filter": {
-          "hit_rate@1": 0.087,
-          "mrr@1": 0.087,
+          "hit_rate@1": 0.13,
+          "mrr@1": 0.13,
           "hit_rate@5": 0.348,
-          "mrr@5": 0.181,
+          "mrr@5": 0.228,
           "hit_rate@10": 0.435,
-          "mrr@10": 0.19,
+          "mrr@10": 0.239,
           "n": 23
         },
         "hybrid_vw+rule_filter": {
-          "hit_rate@1": 0.13,
-          "mrr@1": 0.13,
+          "hit_rate@1": 0.174,
+          "mrr@1": 0.174,
           "hit_rate@5": 0.304,
-          "mrr@5": 0.19,
+          "mrr@5": 0.232,
           "hit_rate@10": 0.435,
-          "mrr@10": 0.205,
+          "mrr@10": 0.247,
           "n": 23
         },
         "vector+llm_filter": {
@@ -919,12 +919,12 @@
           "n": 23
         },
         "vector+rule_filter+rewrite": {
-          "hit_rate@1": 0.087,
-          "mrr@1": 0.087,
-          "hit_rate@5": 0.304,
-          "mrr@5": 0.162,
-          "hit_rate@10": 0.391,
-          "mrr@10": 0.174,
+          "hit_rate@1": 0.13,
+          "mrr@1": 0.13,
+          "hit_rate@5": 0.348,
+          "mrr@5": 0.206,
+          "hit_rate@10": 0.435,
+          "mrr@10": 0.217,
           "n": 23
         },
         "vector+llm_filter+rewrite": {
@@ -937,30 +937,30 @@
           "n": 23
         },
         "vector+rule_filter_on_rewrite": {
-          "hit_rate@1": 0.087,
-          "mrr@1": 0.087,
-          "hit_rate@5": 0.304,
-          "mrr@5": 0.162,
-          "hit_rate@10": 0.391,
-          "mrr@10": 0.174,
+          "hit_rate@1": 0.13,
+          "mrr@1": 0.13,
+          "hit_rate@5": 0.348,
+          "mrr@5": 0.206,
+          "hit_rate@10": 0.435,
+          "mrr@10": 0.217,
           "n": 23
         },
         "vector+rule_filter+rerank": {
           "hit_rate@1": 0.087,
           "mrr@1": 0.087,
           "hit_rate@5": 0.261,
-          "mrr@5": 0.15,
+          "mrr@5": 0.159,
           "hit_rate@10": 0.304,
-          "mrr@10": 0.157,
+          "mrr@10": 0.167,
           "n": 23
         },
         "augmented+rule_filter": {
-          "hit_rate@1": 0.043,
-          "mrr@1": 0.043,
-          "hit_rate@5": 0.174,
-          "mrr@5": 0.098,
-          "hit_rate@10": 0.478,
-          "mrr@10": 0.138,
+          "hit_rate@1": 0.13,
+          "mrr@1": 0.13,
+          "hit_rate@5": 0.304,
+          "mrr@5": 0.18,
+          "hit_rate@10": 0.435,
+          "mrr@10": 0.196,
           "n": 23
         }
       },
@@ -984,21 +984,21 @@
           "n": 19
         },
         "keyword+rule_filter": {
-          "hit_rate@1": 0.211,
-          "mrr@1": 0.211,
-          "hit_rate@5": 0.421,
-          "mrr@5": 0.274,
-          "hit_rate@10": 0.684,
-          "mrr@10": 0.314,
+          "hit_rate@1": 0.105,
+          "mrr@1": 0.105,
+          "hit_rate@5": 0.368,
+          "mrr@5": 0.199,
+          "hit_rate@10": 0.632,
+          "mrr@10": 0.237,
           "n": 19
         },
         "vector+rule_filter": {
-          "hit_rate@1": 0.053,
-          "mrr@1": 0.053,
-          "hit_rate@5": 0.105,
-          "mrr@5": 0.07,
-          "hit_rate@10": 0.158,
-          "mrr@10": 0.078,
+          "hit_rate@1": 0.0,
+          "mrr@1": 0.0,
+          "hit_rate@5": 0.053,
+          "mrr@5": 0.018,
+          "hit_rate@10": 0.053,
+          "mrr@10": 0.018,
           "n": 19
         },
         "keyword+oracle_filter": {
@@ -1029,21 +1029,21 @@
           "n": 19
         },
         "hybrid+rule_filter": {
-          "hit_rate@1": 0.105,
-          "mrr@1": 0.105,
-          "hit_rate@5": 0.316,
-          "mrr@5": 0.182,
-          "hit_rate@10": 0.474,
-          "mrr@10": 0.199,
+          "hit_rate@1": 0.053,
+          "mrr@1": 0.053,
+          "hit_rate@5": 0.211,
+          "mrr@5": 0.103,
+          "hit_rate@10": 0.316,
+          "mrr@10": 0.12,
           "n": 19
         },
         "hybrid_vw+rule_filter": {
-          "hit_rate@1": 0.105,
-          "mrr@1": 0.105,
-          "hit_rate@5": 0.211,
-          "mrr@5": 0.133,
-          "hit_rate@10": 0.211,
-          "mrr@10": 0.133,
+          "hit_rate@1": 0.053,
+          "mrr@1": 0.053,
+          "hit_rate@5": 0.105,
+          "mrr@5": 0.066,
+          "hit_rate@10": 0.105,
+          "mrr@10": 0.066,
           "n": 19
         },
         "vector+llm_filter": {
@@ -1056,12 +1056,12 @@
           "n": 19
         },
         "vector+rule_filter+rewrite": {
-          "hit_rate@1": 0.053,
-          "mrr@1": 0.053,
-          "hit_rate@5": 0.105,
-          "mrr@5": 0.07,
+          "hit_rate@1": 0.0,
+          "mrr@1": 0.0,
+          "hit_rate@5": 0.053,
+          "mrr@5": 0.018,
           "hit_rate@10": 0.105,
-          "mrr@10": 0.07,
+          "mrr@10": 0.023,
           "n": 19
         },
         "vector+llm_filter+rewrite": {
@@ -1074,30 +1074,30 @@
           "n": 19
         },
         "vector+rule_filter_on_rewrite": {
-          "hit_rate@1": 0.053,
-          "mrr@1": 0.053,
-          "hit_rate@5": 0.105,
-          "mrr@5": 0.07,
+          "hit_rate@1": 0.0,
+          "mrr@1": 0.0,
+          "hit_rate@5": 0.053,
+          "mrr@5": 0.018,
           "hit_rate@10": 0.105,
-          "mrr@10": 0.07,
+          "mrr@10": 0.023,
           "n": 19
         },
         "vector+rule_filter+rerank": {
-          "hit_rate@1": 0.053,
-          "mrr@1": 0.053,
-          "hit_rate@5": 0.211,
-          "mrr@5": 0.105,
-          "hit_rate@10": 0.211,
-          "mrr@10": 0.105,
+          "hit_rate@1": 0.0,
+          "mrr@1": 0.0,
+          "hit_rate@5": 0.105,
+          "mrr@5": 0.031,
+          "hit_rate@10": 0.105,
+          "mrr@10": 0.031,
           "n": 19
         },
         "augmented+rule_filter": {
-          "hit_rate@1": 0.053,
-          "mrr@1": 0.053,
-          "hit_rate@5": 0.263,
-          "mrr@5": 0.11,
+          "hit_rate@1": 0.0,
+          "mrr@1": 0.0,
+          "hit_rate@5": 0.211,
+          "mrr@5": 0.057,
           "hit_rate@10": 0.316,
-          "mrr@10": 0.116,
+          "mrr@10": 0.07,
           "n": 19
         }
       },
@@ -1124,18 +1124,18 @@
           "hit_rate@1": 0.19,
           "mrr@1": 0.19,
           "hit_rate@5": 0.333,
-          "mrr@5": 0.236,
-          "hit_rate@10": 0.429,
-          "mrr@10": 0.248,
+          "mrr@5": 0.24,
+          "hit_rate@10": 0.381,
+          "mrr@10": 0.246,
           "n": 21
         },
         "vector+rule_filter": {
-          "hit_rate@1": 0.095,
-          "mrr@1": 0.095,
-          "hit_rate@5": 0.19,
-          "mrr@5": 0.135,
+          "hit_rate@1": 0.143,
+          "mrr@1": 0.143,
+          "hit_rate@5": 0.381,
+          "mrr@5": 0.216,
           "hit_rate@10": 0.524,
-          "mrr@10": 0.18,
+          "mrr@10": 0.235,
           "n": 21
         },
         "keyword+oracle_filter": {
@@ -1168,19 +1168,19 @@
         "hybrid+rule_filter": {
           "hit_rate@1": 0.19,
           "mrr@1": 0.19,
-          "hit_rate@5": 0.381,
-          "mrr@5": 0.258,
-          "hit_rate@10": 0.429,
-          "mrr@10": 0.263,
+          "hit_rate@5": 0.333,
+          "mrr@5": 0.262,
+          "hit_rate@10": 0.476,
+          "mrr@10": 0.282,
           "n": 21
         },
         "hybrid_vw+rule_filter": {
           "hit_rate@1": 0.095,
           "mrr@1": 0.095,
           "hit_rate@5": 0.381,
-          "mrr@5": 0.198,
+          "mrr@5": 0.21,
           "hit_rate@10": 0.476,
-          "mrr@10": 0.208,
+          "mrr@10": 0.222,
           "n": 21
         },
         "vector+llm_filter": {
@@ -1193,12 +1193,12 @@
           "n": 21
         },
         "vector+rule_filter+rewrite": {
-          "hit_rate@1": 0.0,
-          "mrr@1": 0.0,
-          "hit_rate@5": 0.238,
-          "mrr@5": 0.075,
-          "hit_rate@10": 0.429,
-          "mrr@10": 0.101,
+          "hit_rate@1": 0.048,
+          "mrr@1": 0.048,
+          "hit_rate@5": 0.333,
+          "mrr@5": 0.147,
+          "hit_rate@10": 0.524,
+          "mrr@10": 0.17,
           "n": 21
         },
         "vector+llm_filter+rewrite": {
@@ -1211,30 +1211,30 @@
           "n": 21
         },
         "vector+rule_filter_on_rewrite": {
-          "hit_rate@1": 0.0,
-          "mrr@1": 0.0,
-          "hit_rate@5": 0.286,
-          "mrr@5": 0.087,
-          "hit_rate@10": 0.429,
-          "mrr@10": 0.106,
+          "hit_rate@1": 0.048,
+          "mrr@1": 0.048,
+          "hit_rate@5": 0.333,
+          "mrr@5": 0.159,
+          "hit_rate@10": 0.524,
+          "mrr@10": 0.182,
           "n": 21
         },
         "vector+rule_filter+rerank": {
           "hit_rate@1": 0.095,
           "mrr@1": 0.095,
-          "hit_rate@5": 0.238,
-          "mrr@5": 0.159,
+          "hit_rate@5": 0.286,
+          "mrr@5": 0.154,
           "hit_rate@10": 0.476,
-          "mrr@10": 0.193,
+          "mrr@10": 0.181,
           "n": 21
         },
         "augmented+rule_filter": {
-          "hit_rate@1": 0.095,
-          "mrr@1": 0.095,
-          "hit_rate@5": 0.19,
-          "mrr@5": 0.135,
-          "hit_rate@10": 0.476,
-          "mrr@10": 0.169,
+          "hit_rate@1": 0.143,
+          "mrr@1": 0.143,
+          "hit_rate@5": 0.333,
+          "mrr@5": 0.204,
+          "hit_rate@10": 0.571,
+          "mrr@10": 0.235,
           "n": 21
         }
       },
@@ -1258,21 +1258,21 @@
           "n": 19
         },
         "keyword+rule_filter": {
-          "hit_rate@1": 0.421,
-          "mrr@1": 0.421,
-          "hit_rate@5": 0.526,
-          "mrr@5": 0.474,
-          "hit_rate@10": 0.579,
-          "mrr@10": 0.482,
+          "hit_rate@1": 0.316,
+          "mrr@1": 0.316,
+          "hit_rate@5": 0.368,
+          "mrr@5": 0.342,
+          "hit_rate@10": 0.421,
+          "mrr@10": 0.351,
           "n": 19
         },
         "vector+rule_filter": {
           "hit_rate@1": 0.158,
           "mrr@1": 0.158,
-          "hit_rate@5": 0.368,
-          "mrr@5": 0.225,
-          "hit_rate@10": 0.474,
-          "mrr@10": 0.242,
+          "hit_rate@5": 0.263,
+          "mrr@5": 0.189,
+          "hit_rate@10": 0.263,
+          "mrr@10": 0.189,
           "n": 19
         },
         "keyword+oracle_filter": {
@@ -1303,21 +1303,21 @@
           "n": 19
         },
         "hybrid+rule_filter": {
-          "hit_rate@1": 0.211,
-          "mrr@1": 0.211,
-          "hit_rate@5": 0.526,
-          "mrr@5": 0.344,
-          "hit_rate@10": 0.579,
-          "mrr@10": 0.353,
+          "hit_rate@1": 0.158,
+          "mrr@1": 0.158,
+          "hit_rate@5": 0.368,
+          "mrr@5": 0.223,
+          "hit_rate@10": 0.421,
+          "mrr@10": 0.23,
           "n": 19
         },
         "hybrid_vw+rule_filter": {
           "hit_rate@1": 0.158,
           "mrr@1": 0.158,
-          "hit_rate@5": 0.421,
-          "mrr@5": 0.272,
-          "hit_rate@10": 0.474,
-          "mrr@10": 0.279,
+          "hit_rate@5": 0.263,
+          "mrr@5": 0.202,
+          "hit_rate@10": 0.263,
+          "mrr@10": 0.202,
           "n": 19
         },
         "vector+llm_filter": {
@@ -1332,10 +1332,10 @@
         "vector+rule_filter+rewrite": {
           "hit_rate@1": 0.158,
           "mrr@1": 0.158,
-          "hit_rate@5": 0.421,
-          "mrr@5": 0.261,
-          "hit_rate@10": 0.421,
-          "mrr@10": 0.261,
+          "hit_rate@5": 0.263,
+          "mrr@5": 0.197,
+          "hit_rate@10": 0.316,
+          "mrr@10": 0.203,
           "n": 19
         },
         "vector+llm_filter+rewrite": {
@@ -1350,28 +1350,28 @@
         "vector+rule_filter_on_rewrite": {
           "hit_rate@1": 0.158,
           "mrr@1": 0.158,
-          "hit_rate@5": 0.421,
-          "mrr@5": 0.261,
-          "hit_rate@10": 0.421,
-          "mrr@10": 0.261,
+          "hit_rate@5": 0.263,
+          "mrr@5": 0.197,
+          "hit_rate@10": 0.316,
+          "mrr@10": 0.203,
           "n": 19
         },
         "vector+rule_filter+rerank": {
-          "hit_rate@1": 0.211,
-          "mrr@1": 0.211,
-          "hit_rate@5": 0.421,
-          "mrr@5": 0.316,
-          "hit_rate@10": 0.421,
-          "mrr@10": 0.316,
+          "hit_rate@1": 0.158,
+          "mrr@1": 0.158,
+          "hit_rate@5": 0.263,
+          "mrr@5": 0.211,
+          "hit_rate@10": 0.263,
+          "mrr@10": 0.211,
           "n": 19
         },
         "augmented+rule_filter": {
           "hit_rate@1": 0.158,
           "mrr@1": 0.158,
-          "hit_rate@5": 0.421,
-          "mrr@5": 0.241,
-          "hit_rate@10": 0.632,
-          "mrr@10": 0.271,
+          "hit_rate@5": 0.368,
+          "mrr@5": 0.215,
+          "hit_rate@10": 0.421,
+          "mrr@10": 0.222,
           "n": 19
         }
       }
@@ -1397,21 +1397,21 @@
           "n": 46
         },
         "keyword+rule_filter": {
-          "hit_rate@1": 0.283,
-          "mrr@1": 0.283,
-          "hit_rate@5": 0.457,
-          "mrr@5": 0.336,
-          "hit_rate@10": 0.587,
-          "mrr@10": 0.356,
+          "hit_rate@1": 0.196,
+          "mrr@1": 0.196,
+          "hit_rate@5": 0.391,
+          "mrr@5": 0.262,
+          "hit_rate@10": 0.5,
+          "mrr@10": 0.278,
           "n": 46
         },
         "vector+rule_filter": {
-          "hit_rate@1": 0.065,
-          "mrr@1": 0.065,
-          "hit_rate@5": 0.217,
-          "mrr@5": 0.118,
-          "hit_rate@10": 0.457,
-          "mrr@10": 0.154,
+          "hit_rate@1": 0.087,
+          "mrr@1": 0.087,
+          "hit_rate@5": 0.283,
+          "mrr@5": 0.146,
+          "hit_rate@10": 0.37,
+          "mrr@10": 0.158,
           "n": 46
         },
         "keyword+oracle_filter": {
@@ -1442,21 +1442,21 @@
           "n": 46
         },
         "hybrid+rule_filter": {
-          "hit_rate@1": 0.174,
-          "mrr@1": 0.174,
-          "hit_rate@5": 0.435,
-          "mrr@5": 0.271,
-          "hit_rate@10": 0.522,
-          "mrr@10": 0.28,
+          "hit_rate@1": 0.152,
+          "mrr@1": 0.152,
+          "hit_rate@5": 0.348,
+          "mrr@5": 0.229,
+          "hit_rate@10": 0.457,
+          "mrr@10": 0.244,
           "n": 46
         },
         "hybrid_vw+rule_filter": {
           "hit_rate@1": 0.109,
           "mrr@1": 0.109,
-          "hit_rate@5": 0.37,
-          "mrr@5": 0.209,
-          "hit_rate@10": 0.478,
-          "mrr@10": 0.222,
+          "hit_rate@5": 0.304,
+          "mrr@5": 0.187,
+          "hit_rate@10": 0.391,
+          "mrr@10": 0.197,
           "n": 46
         },
         "vector+llm_filter": {
@@ -1471,10 +1471,10 @@
         "vector+rule_filter+rewrite": {
           "hit_rate@1": 0.065,
           "mrr@1": 0.065,
-          "hit_rate@5": 0.326,
-          "mrr@5": 0.153,
+          "hit_rate@5": 0.304,
+          "mrr@5": 0.149,
           "hit_rate@10": 0.435,
-          "mrr@10": 0.169,
+          "mrr@10": 0.166,
           "n": 46
         },
         "vector+llm_filter+rewrite": {
@@ -1489,28 +1489,28 @@
         "vector+rule_filter_on_rewrite": {
           "hit_rate@1": 0.065,
           "mrr@1": 0.065,
-          "hit_rate@5": 0.348,
-          "mrr@5": 0.159,
+          "hit_rate@5": 0.304,
+          "mrr@5": 0.155,
           "hit_rate@10": 0.435,
           "mrr@10": 0.171,
           "n": 46
         },
         "vector+rule_filter+rerank": {
-          "hit_rate@1": 0.13,
-          "mrr@1": 0.13,
-          "hit_rate@5": 0.283,
-          "mrr@5": 0.197,
-          "hit_rate@10": 0.391,
-          "mrr@10": 0.213,
+          "hit_rate@1": 0.087,
+          "mrr@1": 0.087,
+          "hit_rate@5": 0.239,
+          "mrr@5": 0.145,
+          "hit_rate@10": 0.326,
+          "mrr@10": 0.157,
           "n": 46
         },
         "augmented+rule_filter": {
-          "hit_rate@1": 0.065,
-          "mrr@1": 0.065,
-          "hit_rate@5": 0.261,
-          "mrr@5": 0.13,
-          "hit_rate@10": 0.543,
-          "mrr@10": 0.166,
+          "hit_rate@1": 0.087,
+          "mrr@1": 0.087,
+          "hit_rate@5": 0.326,
+          "mrr@5": 0.155,
+          "hit_rate@10": 0.5,
+          "mrr@10": 0.177,
           "n": 46
         }
       },
@@ -1537,18 +1537,18 @@
           "hit_rate@1": 0.194,
           "mrr@1": 0.194,
           "hit_rate@5": 0.361,
-          "mrr@5": 0.265,
-          "hit_rate@10": 0.528,
-          "mrr@10": 0.289,
+          "mrr@5": 0.256,
+          "hit_rate@10": 0.5,
+          "mrr@10": 0.277,
           "n": 36
         },
         "vector+rule_filter": {
-          "hit_rate@1": 0.111,
-          "mrr@1": 0.111,
+          "hit_rate@1": 0.139,
+          "mrr@1": 0.139,
           "hit_rate@5": 0.194,
-          "mrr@5": 0.144,
-          "hit_rate@10": 0.278,
-          "mrr@10": 0.154,
+          "mrr@5": 0.16,
+          "hit_rate@10": 0.222,
+          "mrr@10": 0.162,
           "n": 36
         },
         "keyword+oracle_filter": {
@@ -1581,19 +1581,19 @@
         "hybrid+rule_filter": {
           "hit_rate@1": 0.111,
           "mrr@1": 0.111,
-          "hit_rate@5": 0.333,
-          "mrr@5": 0.198,
-          "hit_rate@10": 0.417,
-          "mrr@10": 0.208,
+          "hit_rate@5": 0.278,
+          "mrr@5": 0.178,
+          "hit_rate@10": 0.361,
+          "mrr@10": 0.19,
           "n": 36
         },
         "hybrid_vw+rule_filter": {
           "hit_rate@1": 0.139,
           "mrr@1": 0.139,
-          "hit_rate@5": 0.278,
-          "mrr@5": 0.183,
-          "hit_rate@10": 0.306,
-          "mrr@10": 0.186,
+          "hit_rate@5": 0.222,
+          "mrr@5": 0.174,
+          "hit_rate@10": 0.25,
+          "mrr@10": 0.176,
           "n": 36
         },
         "vector+llm_filter": {
@@ -1606,12 +1606,12 @@
           "n": 36
         },
         "vector+rule_filter+rewrite": {
-          "hit_rate@1": 0.083,
-          "mrr@1": 0.083,
+          "hit_rate@1": 0.111,
+          "mrr@1": 0.111,
           "hit_rate@5": 0.194,
-          "mrr@5": 0.126,
-          "hit_rate@10": 0.222,
-          "mrr@10": 0.129,
+          "mrr@5": 0.14,
+          "hit_rate@10": 0.25,
+          "mrr@10": 0.145,
           "n": 36
         },
         "vector+llm_filter+rewrite": {
@@ -1624,30 +1624,30 @@
           "n": 36
         },
         "vector+rule_filter_on_rewrite": {
-          "hit_rate@1": 0.083,
-          "mrr@1": 0.083,
+          "hit_rate@1": 0.111,
+          "mrr@1": 0.111,
           "hit_rate@5": 0.194,
-          "mrr@5": 0.126,
-          "hit_rate@10": 0.222,
-          "mrr@10": 0.129,
+          "mrr@5": 0.14,
+          "hit_rate@10": 0.25,
+          "mrr@10": 0.145,
           "n": 36
         },
         "vector+rule_filter+rerank": {
           "hit_rate@1": 0.083,
           "mrr@1": 0.083,
-          "hit_rate@5": 0.278,
-          "mrr@5": 0.158,
-          "hit_rate@10": 0.306,
-          "mrr@10": 0.163,
+          "hit_rate@5": 0.222,
+          "mrr@5": 0.134,
+          "hit_rate@10": 0.25,
+          "mrr@10": 0.139,
           "n": 36
         },
         "augmented+rule_filter": {
-          "hit_rate@1": 0.111,
-          "mrr@1": 0.111,
-          "hit_rate@5": 0.25,
-          "mrr@5": 0.16,
-          "hit_rate@10": 0.389,
-          "mrr@10": 0.179,
+          "hit_rate@1": 0.139,
+          "mrr@1": 0.139,
+          "hit_rate@5": 0.278,
+          "mrr@5": 0.179,
+          "hit_rate@10": 0.361,
+          "mrr@10": 0.19,
           "n": 36
         }
       }
@@ -1674,21 +1674,21 @@
         "n": 82
       },
       "keyword+rule_filter": {
-        "hit_rate@1": 0.256,
-        "mrr@1": 0.256,
-        "hit_rate@5": 0.427,
-        "mrr@5": 0.317,
-        "hit_rate@10": 0.585,
-        "mrr@10": 0.34,
+        "hit_rate@1": 0.207,
+        "mrr@1": 0.207,
+        "hit_rate@5": 0.39,
+        "mrr@5": 0.272,
+        "hit_rate@10": 0.524,
+        "mrr@10": 0.292,
         "n": 82
       },
       "vector+rule_filter": {
-        "hit_rate@1": 0.134,
-        "mrr@1": 0.134,
-        "hit_rate@5": 0.268,
-        "mrr@5": 0.185,
-        "hit_rate@10": 0.415,
-        "mrr@10": 0.205,
+        "hit_rate@1": 0.159,
+        "mrr@1": 0.159,
+        "hit_rate@5": 0.293,
+        "mrr@5": 0.204,
+        "hit_rate@10": 0.341,
+        "mrr@10": 0.21,
         "n": 82
       },
       "keyword+oracle_filter": {
@@ -1719,21 +1719,21 @@
         "n": 82
       },
       "hybrid+rule_filter": {
-        "hit_rate@1": 0.171,
-        "mrr@1": 0.171,
-        "hit_rate@5": 0.427,
-        "mrr@5": 0.266,
-        "hit_rate@10": 0.524,
-        "mrr@10": 0.278,
+        "hit_rate@1": 0.159,
+        "mrr@1": 0.159,
+        "hit_rate@5": 0.354,
+        "mrr@5": 0.235,
+        "hit_rate@10": 0.463,
+        "mrr@10": 0.251,
         "n": 82
       },
       "hybrid_vw+rule_filter": {
-        "hit_rate@1": 0.159,
-        "mrr@1": 0.159,
-        "hit_rate@5": 0.378,
-        "mrr@5": 0.238,
-        "hit_rate@10": 0.451,
-        "mrr@10": 0.247,
+        "hit_rate@1": 0.146,
+        "mrr@1": 0.146,
+        "hit_rate@5": 0.317,
+        "mrr@5": 0.217,
+        "hit_rate@10": 0.378,
+        "mrr@10": 0.225,
         "n": 82
       },
       "vector+llm_filter": {
@@ -1746,12 +1746,12 @@
         "n": 82
       },
       "vector+rule_filter+rewrite": {
-        "hit_rate@1": 0.11,
-        "mrr@1": 0.11,
-        "hit_rate@5": 0.317,
-        "mrr@5": 0.18,
-        "hit_rate@10": 0.354,
-        "mrr@10": 0.184,
+        "hit_rate@1": 0.122,
+        "mrr@1": 0.122,
+        "hit_rate@5": 0.293,
+        "mrr@5": 0.183,
+        "hit_rate@10": 0.366,
+        "mrr@10": 0.19,
         "n": 82
       },
       "vector+llm_filter+rewrite": {
@@ -1764,30 +1764,30 @@
         "n": 82
       },
       "vector+rule_filter_on_rewrite": {
-        "hit_rate@1": 0.11,
-        "mrr@1": 0.11,
-        "hit_rate@5": 0.329,
-        "mrr@5": 0.183,
-        "hit_rate@10": 0.354,
-        "mrr@10": 0.186,
+        "hit_rate@1": 0.122,
+        "mrr@1": 0.122,
+        "hit_rate@5": 0.293,
+        "mrr@5": 0.186,
+        "hit_rate@10": 0.366,
+        "mrr@10": 0.193,
         "n": 82
       },
       "vector+rule_filter+rerank": {
-        "hit_rate@1": 0.134,
-        "mrr@1": 0.134,
-        "hit_rate@5": 0.341,
-        "mrr@5": 0.219,
-        "hit_rate@10": 0.39,
-        "mrr@10": 0.226,
+        "hit_rate@1": 0.11,
+        "mrr@1": 0.11,
+        "hit_rate@5": 0.28,
+        "mrr@5": 0.178,
+        "hit_rate@10": 0.329,
+        "mrr@10": 0.185,
         "n": 82
       },
       "augmented+rule_filter": {
-        "hit_rate@1": 0.134,
-        "mrr@1": 0.134,
-        "hit_rate@5": 0.305,
-        "mrr@5": 0.195,
-        "hit_rate@10": 0.5,
-        "mrr@10": 0.221,
+        "hit_rate@1": 0.159,
+        "mrr@1": 0.159,
+        "hit_rate@5": 0.341,
+        "mrr@5": 0.215,
+        "hit_rate@10": 0.463,
+        "mrr@10": 0.231,
         "n": 82
       }
     },
@@ -1814,19 +1814,19 @@
         "keyword+rule_filter": {
           "hit_rate@1": 0.231,
           "mrr@1": 0.231,
-          "hit_rate@5": 0.436,
-          "mrr@5": 0.3,
+          "hit_rate@5": 0.462,
+          "mrr@5": 0.314,
           "hit_rate@10": 0.564,
-          "mrr@10": 0.32,
+          "mrr@10": 0.329,
           "n": 39
         },
         "vector+rule_filter": {
-          "hit_rate@1": 0.154,
-          "mrr@1": 0.154,
-          "hit_rate@5": 0.282,
-          "mrr@5": 0.2,
+          "hit_rate@1": 0.205,
+          "mrr@1": 0.205,
+          "hit_rate@5": 0.333,
+          "mrr@5": 0.252,
           "hit_rate@10": 0.333,
-          "mrr@10": 0.208,
+          "mrr@10": 0.252,
           "n": 39
         },
         "keyword+oracle_filter": {
@@ -1857,21 +1857,21 @@
           "n": 39
         },
         "hybrid+rule_filter": {
-          "hit_rate@1": 0.154,
-          "mrr@1": 0.154,
+          "hit_rate@1": 0.179,
+          "mrr@1": 0.179,
           "hit_rate@5": 0.385,
-          "mrr@5": 0.244,
+          "mrr@5": 0.26,
           "hit_rate@10": 0.538,
-          "mrr@10": 0.264,
+          "mrr@10": 0.283,
           "n": 39
         },
         "hybrid_vw+rule_filter": {
           "hit_rate@1": 0.179,
           "mrr@1": 0.179,
-          "hit_rate@5": 0.333,
-          "mrr@5": 0.24,
+          "hit_rate@5": 0.359,
+          "mrr@5": 0.252,
           "hit_rate@10": 0.385,
-          "mrr@10": 0.246,
+          "mrr@10": 0.255,
           "n": 39
         },
         "vector+llm_filter": {
@@ -1887,9 +1887,9 @@
           "hit_rate@1": 0.128,
           "mrr@1": 0.128,
           "hit_rate@5": 0.308,
-          "mrr@5": 0.182,
-          "hit_rate@10": 0.308,
-          "mrr@10": 0.182,
+          "mrr@5": 0.203,
+          "hit_rate@10": 0.359,
+          "mrr@10": 0.208,
           "n": 39
         },
         "vector+llm_filter+rewrite": {
@@ -1905,27 +1905,27 @@
           "hit_rate@1": 0.128,
           "mrr@1": 0.128,
           "hit_rate@5": 0.308,
-          "mrr@5": 0.182,
-          "hit_rate@10": 0.308,
-          "mrr@10": 0.182,
+          "mrr@5": 0.203,
+          "hit_rate@10": 0.359,
+          "mrr@10": 0.208,
           "n": 39
         },
         "vector+rule_filter+rerank": {
           "hit_rate@1": 0.154,
           "mrr@1": 0.154,
           "hit_rate@5": 0.333,
-          "mrr@5": 0.229,
+          "mrr@5": 0.231,
           "hit_rate@10": 0.359,
-          "mrr@10": 0.233,
+          "mrr@10": 0.235,
           "n": 39
         },
         "augmented+rule_filter": {
-          "hit_rate@1": 0.154,
-          "mrr@1": 0.154,
-          "hit_rate@5": 0.359,
-          "mrr@5": 0.22,
-          "hit_rate@10": 0.487,
-          "mrr@10": 0.239,
+          "hit_rate@1": 0.205,
+          "mrr@1": 0.205,
+          "hit_rate@5": 0.436,
+          "mrr@5": 0.276,
+          "hit_rate@10": 0.538,
+          "mrr@10": 0.289,
           "n": 39
         }
       },
@@ -1949,21 +1949,21 @@
           "n": 42
         },
         "keyword+rule_filter": {
-          "hit_rate@1": 0.286,
-          "mrr@1": 0.286,
-          "hit_rate@5": 0.429,
-          "mrr@5": 0.34,
-          "hit_rate@10": 0.595,
-          "mrr@10": 0.364,
+          "hit_rate@1": 0.19,
+          "mrr@1": 0.19,
+          "hit_rate@5": 0.333,
+          "mrr@5": 0.239,
+          "hit_rate@10": 0.476,
+          "mrr@10": 0.259,
           "n": 42
         },
         "vector+rule_filter": {
           "hit_rate@1": 0.119,
           "mrr@1": 0.119,
           "hit_rate@5": 0.238,
-          "mrr@5": 0.163,
-          "hit_rate@10": 0.476,
-          "mrr@10": 0.195,
+          "mrr@5": 0.152,
+          "hit_rate@10": 0.333,
+          "mrr@10": 0.164,
           "n": 42
         },
         "keyword+oracle_filter": {
@@ -1994,21 +1994,21 @@
           "n": 42
         },
         "hybrid+rule_filter": {
-          "hit_rate@1": 0.19,
-          "mrr@1": 0.19,
-          "hit_rate@5": 0.452,
-          "mrr@5": 0.287,
-          "hit_rate@10": 0.5,
-          "mrr@10": 0.291,
+          "hit_rate@1": 0.143,
+          "mrr@1": 0.143,
+          "hit_rate@5": 0.31,
+          "mrr@5": 0.209,
+          "hit_rate@10": 0.381,
+          "mrr@10": 0.219,
           "n": 42
         },
         "hybrid_vw+rule_filter": {
-          "hit_rate@1": 0.143,
-          "mrr@1": 0.143,
-          "hit_rate@5": 0.405,
-          "mrr@5": 0.235,
-          "hit_rate@10": 0.5,
-          "mrr@10": 0.246,
+          "hit_rate@1": 0.119,
+          "mrr@1": 0.119,
+          "hit_rate@5": 0.262,
+          "mrr@5": 0.179,
+          "hit_rate@10": 0.357,
+          "mrr@10": 0.19,
           "n": 42
         },
         "vector+llm_filter": {
@@ -2021,12 +2021,12 @@
           "n": 42
         },
         "vector+rule_filter+rewrite": {
-          "hit_rate@1": 0.095,
-          "mrr@1": 0.095,
-          "hit_rate@5": 0.31,
-          "mrr@5": 0.178,
-          "hit_rate@10": 0.381,
-          "mrr@10": 0.186,
+          "hit_rate@1": 0.119,
+          "mrr@1": 0.119,
+          "hit_rate@5": 0.262,
+          "mrr@5": 0.16,
+          "hit_rate@10": 0.357,
+          "mrr@10": 0.17,
           "n": 42
         },
         "vector+llm_filter+rewrite": {
@@ -2039,30 +2039,30 @@
           "n": 42
         },
         "vector+rule_filter_on_rewrite": {
-          "hit_rate@1": 0.095,
-          "mrr@1": 0.095,
-          "hit_rate@5": 0.333,
-          "mrr@5": 0.184,
-          "hit_rate@10": 0.381,
-          "mrr@10": 0.189,
+          "hit_rate@1": 0.119,
+          "mrr@1": 0.119,
+          "hit_rate@5": 0.262,
+          "mrr@5": 0.166,
+          "hit_rate@10": 0.357,
+          "mrr@10": 0.176,
           "n": 42
         },
         "vector+rule_filter+rerank": {
-          "hit_rate@1": 0.119,
-          "mrr@1": 0.119,
-          "hit_rate@5": 0.333,
-          "mrr@5": 0.207,
-          "hit_rate@10": 0.405,
-          "mrr@10": 0.217,
+          "hit_rate@1": 0.071,
+          "mrr@1": 0.071,
+          "hit_rate@5": 0.214,
+          "mrr@5": 0.122,
+          "hit_rate@10": 0.286,
+          "mrr@10": 0.131,
           "n": 42
         },
         "augmented+rule_filter": {
           "hit_rate@1": 0.119,
           "mrr@1": 0.119,
           "hit_rate@5": 0.238,
-          "mrr@5": 0.165,
-          "hit_rate@10": 0.5,
-          "mrr@10": 0.198,
+          "mrr@5": 0.152,
+          "hit_rate@10": 0.381,
+          "mrr@10": 0.17,
           "n": 42
         }
       },
@@ -2091,7 +2091,7 @@
           "hit_rate@5": 0.0,
           "mrr@5": 0.0,
           "hit_rate@10": 1.0,
-          "mrr@10": 0.1,
+          "mrr@10": 0.167,
           "n": 1
         },
         "vector+rule_filter": {
@@ -2134,18 +2134,18 @@
           "hit_rate@1": 0.0,
           "mrr@1": 0.0,
           "hit_rate@5": 1.0,
-          "mrr@5": 0.25,
+          "mrr@5": 0.333,
           "hit_rate@10": 1.0,
-          "mrr@10": 0.25,
+          "mrr@10": 0.333,
           "n": 1
         },
         "hybrid_vw+rule_filter": {
           "hit_rate@1": 0.0,
           "mrr@1": 0.0,
           "hit_rate@5": 1.0,
-          "mrr@5": 0.333,
+          "mrr@5": 0.5,
           "hit_rate@10": 1.0,
-          "mrr@10": 0.333,
+          "mrr@10": 0.5,
           "n": 1
         },
         "vector+llm_filter": {
@@ -2161,9 +2161,9 @@
           "hit_rate@1": 0.0,
           "mrr@1": 0.0,
           "hit_rate@5": 1.0,
-          "mrr@5": 0.2,
+          "mrr@5": 0.333,
           "hit_rate@10": 1.0,
-          "mrr@10": 0.2,
+          "mrr@10": 0.333,
           "n": 1
         },
         "vector+llm_filter+rewrite": {
@@ -2179,18 +2179,18 @@
           "hit_rate@1": 0.0,
           "mrr@1": 0.0,
           "hit_rate@5": 1.0,
-          "mrr@5": 0.2,
+          "mrr@5": 0.333,
           "hit_rate@10": 1.0,
-          "mrr@10": 0.2,
+          "mrr@10": 0.333,
           "n": 1
         },
         "vector+rule_filter+rerank": {
           "hit_rate@1": 0.0,
           "mrr@1": 0.0,
           "hit_rate@5": 1.0,
-          "mrr@5": 0.333,
+          "mrr@5": 0.5,
           "hit_rate@10": 1.0,
-          "mrr@10": 0.333,
+          "mrr@10": 0.5,
           "n": 1
         },
         "augmented+rule_filter": {
@@ -2225,21 +2225,21 @@
           "n": 72
         },
         "keyword+rule_filter": {
-          "hit_rate@1": 0.278,
-          "mrr@1": 0.278,
-          "hit_rate@5": 0.458,
-          "mrr@5": 0.342,
-          "hit_rate@10": 0.611,
-          "mrr@10": 0.365,
+          "hit_rate@1": 0.222,
+          "mrr@1": 0.222,
+          "hit_rate@5": 0.403,
+          "mrr@5": 0.288,
+          "hit_rate@10": 0.542,
+          "mrr@10": 0.308,
           "n": 72
         },
         "vector+rule_filter": {
-          "hit_rate@1": 0.097,
-          "mrr@1": 0.097,
-          "hit_rate@5": 0.222,
-          "mrr@5": 0.143,
-          "hit_rate@10": 0.361,
-          "mrr@10": 0.162,
+          "hit_rate@1": 0.125,
+          "mrr@1": 0.125,
+          "hit_rate@5": 0.236,
+          "mrr@5": 0.158,
+          "hit_rate@10": 0.278,
+          "mrr@10": 0.163,
           "n": 72
         },
         "keyword+oracle_filter": {
@@ -2270,21 +2270,21 @@
           "n": 72
         },
         "hybrid+rule_filter": {
-          "hit_rate@1": 0.153,
-          "mrr@1": 0.153,
-          "hit_rate@5": 0.417,
-          "mrr@5": 0.253,
-          "hit_rate@10": 0.514,
-          "mrr@10": 0.265,
+          "hit_rate@1": 0.139,
+          "mrr@1": 0.139,
+          "hit_rate@5": 0.333,
+          "mrr@5": 0.217,
+          "hit_rate@10": 0.444,
+          "mrr@10": 0.232,
           "n": 72
         },
         "hybrid_vw+rule_filter": {
           "hit_rate@1": 0.139,
           "mrr@1": 0.139,
-          "hit_rate@5": 0.347,
-          "mrr@5": 0.211,
-          "hit_rate@10": 0.403,
-          "mrr@10": 0.218,
+          "hit_rate@5": 0.264,
+          "mrr@5": 0.189,
+          "hit_rate@10": 0.319,
+          "mrr@10": 0.196,
           "n": 72
         },
         "vector+llm_filter": {
@@ -2297,11 +2297,11 @@
           "n": 72
         },
         "vector+rule_filter+rewrite": {
-          "hit_rate@1": 0.083,
-          "mrr@1": 0.083,
-          "hit_rate@5": 0.25,
-          "mrr@5": 0.144,
-          "hit_rate@10": 0.292,
+          "hit_rate@1": 0.097,
+          "mrr@1": 0.097,
+          "hit_rate@5": 0.222,
+          "mrr@5": 0.141,
+          "hit_rate@10": 0.306,
           "mrr@10": 0.149,
           "n": 72
         },
@@ -2315,30 +2315,30 @@
           "n": 72
         },
         "vector+rule_filter_on_rewrite": {
-          "hit_rate@1": 0.083,
-          "mrr@1": 0.083,
-          "hit_rate@5": 0.264,
-          "mrr@5": 0.147,
-          "hit_rate@10": 0.292,
-          "mrr@10": 0.15,
+          "hit_rate@1": 0.097,
+          "mrr@1": 0.097,
+          "hit_rate@5": 0.222,
+          "mrr@5": 0.144,
+          "hit_rate@10": 0.306,
+          "mrr@10": 0.153,
           "n": 72
         },
         "vector+rule_filter+rerank": {
-          "hit_rate@1": 0.125,
-          "mrr@1": 0.125,
-          "hit_rate@5": 0.306,
-          "mrr@5": 0.198,
-          "hit_rate@10": 0.347,
-          "mrr@10": 0.204,
+          "hit_rate@1": 0.097,
+          "mrr@1": 0.097,
+          "hit_rate@5": 0.236,
+          "mrr@5": 0.15,
+          "hit_rate@10": 0.278,
+          "mrr@10": 0.155,
           "n": 72
         },
         "augmented+rule_filter": {
-          "hit_rate@1": 0.097,
-          "mrr@1": 0.097,
-          "hit_rate@5": 0.264,
-          "mrr@5": 0.155,
-          "hit_rate@10": 0.458,
-          "mrr@10": 0.181,
+          "hit_rate@1": 0.125,
+          "mrr@1": 0.125,
+          "hit_rate@5": 0.292,
+          "mrr@5": 0.171,
+          "hit_rate@10": 0.417,
+          "mrr@10": 0.187,
           "n": 72
         }
       },
@@ -2364,19 +2364,19 @@
         "keyword+rule_filter": {
           "hit_rate@1": 0.1,
           "mrr@1": 0.1,
-          "hit_rate@5": 0.2,
-          "mrr@5": 0.133,
+          "hit_rate@5": 0.3,
+          "mrr@5": 0.153,
           "hit_rate@10": 0.4,
-          "mrr@10": 0.158,
+          "mrr@10": 0.17,
           "n": 10
         },
         "vector+rule_filter": {
           "hit_rate@1": 0.4,
           "mrr@1": 0.4,
-          "hit_rate@5": 0.6,
-          "mrr@5": 0.483,
+          "hit_rate@5": 0.7,
+          "mrr@5": 0.533,
           "hit_rate@10": 0.8,
-          "mrr@10": 0.517,
+          "mrr@10": 0.55,
           "n": 10
         },
         "keyword+oracle_filter": {
@@ -2410,18 +2410,18 @@
           "hit_rate@1": 0.3,
           "mrr@1": 0.3,
           "hit_rate@5": 0.5,
-          "mrr@5": 0.358,
+          "mrr@5": 0.367,
           "hit_rate@10": 0.6,
-          "mrr@10": 0.375,
+          "mrr@10": 0.383,
           "n": 10
         },
         "hybrid_vw+rule_filter": {
-          "hit_rate@1": 0.3,
-          "mrr@1": 0.3,
-          "hit_rate@5": 0.6,
-          "mrr@5": 0.433,
+          "hit_rate@1": 0.2,
+          "mrr@1": 0.2,
+          "hit_rate@5": 0.7,
+          "mrr@5": 0.425,
           "hit_rate@10": 0.8,
-          "mrr@10": 0.456,
+          "mrr@10": 0.435,
           "n": 10
         },
         "vector+llm_filter": {
@@ -2437,9 +2437,9 @@
           "hit_rate@1": 0.3,
           "mrr@1": 0.3,
           "hit_rate@5": 0.8,
-          "mrr@5": 0.443,
+          "mrr@5": 0.487,
           "hit_rate@10": 0.8,
-          "mrr@10": 0.443,
+          "mrr@10": 0.487,
           "n": 10
         },
         "vector+llm_filter+rewrite": {
@@ -2455,27 +2455,27 @@
           "hit_rate@1": 0.3,
           "mrr@1": 0.3,
           "hit_rate@5": 0.8,
-          "mrr@5": 0.443,
+          "mrr@5": 0.487,
           "hit_rate@10": 0.8,
-          "mrr@10": 0.443,
+          "mrr@10": 0.487,
           "n": 10
         },
         "vector+rule_filter+rerank": {
           "hit_rate@1": 0.2,
           "mrr@1": 0.2,
           "hit_rate@5": 0.6,
-          "mrr@5": 0.367,
+          "mrr@5": 0.383,
           "hit_rate@10": 0.7,
-          "mrr@10": 0.383,
+          "mrr@10": 0.4,
           "n": 10
         },
         "augmented+rule_filter": {
           "hit_rate@1": 0.4,
           "mrr@1": 0.4,
-          "hit_rate@5": 0.6,
-          "mrr@5": 0.483,
+          "hit_rate@5": 0.7,
+          "mrr@5": 0.533,
           "hit_rate@10": 0.8,
-          "mrr@10": 0.508,
+          "mrr@10": 0.546,
           "n": 10
         }
       }
@@ -2503,19 +2503,19 @@
         "keyword+rule_filter": {
           "hit_rate@1": 0.217,
           "mrr@1": 0.217,
-          "hit_rate@5": 0.435,
-          "mrr@5": 0.297,
+          "hit_rate@5": 0.478,
+          "mrr@5": 0.302,
           "hit_rate@10": 0.609,
-          "mrr@10": 0.323,
+          "mrr@10": 0.322,
           "n": 23
         },
         "vector+rule_filter": {
-          "hit_rate@1": 0.174,
-          "mrr@1": 0.174,
-          "hit_rate@5": 0.304,
-          "mrr@5": 0.226,
+          "hit_rate@1": 0.261,
+          "mrr@1": 0.261,
+          "hit_rate@5": 0.391,
+          "mrr@5": 0.304,
           "hit_rate@10": 0.478,
-          "mrr@10": 0.25,
+          "mrr@10": 0.316,
           "n": 23
         },
         "keyword+oracle_filter": {
@@ -2546,21 +2546,21 @@
           "n": 23
         },
         "hybrid+rule_filter": {
-          "hit_rate@1": 0.174,
-          "mrr@1": 0.174,
-          "hit_rate@5": 0.435,
-          "mrr@5": 0.268,
-          "hit_rate@10": 0.565,
-          "mrr@10": 0.285,
-          "n": 23
-        },
-        "hybrid_vw+rule_filter": {
           "hit_rate@1": 0.217,
           "mrr@1": 0.217,
           "hit_rate@5": 0.435,
-          "mrr@5": 0.299,
+          "mrr@5": 0.315,
           "hit_rate@10": 0.565,
-          "mrr@10": 0.314,
+          "mrr@10": 0.333,
+          "n": 23
+        },
+        "hybrid_vw+rule_filter": {
+          "hit_rate@1": 0.261,
+          "mrr@1": 0.261,
+          "hit_rate@5": 0.435,
+          "mrr@5": 0.341,
+          "hit_rate@10": 0.565,
+          "mrr@10": 0.356,
           "n": 23
         },
         "vector+llm_filter": {
@@ -2573,12 +2573,12 @@
           "n": 23
         },
         "vector+rule_filter+rewrite": {
-          "hit_rate@1": 0.174,
-          "mrr@1": 0.174,
-          "hit_rate@5": 0.391,
-          "mrr@5": 0.249,
-          "hit_rate@10": 0.435,
-          "mrr@10": 0.254,
+          "hit_rate@1": 0.217,
+          "mrr@1": 0.217,
+          "hit_rate@5": 0.435,
+          "mrr@5": 0.293,
+          "hit_rate@10": 0.478,
+          "mrr@10": 0.297,
           "n": 23
         },
         "vector+llm_filter+rewrite": {
@@ -2591,30 +2591,30 @@
           "n": 23
         },
         "vector+rule_filter_on_rewrite": {
-          "hit_rate@1": 0.174,
-          "mrr@1": 0.174,
-          "hit_rate@5": 0.391,
-          "mrr@5": 0.249,
-          "hit_rate@10": 0.435,
-          "mrr@10": 0.254,
+          "hit_rate@1": 0.217,
+          "mrr@1": 0.217,
+          "hit_rate@5": 0.435,
+          "mrr@5": 0.293,
+          "hit_rate@10": 0.478,
+          "mrr@10": 0.297,
           "n": 23
         },
         "vector+rule_filter+rerank": {
           "hit_rate@1": 0.13,
           "mrr@1": 0.13,
           "hit_rate@5": 0.391,
-          "mrr@5": 0.23,
+          "mrr@5": 0.239,
           "hit_rate@10": 0.435,
-          "mrr@10": 0.237,
+          "mrr@10": 0.246,
           "n": 23
         },
         "augmented+rule_filter": {
-          "hit_rate@1": 0.174,
-          "mrr@1": 0.174,
-          "hit_rate@5": 0.261,
-          "mrr@5": 0.217,
-          "hit_rate@10": 0.565,
-          "mrr@10": 0.258,
+          "hit_rate@1": 0.261,
+          "mrr@1": 0.261,
+          "hit_rate@5": 0.391,
+          "mrr@5": 0.3,
+          "hit_rate@10": 0.522,
+          "mrr@10": 0.316,
           "n": 23
         }
       },
@@ -2638,21 +2638,21 @@
           "n": 19
         },
         "keyword+rule_filter": {
-          "hit_rate@1": 0.211,
-          "mrr@1": 0.211,
-          "hit_rate@5": 0.421,
-          "mrr@5": 0.274,
-          "hit_rate@10": 0.684,
-          "mrr@10": 0.314,
+          "hit_rate@1": 0.105,
+          "mrr@1": 0.105,
+          "hit_rate@5": 0.368,
+          "mrr@5": 0.199,
+          "hit_rate@10": 0.632,
+          "mrr@10": 0.237,
           "n": 19
         },
         "vector+rule_filter": {
-          "hit_rate@1": 0.053,
-          "mrr@1": 0.053,
-          "hit_rate@5": 0.105,
-          "mrr@5": 0.07,
-          "hit_rate@10": 0.158,
-          "mrr@10": 0.078,
+          "hit_rate@1": 0.0,
+          "mrr@1": 0.0,
+          "hit_rate@5": 0.053,
+          "mrr@5": 0.018,
+          "hit_rate@10": 0.053,
+          "mrr@10": 0.018,
           "n": 19
         },
         "keyword+oracle_filter": {
@@ -2683,21 +2683,21 @@
           "n": 19
         },
         "hybrid+rule_filter": {
-          "hit_rate@1": 0.105,
-          "mrr@1": 0.105,
-          "hit_rate@5": 0.316,
-          "mrr@5": 0.182,
-          "hit_rate@10": 0.474,
-          "mrr@10": 0.199,
+          "hit_rate@1": 0.053,
+          "mrr@1": 0.053,
+          "hit_rate@5": 0.211,
+          "mrr@5": 0.103,
+          "hit_rate@10": 0.316,
+          "mrr@10": 0.12,
           "n": 19
         },
         "hybrid_vw+rule_filter": {
-          "hit_rate@1": 0.105,
-          "mrr@1": 0.105,
-          "hit_rate@5": 0.211,
-          "mrr@5": 0.133,
-          "hit_rate@10": 0.211,
-          "mrr@10": 0.133,
+          "hit_rate@1": 0.053,
+          "mrr@1": 0.053,
+          "hit_rate@5": 0.105,
+          "mrr@5": 0.066,
+          "hit_rate@10": 0.105,
+          "mrr@10": 0.066,
           "n": 19
         },
         "vector+llm_filter": {
@@ -2710,12 +2710,12 @@
           "n": 19
         },
         "vector+rule_filter+rewrite": {
-          "hit_rate@1": 0.053,
-          "mrr@1": 0.053,
-          "hit_rate@5": 0.105,
-          "mrr@5": 0.07,
+          "hit_rate@1": 0.0,
+          "mrr@1": 0.0,
+          "hit_rate@5": 0.053,
+          "mrr@5": 0.018,
           "hit_rate@10": 0.105,
-          "mrr@10": 0.07,
+          "mrr@10": 0.023,
           "n": 19
         },
         "vector+llm_filter+rewrite": {
@@ -2728,30 +2728,30 @@
           "n": 19
         },
         "vector+rule_filter_on_rewrite": {
-          "hit_rate@1": 0.053,
-          "mrr@1": 0.053,
-          "hit_rate@5": 0.105,
-          "mrr@5": 0.07,
+          "hit_rate@1": 0.0,
+          "mrr@1": 0.0,
+          "hit_rate@5": 0.053,
+          "mrr@5": 0.018,
           "hit_rate@10": 0.105,
-          "mrr@10": 0.07,
+          "mrr@10": 0.023,
           "n": 19
         },
         "vector+rule_filter+rerank": {
-          "hit_rate@1": 0.053,
-          "mrr@1": 0.053,
-          "hit_rate@5": 0.211,
-          "mrr@5": 0.105,
-          "hit_rate@10": 0.211,
-          "mrr@10": 0.105,
+          "hit_rate@1": 0.0,
+          "mrr@1": 0.0,
+          "hit_rate@5": 0.105,
+          "mrr@5": 0.031,
+          "hit_rate@10": 0.105,
+          "mrr@10": 0.031,
           "n": 19
         },
         "augmented+rule_filter": {
-          "hit_rate@1": 0.053,
-          "mrr@1": 0.053,
-          "hit_rate@5": 0.263,
-          "mrr@5": 0.11,
+          "hit_rate@1": 0.0,
+          "mrr@1": 0.0,
+          "hit_rate@5": 0.211,
+          "mrr@5": 0.057,
           "hit_rate@10": 0.316,
-          "mrr@10": 0.116,
+          "mrr@10": 0.07,
           "n": 19
         }
       },
@@ -2778,18 +2778,18 @@
           "hit_rate@1": 0.19,
           "mrr@1": 0.19,
           "hit_rate@5": 0.333,
-          "mrr@5": 0.236,
-          "hit_rate@10": 0.476,
-          "mrr@10": 0.253,
+          "mrr@5": 0.24,
+          "hit_rate@10": 0.429,
+          "mrr@10": 0.254,
           "n": 21
         },
         "vector+rule_filter": {
-          "hit_rate@1": 0.143,
-          "mrr@1": 0.143,
-          "hit_rate@5": 0.286,
-          "mrr@5": 0.206,
+          "hit_rate@1": 0.19,
+          "mrr@1": 0.19,
+          "hit_rate@5": 0.429,
+          "mrr@5": 0.275,
           "hit_rate@10": 0.524,
-          "mrr@10": 0.237,
+          "mrr@10": 0.287,
           "n": 21
         },
         "keyword+oracle_filter": {
@@ -2822,19 +2822,19 @@
         "hybrid+rule_filter": {
           "hit_rate@1": 0.19,
           "mrr@1": 0.19,
-          "hit_rate@5": 0.429,
-          "mrr@5": 0.27,
-          "hit_rate@10": 0.476,
-          "mrr@10": 0.275,
+          "hit_rate@5": 0.381,
+          "mrr@5": 0.278,
+          "hit_rate@10": 0.524,
+          "mrr@10": 0.298,
           "n": 21
         },
         "hybrid_vw+rule_filter": {
-          "hit_rate@1": 0.143,
-          "mrr@1": 0.143,
+          "hit_rate@1": 0.095,
+          "mrr@1": 0.095,
           "hit_rate@5": 0.429,
-          "mrr@5": 0.237,
+          "mrr@5": 0.234,
           "hit_rate@10": 0.524,
-          "mrr@10": 0.248,
+          "mrr@10": 0.246,
           "n": 21
         },
         "vector+llm_filter": {
@@ -2847,12 +2847,12 @@
           "n": 21
         },
         "vector+rule_filter+rewrite": {
-          "hit_rate@1": 0.048,
-          "mrr@1": 0.048,
-          "hit_rate@5": 0.333,
-          "mrr@5": 0.132,
-          "hit_rate@10": 0.429,
-          "mrr@10": 0.143,
+          "hit_rate@1": 0.095,
+          "mrr@1": 0.095,
+          "hit_rate@5": 0.381,
+          "mrr@5": 0.198,
+          "hit_rate@10": 0.524,
+          "mrr@10": 0.214,
           "n": 21
         },
         "vector+llm_filter+rewrite": {
@@ -2865,30 +2865,30 @@
           "n": 21
         },
         "vector+rule_filter_on_rewrite": {
-          "hit_rate@1": 0.048,
-          "mrr@1": 0.048,
+          "hit_rate@1": 0.095,
+          "mrr@1": 0.095,
           "hit_rate@5": 0.381,
-          "mrr@5": 0.144,
-          "hit_rate@10": 0.429,
-          "mrr@10": 0.148,
+          "mrr@5": 0.21,
+          "hit_rate@10": 0.524,
+          "mrr@10": 0.226,
           "n": 21
         },
         "vector+rule_filter+rerank": {
           "hit_rate@1": 0.143,
           "mrr@1": 0.143,
           "hit_rate@5": 0.333,
-          "mrr@5": 0.222,
+          "mrr@5": 0.216,
           "hit_rate@10": 0.476,
-          "mrr@10": 0.242,
+          "mrr@10": 0.235,
           "n": 21
         },
         "augmented+rule_filter": {
-          "hit_rate@1": 0.143,
-          "mrr@1": 0.143,
-          "hit_rate@5": 0.286,
-          "mrr@5": 0.206,
-          "hit_rate@10": 0.476,
-          "mrr@10": 0.229,
+          "hit_rate@1": 0.19,
+          "mrr@1": 0.19,
+          "hit_rate@5": 0.381,
+          "mrr@5": 0.266,
+          "hit_rate@10": 0.571,
+          "mrr@10": 0.291,
           "n": 21
         }
       },
@@ -2912,21 +2912,21 @@
           "n": 19
         },
         "keyword+rule_filter": {
-          "hit_rate@1": 0.421,
-          "mrr@1": 0.421,
-          "hit_rate@5": 0.526,
-          "mrr@5": 0.474,
-          "hit_rate@10": 0.579,
-          "mrr@10": 0.482,
+          "hit_rate@1": 0.316,
+          "mrr@1": 0.316,
+          "hit_rate@5": 0.368,
+          "mrr@5": 0.342,
+          "hit_rate@10": 0.421,
+          "mrr@10": 0.351,
           "n": 19
         },
         "vector+rule_filter": {
           "hit_rate@1": 0.158,
           "mrr@1": 0.158,
-          "hit_rate@5": 0.368,
-          "mrr@5": 0.225,
-          "hit_rate@10": 0.474,
-          "mrr@10": 0.242,
+          "hit_rate@5": 0.263,
+          "mrr@5": 0.189,
+          "hit_rate@10": 0.263,
+          "mrr@10": 0.189,
           "n": 19
         },
         "keyword+oracle_filter": {
@@ -2957,21 +2957,21 @@
           "n": 19
         },
         "hybrid+rule_filter": {
-          "hit_rate@1": 0.211,
-          "mrr@1": 0.211,
-          "hit_rate@5": 0.526,
-          "mrr@5": 0.344,
-          "hit_rate@10": 0.579,
-          "mrr@10": 0.353,
+          "hit_rate@1": 0.158,
+          "mrr@1": 0.158,
+          "hit_rate@5": 0.368,
+          "mrr@5": 0.223,
+          "hit_rate@10": 0.421,
+          "mrr@10": 0.23,
           "n": 19
         },
         "hybrid_vw+rule_filter": {
           "hit_rate@1": 0.158,
           "mrr@1": 0.158,
-          "hit_rate@5": 0.421,
-          "mrr@5": 0.272,
-          "hit_rate@10": 0.474,
-          "mrr@10": 0.279,
+          "hit_rate@5": 0.263,
+          "mrr@5": 0.202,
+          "hit_rate@10": 0.263,
+          "mrr@10": 0.202,
           "n": 19
         },
         "vector+llm_filter": {
@@ -2986,10 +2986,10 @@
         "vector+rule_filter+rewrite": {
           "hit_rate@1": 0.158,
           "mrr@1": 0.158,
-          "hit_rate@5": 0.421,
-          "mrr@5": 0.261,
-          "hit_rate@10": 0.421,
-          "mrr@10": 0.261,
+          "hit_rate@5": 0.263,
+          "mrr@5": 0.197,
+          "hit_rate@10": 0.316,
+          "mrr@10": 0.203,
           "n": 19
         },
         "vector+llm_filter+rewrite": {
@@ -3004,28 +3004,28 @@
         "vector+rule_filter_on_rewrite": {
           "hit_rate@1": 0.158,
           "mrr@1": 0.158,
-          "hit_rate@5": 0.421,
-          "mrr@5": 0.261,
-          "hit_rate@10": 0.421,
-          "mrr@10": 0.261,
+          "hit_rate@5": 0.263,
+          "mrr@5": 0.197,
+          "hit_rate@10": 0.316,
+          "mrr@10": 0.203,
           "n": 19
         },
         "vector+rule_filter+rerank": {
-          "hit_rate@1": 0.211,
-          "mrr@1": 0.211,
-          "hit_rate@5": 0.421,
-          "mrr@5": 0.316,
-          "hit_rate@10": 0.421,
-          "mrr@10": 0.316,
+          "hit_rate@1": 0.158,
+          "mrr@1": 0.158,
+          "hit_rate@5": 0.263,
+          "mrr@5": 0.211,
+          "hit_rate@10": 0.263,
+          "mrr@10": 0.211,
           "n": 19
         },
         "augmented+rule_filter": {
           "hit_rate@1": 0.158,
           "mrr@1": 0.158,
-          "hit_rate@5": 0.421,
-          "mrr@5": 0.241,
-          "hit_rate@10": 0.632,
-          "mrr@10": 0.271,
+          "hit_rate@5": 0.368,
+          "mrr@5": 0.215,
+          "hit_rate@10": 0.421,
+          "mrr@10": 0.222,
           "n": 19
         }
       }
@@ -3051,21 +3051,21 @@
           "n": 46
         },
         "keyword+rule_filter": {
-          "hit_rate@1": 0.304,
-          "mrr@1": 0.304,
-          "hit_rate@5": 0.478,
-          "mrr@5": 0.358,
-          "hit_rate@10": 0.63,
-          "mrr@10": 0.38,
+          "hit_rate@1": 0.217,
+          "mrr@1": 0.217,
+          "hit_rate@5": 0.413,
+          "mrr@5": 0.283,
+          "hit_rate@10": 0.543,
+          "mrr@10": 0.303,
           "n": 46
         },
         "vector+rule_filter": {
-          "hit_rate@1": 0.152,
-          "mrr@1": 0.152,
-          "hit_rate@5": 0.326,
-          "mrr@5": 0.216,
-          "hit_rate@10": 0.522,
-          "mrr@10": 0.245,
+          "hit_rate@1": 0.174,
+          "mrr@1": 0.174,
+          "hit_rate@5": 0.37,
+          "mrr@5": 0.238,
+          "hit_rate@10": 0.435,
+          "mrr@10": 0.247,
           "n": 46
         },
         "keyword+oracle_filter": {
@@ -3096,21 +3096,21 @@
           "n": 46
         },
         "hybrid+rule_filter": {
-          "hit_rate@1": 0.217,
-          "mrr@1": 0.217,
-          "hit_rate@5": 0.5,
-          "mrr@5": 0.32,
-          "hit_rate@10": 0.609,
-          "mrr@10": 0.333,
+          "hit_rate@1": 0.196,
+          "mrr@1": 0.196,
+          "hit_rate@5": 0.413,
+          "mrr@5": 0.28,
+          "hit_rate@10": 0.543,
+          "mrr@10": 0.298,
           "n": 46
         },
         "hybrid_vw+rule_filter": {
-          "hit_rate@1": 0.174,
-          "mrr@1": 0.174,
-          "hit_rate@5": 0.457,
-          "mrr@5": 0.282,
-          "hit_rate@10": 0.565,
-          "mrr@10": 0.295,
+          "hit_rate@1": 0.152,
+          "mrr@1": 0.152,
+          "hit_rate@5": 0.391,
+          "mrr@5": 0.252,
+          "hit_rate@10": 0.478,
+          "mrr@10": 0.263,
           "n": 46
         },
         "vector+llm_filter": {
@@ -3125,10 +3125,10 @@
         "vector+rule_filter+rewrite": {
           "hit_rate@1": 0.13,
           "mrr@1": 0.13,
-          "hit_rate@5": 0.413,
-          "mrr@5": 0.223,
+          "hit_rate@5": 0.37,
+          "mrr@5": 0.216,
           "hit_rate@10": 0.457,
-          "mrr@10": 0.228,
+          "mrr@10": 0.226,
           "n": 46
         },
         "vector+llm_filter+rewrite": {
@@ -3143,28 +3143,28 @@
         "vector+rule_filter_on_rewrite": {
           "hit_rate@1": 0.13,
           "mrr@1": 0.13,
-          "hit_rate@5": 0.435,
-          "mrr@5": 0.228,
+          "hit_rate@5": 0.37,
+          "mrr@5": 0.222,
           "hit_rate@10": 0.457,
-          "mrr@10": 0.23,
+          "mrr@10": 0.231,
           "n": 46
         },
         "vector+rule_filter+rerank": {
-          "hit_rate@1": 0.174,
-          "mrr@1": 0.174,
-          "hit_rate@5": 0.391,
-          "mrr@5": 0.266,
-          "hit_rate@10": 0.457,
-          "mrr@10": 0.275,
+          "hit_rate@1": 0.13,
+          "mrr@1": 0.13,
+          "hit_rate@5": 0.326,
+          "mrr@5": 0.213,
+          "hit_rate@10": 0.391,
+          "mrr@10": 0.221,
           "n": 46
         },
         "augmented+rule_filter": {
-          "hit_rate@1": 0.152,
-          "mrr@1": 0.152,
-          "hit_rate@5": 0.348,
-          "mrr@5": 0.223,
-          "hit_rate@10": 0.587,
-          "mrr@10": 0.254,
+          "hit_rate@1": 0.174,
+          "mrr@1": 0.174,
+          "hit_rate@5": 0.391,
+          "mrr@5": 0.243,
+          "hit_rate@10": 0.543,
+          "mrr@10": 0.263,
           "n": 46
         }
       },
@@ -3191,18 +3191,18 @@
           "hit_rate@1": 0.194,
           "mrr@1": 0.194,
           "hit_rate@5": 0.361,
-          "mrr@5": 0.265,
-          "hit_rate@10": 0.528,
-          "mrr@10": 0.289,
+          "mrr@5": 0.256,
+          "hit_rate@10": 0.5,
+          "mrr@10": 0.277,
           "n": 36
         },
         "vector+rule_filter": {
-          "hit_rate@1": 0.111,
-          "mrr@1": 0.111,
+          "hit_rate@1": 0.139,
+          "mrr@1": 0.139,
           "hit_rate@5": 0.194,
-          "mrr@5": 0.144,
-          "hit_rate@10": 0.278,
-          "mrr@10": 0.154,
+          "mrr@5": 0.16,
+          "hit_rate@10": 0.222,
+          "mrr@10": 0.162,
           "n": 36
         },
         "keyword+oracle_filter": {
@@ -3235,19 +3235,19 @@
         "hybrid+rule_filter": {
           "hit_rate@1": 0.111,
           "mrr@1": 0.111,
-          "hit_rate@5": 0.333,
-          "mrr@5": 0.198,
-          "hit_rate@10": 0.417,
-          "mrr@10": 0.208,
+          "hit_rate@5": 0.278,
+          "mrr@5": 0.178,
+          "hit_rate@10": 0.361,
+          "mrr@10": 0.19,
           "n": 36
         },
         "hybrid_vw+rule_filter": {
           "hit_rate@1": 0.139,
           "mrr@1": 0.139,
-          "hit_rate@5": 0.278,
-          "mrr@5": 0.183,
-          "hit_rate@10": 0.306,
-          "mrr@10": 0.186,
+          "hit_rate@5": 0.222,
+          "mrr@5": 0.174,
+          "hit_rate@10": 0.25,
+          "mrr@10": 0.176,
           "n": 36
         },
         "vector+llm_filter": {
@@ -3260,12 +3260,12 @@
           "n": 36
         },
         "vector+rule_filter+rewrite": {
-          "hit_rate@1": 0.083,
-          "mrr@1": 0.083,
+          "hit_rate@1": 0.111,
+          "mrr@1": 0.111,
           "hit_rate@5": 0.194,
-          "mrr@5": 0.126,
-          "hit_rate@10": 0.222,
-          "mrr@10": 0.129,
+          "mrr@5": 0.14,
+          "hit_rate@10": 0.25,
+          "mrr@10": 0.145,
           "n": 36
         },
         "vector+llm_filter+rewrite": {
@@ -3278,30 +3278,30 @@
           "n": 36
         },
         "vector+rule_filter_on_rewrite": {
-          "hit_rate@1": 0.083,
-          "mrr@1": 0.083,
+          "hit_rate@1": 0.111,
+          "mrr@1": 0.111,
           "hit_rate@5": 0.194,
-          "mrr@5": 0.126,
-          "hit_rate@10": 0.222,
-          "mrr@10": 0.129,
+          "mrr@5": 0.14,
+          "hit_rate@10": 0.25,
+          "mrr@10": 0.145,
           "n": 36
         },
         "vector+rule_filter+rerank": {
           "hit_rate@1": 0.083,
           "mrr@1": 0.083,
-          "hit_rate@5": 0.278,
-          "mrr@5": 0.158,
-          "hit_rate@10": 0.306,
-          "mrr@10": 0.163,
+          "hit_rate@5": 0.222,
+          "mrr@5": 0.134,
+          "hit_rate@10": 0.25,
+          "mrr@10": 0.139,
           "n": 36
         },
         "augmented+rule_filter": {
-          "hit_rate@1": 0.111,
-          "mrr@1": 0.111,
-          "hit_rate@5": 0.25,
-          "mrr@5": 0.16,
-          "hit_rate@10": 0.389,
-          "mrr@10": 0.179,
+          "hit_rate@1": 0.139,
+          "mrr@1": 0.139,
+          "hit_rate@5": 0.278,
+          "mrr@5": 0.179,
+          "hit_rate@10": 0.361,
+          "mrr@10": 0.19,
           "n": 36
         }
       }

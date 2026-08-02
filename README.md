@@ -420,15 +420,18 @@ absent" — which inflates the refusal metric in B's favour.
   single-figure lookup tool, which has no equivalent guard. Validation
   currently sits where a value is consumed rather than where it is
   produced.
-- **Retrieval degrades** when the corpus contains multiple editions of the
-  same filing.** The scheduled pipeline added Microsoft's FY2026 10-K,
-  and questions about fiscal 2025 now retrieve the FY2026 MD&A first —
-  the same section of the same document, one year later, near-identical
-  in wording and differing only in figures. Manual-subset hit@5 fell from
-  0.400 to 0.100 (0.800 to 0.600 expanded). Metadata filtering assumed
-  one 10-K per company, an assumption never stated and broken by the
-  first automated ingestion run. The fix is a `fiscal_year` filter
-  dimension; it is scoped but not implemented.
+- **Multiple editions of the same filing require year-level filtering.**
+  When the scheduled pipeline added Microsoft's FY2026 10-K, questions
+  about fiscal 2025 began retrieving the FY2026 MD&A first — the same
+  section of the same document one year later, near-identical in wording
+  and differing only in figures. Manual-subset hit@5 fell 0.400 → 0.100.
+  Adding `fiscal_year` (derived from the filing's report date, not its
+  submission date) as a third filter dimension recovered most of it
+  (0.300 / 0.700 expanded). The cost is that a year mentioned
+  incidentally in a question now excludes three quarters of the corpus:
+  keyword retrieval on narrative questions dropped from 0.452 to 0.333.
+  Temporal disambiguation in a growing corpus is a metadata problem, not
+  a semantic retrieval one.
 
   ## Retrieval improvements: what was adopted and what wasn't
 

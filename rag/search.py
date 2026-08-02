@@ -23,7 +23,7 @@ def build_index(chunks: list[dict]) -> Index:
 
     index = Index(
         text_fields=["text", "section"],
-        keyword_fields=["ticker", "form"],
+        keyword_fields=["ticker", "form", "fiscal_year"],
     )
     index.fit(chunks)
     return index

@@ -109,6 +109,19 @@
       "new_filings": 0,
       "corpus_filings": 14,
       "result": "no-op"
+    },
+    {
+      "started_at": "2026-08-01T19:48:38.199244+00:00",
+      "stages": [
+        {
+          "stage": "download",
+          "status": "ok",
+          "seconds": 2.1
+        }
+      ],
+      "new_filings": 0,
+      "corpus_filings": 14,
+      "result": "no-op"
     }
   ],
   "known_filings": [

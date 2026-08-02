@@ -91,6 +91,20 @@ def infer_form(question: str) -> str | None:
         return None
     return "10K" if annual else "10Q"
 
+# Years plausible for this corpus. Bounded on purpose: a bare "2015" in
+# a question is more likely a historical reference than a filter target.
+YEAR_RE = re.compile(r"\b(fiscal\s+|fy\s*)?(20(?:2[0-9]|3[0-9]))\b", re.IGNORECASE)
+
+def infer_fiscal_year(question: str) -> str | None:
+    """Return a four-digit year if exactly one is mentioned.
+
+    Two years means a comparison ("from 2024 to 2025") — filtering to
+    either would hide half the answer. Same precision-over-recall stance
+    as the other filters: ambiguity yields no filter.
+    """
+    years = {m.group(2) for m in YEAR_RE.finditer(question)}
+    return years.pop() if len(years) == 1 else None
+
 
 def infer_filters(question: str) -> dict:
     """Build a filter dict from a question. Empty dict = no filtering.
@@ -101,6 +115,9 @@ def infer_filters(question: str) -> dict:
     """
     filters = {}
     ticker = infer_ticker(question)
+    year = infer_fiscal_year(question)
+    if year:
+        filters["fiscal_year"] = year
     if ticker:
         filters["ticker"] = ticker
     form = infer_form(question)

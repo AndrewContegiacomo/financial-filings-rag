@@ -63,15 +63,32 @@ def html_to_text(path: Path) -> str:
     return re.sub(r"\s+", " ", text).strip()
 
 
-def parse_filename(path: Path) -> dict:
-    """Recover metadata encoded in the filename by the download script.
+CORPUS_MANIFEST = PROJECT_ROOT / "data/corpus_manifest.json"
 
-    Filenames follow the convention TICKER_FORM_DATE.html
-    (e.g. AAPL_10K_2025-10-31.html), so the filename itself is our
-    metadata store — no extra lookup needed.
+
+def load_filing_metadata() -> dict:
+    """Map filename -> filing metadata, keyed the way chunks are named.
+
+    fiscal_year comes from report_date (the period covered), never from
+    filing_date (the submission). They differ by months: Microsoft's
+    FY2026 10-K was filed 2026-07-29 for a year ended 2026-06-30, Apple's
+    FY2025 10-K on 2025-10-31 for a year ended 2025-09-27. Using the
+    filing date would mislabel every filing whose fiscal year doesn't end
+    in December.
     """
-    ticker, form, date = path.stem.split("_")
-    return {"ticker": ticker, "form": form, "date": date}
+    manifest = json.loads(CORPUS_MANIFEST.read_text(encoding="utf-8"))
+    by_filename = {}
+    for e in manifest["filings"].values():
+        form = e["form"].replace("-", "")
+        fname = f"{e['ticker']}_{form}_{e['filing_date']}.html"
+        by_filename[fname] = {
+            "ticker": e["ticker"],
+            "form": form,
+            "date": e["filing_date"],
+            "report_date": e["report_date"],
+            "fiscal_year": e["report_date"][:4],
+        }
+    return by_filename
 
 
 def chunk_text(text: str) -> list[dict]:
@@ -125,7 +142,15 @@ def main() -> None:
         raise SystemExit("No files in data/raw/ — run download_filings.py first")
 
     for path in tqdm(files, desc="Chunking"):
-        meta = parse_filename(path)
+        filing_meta = load_filing_metadata()
+
+    for path in tqdm(files, desc="Chunking"):
+        meta = filing_meta.get(path.name)
+        if meta is None:
+            # A raw file with no manifest entry shouldn't exist; skipping
+            # loudly beats silently producing chunks without metadata.
+            print(f"\n  ! skipping {path.name}: not in corpus manifest")
+            continue
         text = html_to_text(path)
 
         for i, chunk in enumerate(chunk_text(text)):
@@ -138,6 +163,7 @@ def main() -> None:
                     "ticker": meta["ticker"],
                     "form": meta["form"],
                     "date": meta["date"],
+                    "fiscal_year": meta["fiscal_year"],
                     "section": chunk["section"],
                     "text": chunk["text"],
                 }
