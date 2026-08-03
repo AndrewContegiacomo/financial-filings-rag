@@ -36,6 +36,12 @@ def get_client() -> Groq:
         _client = Groq(api_key=os.getenv("GROQ_API_KEY"))
     return _client
 
+# Retries observed on the most recent call. Read by the app so the
+# monitoring log can distinguish "the model was slow" from "we waited
+# out a rate limit" — a 96-second query looks alarming until you know
+# 80 of those seconds were backoff.
+last_call_retries = {"count": 0}
+
 
 def call_llm(messages: list[dict], retries: int = 3, **kwargs):
     """Call the chat completions endpoint, retrying transient failures.
@@ -44,6 +50,7 @@ def call_llm(messages: list[dict], retries: int = 3, **kwargs):
     Accepts **kwargs so callers can pass tools/tool_choice without this
     helper needing to know about them.
     """
+    last_call_retries["count"] = 0
     for attempt in range(retries):
         try:
             resp = get_client().chat.completions.create(
@@ -54,6 +61,7 @@ def call_llm(messages: list[dict], retries: int = 3, **kwargs):
             )
             return resp.choices[0].message
         except (RateLimitError, InternalServerError, APIConnectionError) as exc:
+            last_call_retries["count"] = attempt + 1
             if attempt == retries - 1:
                 print(f"  [llm] giving up after {retries} attempts: "
                       f"{type(exc).__name__}")

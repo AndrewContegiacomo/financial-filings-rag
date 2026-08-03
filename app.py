@@ -10,10 +10,13 @@ interaction. Two consequences shape this file:
     that list each time.
 """
 import os
+import time
 from pathlib import Path
 
 import streamlit as st
 from dotenv import load_dotenv
+
+from monitoring.store import log_query, log_feedback
 
 st.set_page_config(
     page_title="Filings Analyst",
@@ -103,6 +106,14 @@ def load_modules():
     return rag, agent
 
 
+# Module-level, not session_state: @st.cache_resource is shared across
+# browser sessions, so "has this process loaded the model yet" is a
+# process-level fact. Using session_state marked a reloaded page as cold
+# when the model was already in memory, mixing the two populations in
+# the latency chart.
+_WARM = {"value": False}
+
+
 # --- Routing ----------------------------------------------------------
 
 COMPARATIVE_TERMS = [
@@ -162,6 +173,24 @@ def render_sources(chunks: list[dict]) -> None:
                 st.divider()
 
 
+def render_feedback(query_id: int) -> None:
+    """Rating buttons for one answer.
+
+    Keyed by query_id so every answer in the conversation keeps its own
+    buttons across re-runs — Streamlit redraws the whole page on each
+    interaction, and widgets sharing a key would collide.
+    """
+    col1, col2, _ = st.columns([1.2, 1.2, 6])
+    if col1.button("Good answer", key=f"up_{query_id}",
+                   use_container_width=True):
+        log_feedback(query_id, 1)
+        st.toast("Thanks for the feedback")
+    if col2.button("Bad answer", key=f"down_{query_id}",
+                   use_container_width=True):
+        log_feedback(query_id, -1)
+        st.toast("Thanks for the feedback")
+
+
 # --- Header -----------------------------------------------------------
 
 st.markdown('<div class="app-title">Filings Analyst</div>',
@@ -191,6 +220,8 @@ for msg in st.session_state.messages:
                         unsafe_allow_html=True)
         if msg.get("chunks"):
             render_sources(msg["chunks"])
+        if msg.get("query_id"):
+            render_feedback(msg["query_id"])
 
 
 # --- Empty state ------------------------------------------------------
@@ -234,42 +265,66 @@ if question:
         render_answer(question)
 
     with st.chat_message("assistant", avatar=":material/analytics:"):
+        # Cold start is tracked explicitly: the first query of a process
+        # pays for loading the embedding model and building the keyword
+        # index, and averaging it with warm queries makes the latency
+        # figure meaningless.
+        cold = not _WARM["value"]
+
         try:
             rag_mod, agent_mod = load_modules()
             index = load_index()
+            _WARM["value"] = True
         except FileNotFoundError:
             st.error(
                 "Corpus not found. Build it with:\n\n"
-                "```\npython ingestion/download_filings.py\n"
-                "python ingestion/chunk_filings.py\n"
-                "python -m rag.vector_search\n```"
+                "```\npython -m pipeline.run_pipeline\n```"
             )
             st.stop()
 
+        error = None
         if force_tools or looks_analytical(question):
+            path = "agent"
+            t0 = time.perf_counter()
             with st.spinner("Looking up figures"):
                 text = agent_mod.run(question, verbose=False)
+            gen_ms = int((time.perf_counter() - t0) * 1000)
+            retrieval_ms, chunks, filters = 0, None, {}
             meta = ("analytical tools · figures looked up individually, "
                     "arithmetic in code")
-            chunks = None
         else:
+            path = "rag"
+            t0 = time.perf_counter()
             with st.spinner("Searching filings"):
                 result = rag_mod.answer(index, question)
+            gen_ms = int((time.perf_counter() - t0) * 1000)
             text = result["answer"]
             chunks = result["chunks"]
-            # Filters are hard constraints: a wrong inference makes the
-            # answer unreachable, so the user should be able to see when
-            # the search was narrowed.
-            applied = result["filters_applied"]
-            scope = (" · " + " ".join(f"{k}={v}" for k, v in applied.items())
-                     if applied else "")
+            filters = result["filters_applied"]
+            retrieval_ms = result.get("retrieval_ms", 0)
+            scope = (" · " + " ".join(f"{k}={v}" for k, v in filters.items())
+                     if filters else "")
             meta = f"{len(chunks)} passages retrieved{scope}"
+
+        # A refusal is a legitimate outcome, not a failure — but the rate
+        # matters: a system that refuses too often is as useless as one
+        # that fabricates.
+        refused = "do not contain" in text or "does not contain" in text
+
+        query_id = log_query(
+            question=question, path=path, filters=filters,
+            retrieval_ms=retrieval_ms, generation_ms=gen_ms,
+            cold_start=cold, n_chunks=len(chunks) if chunks else 0,
+            refused=refused, error=error,
+        )
 
         render_answer(text)
         st.markdown(f"<div class='meta'>{meta}</div>", unsafe_allow_html=True)
         if chunks:
             render_sources(chunks)
+        render_feedback(query_id)
 
     st.session_state.messages.append({
-        "role": "assistant", "content": text, "meta": meta, "chunks": chunks,
+        "role": "assistant", "content": text, "meta": meta,
+        "chunks": chunks, "query_id": query_id,
     })

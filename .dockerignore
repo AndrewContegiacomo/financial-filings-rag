@@ -1,0 +1,9 @@
+.venv/
+.git/
+__pycache__/
+*.pyc
+data/raw/
+data/monitoring.db
+.env
+docs/
+notes.md

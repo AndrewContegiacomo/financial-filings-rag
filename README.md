@@ -432,6 +432,12 @@ absent" — which inflates the refusal metric in B's favour.
   keyword retrieval on narrative questions dropped from 0.452 to 0.333.
   Temporal disambiguation in a growing corpus is a metadata problem, not
   a semantic retrieval one.
+  - **The dashboard container segfaults on Apple Silicon** (exit 139) when
+  the app processes a query concurrently. The same dashboard code runs
+  correctly outside Docker, and the compose stack otherwise works — app,
+  Postgres and dashboard start, and monitoring events written by the app
+  are read back by the dashboard. Not diagnosed further; the crash
+  occurs in native code with no Python traceback.
 
   ## Retrieval improvements: what was adopted and what wasn't
 

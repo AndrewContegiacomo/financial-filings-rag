@@ -1,0 +1,50 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: filings
+      POSTGRES_PASSWORD: filings
+      POSTGRES_DB: monitoring
+    volumes:
+      # Named volume so query history survives `docker compose down`.
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      # -d is needed: without it pg_isready connects to a database named
+      # after the user, which doesn't exist here, and logs a FATAL on
+      # every probe.
+      test: ["CMD-SHELL", "pg_isready -U filings -d monitoring"]
+      interval: 5s
+      retries: 5
+
+  app:
+    build: .
+    ports:
+      - "8501:8501"
+    environment:
+      GROQ_API_KEY: ${GROQ_API_KEY}
+      DATABASE_URL: postgresql://filings:filings@db:5432/monitoring
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      # Corpus artifacts mounted rather than copied, so re-running the
+      # ingestion pipeline on the host updates the app without a rebuild.
+      - ./data/processed:/app/data/processed:ro
+
+  dashboard:
+    build: .
+    ports:
+      - "8502:8501"
+    environment:
+      DATABASE_URL: postgresql://filings:filings@db:5432/monitoring
+    depends_on:
+      db:
+        condition: service_healthy
+    # Same image, different entrypoint: the dashboard is a view over the
+    # same code and the same database, not a separate application.
+    command: >
+      streamlit run dashboard.py
+      --server.port=8501 --server.address=0.0.0.0
+
+volumes:
+  pgdata:
