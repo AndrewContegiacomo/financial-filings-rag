@@ -33,7 +33,7 @@ import time
 from pathlib import Path
 
 from dotenv import load_dotenv
-from groq import Groq, RateLimitError, InternalServerError
+from groq import Groq, RateLimitError, InternalServerError, APIConnectionError
 from tqdm import tqdm
 
 from rag.augmented_search import AugmentedIndex
@@ -41,6 +41,7 @@ from rag.query_analysis import infer_filters
 from rag.rag import format_context
 from rag.search import load_chunks, build_index
 from rag.vector_search import VectorIndex
+
 
 load_dotenv()
 
@@ -194,7 +195,7 @@ def ask(prompt: str, retries: int = 3) -> str | None:
                 temperature=0.0,
             )
             return resp.choices[0].message.content.strip()
-        except (RateLimitError, InternalServerError):
+        except (RateLimitError, InternalServerError, APIConnectionError):
             if attempt == retries - 1:
                 return None
             print("\n  rate limited — waiting 60s")
