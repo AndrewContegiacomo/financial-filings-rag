@@ -1,31 +1,30 @@
 """
-Generation evaluation: compares two prompt strategies on the same
-retrieved context.
+Generation evaluation: compares prompt strategies on identical context.
 
-DESIGN: retrieval is held FIXED (keyword, top-5, no oracle) so the only
-variable is the prompt. Otherwise a difference could not be attributed.
+DESIGN: retrieval is held fixed — augmented search with rule-inferred
+filters at k=10, i.e. the production configuration — so the prompt is
+the only variable. The previous round ran on keyword@k=5, the weakest
+configuration measured, which is why the gold chunk reached the context
+in only 4 of 18 cases and made the comparison nearly meaningless.
 
-WHAT "CORRECT" MEANS HERE: retrieval evaluation showed the gold chunk
-often does NOT reach the context. Scoring only "was the answer right"
-would just re-measure retrieval — a prompt cannot extract a figure it
-was never given. So each item is scored against what the context
-actually contained:
-  - gold in context  -> expect a grounded, correct, cited answer
-  - gold not present -> expect an explicit refusal
-A prompt that always answers looks better on a naive metric and is in
-fact the dangerous one: in finance a fabricated number is the worst
-possible failure.
+SCORING is conditioned on what the context actually contained: with a
+gold chunk retrieved, the answer should be correct, grounded and cited;
+without one, an explicit refusal is the correct behaviour. Scoring only
+"was the answer right" would re-measure retrieval, since a prompt cannot
+extract a figure it was never given.
 
-JUDGE MODEL: judging runs on a different, smaller model than generation.
-Two reasons — it halves the load on the 70B model's rate-limit bucket,
-and it removes part of the self-preference bias that appears when a
-model grades its own output.
+JUDGE: same model as generation. Judging was moved to a smaller model in
+the previous round to save quota, and it failed — correct answers
+($35,934 for Apple's cash, 15% for the opex ratio) were scored
+incorrect, and near-identical refusals received opposite labels. Sample
+size is reduced instead. Self-preference bias remains and is documented
+rather than solved: both prompts face the same judge, so the comparison
+holds even if absolute values are optimistic.
 
-RATE LIMITS: the Groq free tier caps *tokens per day* (100k), not just
-per minute, so sleeping between calls does not help against it. The
-subset size below is chosen to fit that budget, results are checkpointed
-after every call, and a completed (question, prompt) pair is never
-re-run — an interrupted job resumes instead of starting over.
+RATE LIMITS: the Groq free tier caps tokens per DAY, so sleeping between
+calls does not help against it. Results are checkpointed after every
+scored pair and a completed (question, prompt) pair is never re-run — an
+interrupted job resumes rather than starting over.
 """
 import json
 import os
@@ -34,34 +33,32 @@ import time
 from pathlib import Path
 
 from dotenv import load_dotenv
-from groq import Groq, RateLimitError
+from groq import Groq, RateLimitError, InternalServerError
 from tqdm import tqdm
 
-from rag.search import load_chunks, build_index, keyword_search
+from rag.augmented_search import AugmentedIndex
+from rag.query_analysis import infer_filters
 from rag.rag import format_context
+from rag.search import load_chunks, build_index
+from rag.vector_search import VectorIndex
 
 load_dotenv()
+
+# Evaluation keeps its own client on purpose: rag/llm_client.py serves
+# the production path and shouldn't be bent to fit measurement needs.
 client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
 EVAL_FILE = Path("data/eval/eval_set.json")
 OUT_FILE = Path("data/eval/llm_results.json")
 
-GEN_MODEL = "llama-3.3-70b-versatile"
-JUDGE_MODEL = "llama-3.1-8b-instant"
+MODEL = "llama-3.3-70b-versatile"
+TOP_K = 10
+SLEEP = 2.0
 
-TOP_K = 5
-SLEEP = 1.5
-
-# Subset sizing is a quota decision, not a methodological one: all 10
-# hand-written items are kept (they are the realistic ones), plus a
-# sample of synthetic items. ~18 items x 2 prompts x 2 calls fits within
-# the free tier's daily token budget.
-N_SYNTHETIC = 8
-
-# Gold passages are truncated before being sent to the judge: the first
-# few hundred words are enough to verify a fact, and full chunks would
-# roughly double token consumption.
-GOLD_TEXT_CHARS = 800
+# All 10 hand-written items (the realistic ones) plus a few synthetic.
+# Three prompts x 2 calls each puts ~14 items near the daily token
+# budget; the constraint is quota, not methodology.
+N_SYNTHETIC = 4
 
 
 PROMPT_A = """You are a financial analyst assistant. Answer the QUESTION
@@ -104,7 +101,46 @@ QUESTION: {question}
 
 ANSWER:"""
 
-PROMPTS = {"A_strict_contract": PROMPT_A, "B_explicit_triage": PROMPT_B}
+
+# Adds an explicit ban on DERIVING figures. The previous round showed
+# both A and B fabricating whenever they computed: A multiplied share
+# counts by average prices across unrelated rows, B subtracted values
+# with mismatched scopes and reported $92.8B of buybacks in two months.
+# Neither prompt forbade calculation — only invention.
+PROMPT_C = """You are a financial analyst assistant answering questions
+about SEC filings.
+
+Work through these steps before answering:
+1. RELEVANCE: identify which of the context blocks, if any, actually
+   address the question. Most blocks are usually irrelevant.
+2. EXTRACT: from the relevant blocks only, pull out the specific facts,
+   figures or statements that answer the question.
+3. ANSWER: state the answer, citing each claim as
+   [TICKER FORM DATE, SECTION].
+
+Rules on figures:
+- Report only numbers that appear LITERALLY in the context. Do not add,
+  subtract, multiply or compute percentages, even when the arithmetic
+  looks trivial.
+- If answering would require calculation, say which figures the context
+  provides and state that the comparison is not stated in the filings.
+- If step 1 finds no relevant block, reply that the filings provided do
+  not contain this information.
+
+Output only the final answer, not your intermediate steps.
+
+CONTEXT:
+{context}
+
+QUESTION: {question}
+
+ANSWER:"""
+
+PROMPTS = {
+    "A_strict_contract": PROMPT_A,
+    "B_explicit_triage": PROMPT_B,
+    "C_no_derived_figures": PROMPT_C,
+}
 
 
 JUDGE_PROMPT = """You are evaluating an AI assistant that answers
@@ -112,7 +148,7 @@ questions about SEC filings using retrieved document excerpts.
 
 QUESTION: {question}
 
-REFERENCE PASSAGE (the excerpt that truly contains the answer):
+REFERENCE PASSAGE (the excerpt that contains the answer):
 {gold_text}
 
 WAS THE REFERENCE PASSAGE AVAILABLE TO THE ASSISTANT? {gold_available}
@@ -120,67 +156,76 @@ WAS THE REFERENCE PASSAGE AVAILABLE TO THE ASSISTANT? {gold_available}
 ASSISTANT'S ANSWER:
 {answer}
 
-Score the answer on three criteria. Reply with ONLY a JSON object, no
-other text:
+Reply with ONLY a JSON object, no other text:
 
 {{"refused": 0 or 1,
   "grounded": 0 or 1,
-  "correct": 0 or 1}}
+  "correct": 0 or 1,
+  "computed": 0 or 1}}
 
 - "refused": 1 if the assistant declined to answer, stating the
   information was not available. 0 if it gave a substantive answer.
 - "grounded": 1 if every factual claim is attributable to filing content
-  and carries a source citation; 0 if any claim is unsupported or
-  uncited. Score 1 for a clean refusal.
+  and carries a source citation. Score 1 for a clean refusal.
 - "correct": 1 if the answer conveys the fact stated in the REFERENCE
-  PASSAGE. 0 otherwise. If the assistant refused, score 0.
+  PASSAGE. A correct answer phrased differently still counts. If the
+  assistant refused, score 0.
+- "computed": 1 if the assistant produced a figure by calculating it
+  (a difference, a percentage, a total) rather than quoting a number
+  present in the text. 0 otherwise.
 """
 
+_SCORE_FIELDS = ("refused", "grounded", "correct", "computed")
 
-def ask(prompt: str, model: str = GEN_MODEL, retries: int = 3) -> str:
-    """Call the API, backing off on rate limits instead of crashing.
+
+def ask(prompt: str, retries: int = 3) -> str | None:
+    """Call the API, backing off on transient failures.
 
     A 429 on the per-minute bucket clears within a minute; a 429 on the
-    daily budget will exhaust the retries and raise, which is correct —
-    at that point the run should stop and resume tomorrow (already
-    completed work is on disk).
+    daily budget exhausts the retries and returns None, which is correct
+    — the run should stop and resume tomorrow, with completed work
+    already on disk.
     """
     for attempt in range(retries):
         try:
             resp = client.chat.completions.create(
-                model=model,
+                model=MODEL,
                 messages=[{"role": "user", "content": prompt}],
                 temperature=0.0,
             )
             return resp.choices[0].message.content.strip()
-        except RateLimitError:
+        except (RateLimitError, InternalServerError):
             if attempt == retries - 1:
-                raise
+                return None
             print("\n  rate limited — waiting 60s")
             time.sleep(60)
+    return None
 
 
 def judge(question: str, gold_text: str, answer: str,
           gold_available: bool) -> dict:
-    raw = ask(
-        JUDGE_PROMPT.format(
-            question=question,
-            gold_text=gold_text[:GOLD_TEXT_CHARS],
-            gold_available="YES" if gold_available else "NO",
-            answer=answer,
-        ),
-        model=JUDGE_MODEL,
-    )
+    """Score one answer. Gold text is NOT truncated: the previous round
+    cut it at 800 characters, which could hide the very figure the judge
+    was meant to verify."""
+    raw = ask(JUDGE_PROMPT.format(
+        question=question,
+        gold_text=gold_text,
+        gold_available="YES" if gold_available else "NO",
+        answer=answer,
+    ))
+    if raw is None:
+        return {k: None for k in _SCORE_FIELDS}
+
     # Models sometimes wrap JSON in prose or code fences despite
     # instructions — extract the object rather than failing the run.
     match = re.search(r"\{.*\}", raw, re.DOTALL)
     if not match:
-        return {"refused": None, "grounded": None, "correct": None}
+        return {k: None for k in _SCORE_FIELDS}
     try:
         parsed = json.loads(match.group())
     except json.JSONDecodeError:
-        return {"refused": None, "grounded": None, "correct": None}
-    return {k: parsed.get(k) for k in ("refused", "grounded", "correct")}
+        return {k: None for k in _SCORE_FIELDS}
+    return {k: parsed.get(k) for k in _SCORE_FIELDS}
 
 
 def load_checkpoint() -> tuple[list[dict], set]:
@@ -196,12 +241,11 @@ def load_checkpoint() -> tuple[list[dict], set]:
 
 
 def report(records: list[dict]) -> None:
-    print("\n=== GENERATION EVALUATION ===")
-
     def rate(rows: list[dict], field: str) -> float:
         vals = [r[field] for r in rows if r.get(field) is not None]
         return sum(vals) / len(vals) if vals else float("nan")
 
+    print("\n=== GENERATION EVALUATION ===")
     for name in PROMPTS:
         rows = [r for r in records if r["prompt"] == name]
         if not rows:
@@ -217,22 +261,25 @@ def report(records: list[dict]) -> None:
         print(f"  gold NOT in context (n={len(missing):>2}): "
               f"refused={rate(missing, 'refused'):.2f}  "
               f"grounded={rate(missing, 'grounded'):.2f}")
+        print(f"  computed a figure  : {rate(rows, 'computed'):.2f}")
 
     # The manual subset is the realistic one: questions phrased without
-    # borrowing the filing's vocabulary.
+    # borrowing the filings' vocabulary.
     manual = [r for r in records if r["origin"] == "manual"]
     if manual:
-        print("\n--- manual questions only ---")
+        print("\n--- hand-written questions only ---")
         for name in PROMPTS:
             rows = [r for r in manual if r["prompt"] == name]
             if not rows:
                 continue
             avail = [r for r in rows if r["gold_available"]]
             missing = [r for r in rows if not r["gold_available"]]
-            print(f"{name:<20} gold in ctx (n={len(avail)}): "
+            print(f"{name:<24} "
+                  f"gold in ctx (n={len(avail)}): "
                   f"correct={rate(avail, 'correct'):.2f}   "
                   f"gold absent (n={len(missing)}): "
-                  f"refused={rate(missing, 'refused'):.2f}")
+                  f"refused={rate(missing, 'refused'):.2f}   "
+                  f"computed={rate(rows, 'computed'):.2f}")
 
 
 def main() -> None:
@@ -241,7 +288,7 @@ def main() -> None:
     by_id = {c["id"]: c for c in chunks}
 
     print("Building index...")
-    index = build_index(chunks)
+    index = AugmentedIndex(VectorIndex(), build_index(chunks))
 
     manual = [i for i in eval_set if i["origin"] == "manual"]
     synthetic = [i for i in eval_set if i["origin"] == "synthetic"][:N_SYNTHETIC]
@@ -254,9 +301,10 @@ def main() -> None:
     OUT_FILE.parent.mkdir(parents=True, exist_ok=True)
 
     for item in tqdm(subset, desc="Generating & judging"):
-        # Retrieval is deterministic, so it can be recomputed cheaply on
-        # resume rather than checkpointed.
-        retrieved = keyword_search(index, item["question"], None, TOP_K)
+        # Retrieval is deterministic, so it is recomputed on resume
+        # rather than checkpointed — only expensive work is persisted.
+        filters = infer_filters(item["question"])
+        retrieved = index.search(item["question"], filters or None, TOP_K)
         context = format_context(retrieved)
 
         gold_ids = set(item["gold_chunk_ids"])
@@ -269,9 +317,15 @@ def main() -> None:
 
             answer = ask(template.format(context=context,
                                          question=item["question"]))
+            if answer is None:
+                print("\n  token budget exhausted — stopping; "
+                      "re-run to resume")
+                report(records)
+                return
             time.sleep(SLEEP)
 
-            scores = judge(item["question"], gold_text, answer, gold_available)
+            scores = judge(item["question"], gold_text, answer,
+                           gold_available)
             time.sleep(SLEEP)
 
             records.append({
@@ -279,6 +333,7 @@ def main() -> None:
                 "origin": item["origin"],
                 "prompt": name,
                 "gold_available": gold_available,
+                "n_filters": len(filters),
                 "answer": answer,
                 **scores,
             })
