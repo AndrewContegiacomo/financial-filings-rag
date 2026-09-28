@@ -310,6 +310,31 @@
       "result": "rebuilt",
       "chunk_count": 5953,
       "finished_at": "2026-09-21T12:34:24.993537+00:00"
+    },
+    {
+      "started_at": "2026-09-28T13:27:41.375122+00:00",
+      "stages": [
+        {
+          "stage": "download",
+          "status": "ok",
+          "seconds": 7.1
+        },
+        {
+          "stage": "chunk",
+          "status": "ok",
+          "seconds": 32.2
+        },
+        {
+          "stage": "embed",
+          "status": "ok",
+          "seconds": 239.4
+        }
+      ],
+      "new_filings": 2,
+      "corpus_filings": 16,
+      "result": "rebuilt",
+      "chunk_count": 5953,
+      "finished_at": "2026-09-28T13:32:20.009752+00:00"
     }
   ],
   "known_filings": [
