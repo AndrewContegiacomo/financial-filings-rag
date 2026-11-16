@@ -1,18 +1,6 @@
 {
   "runs": [
     {
-      "started_at": "2026-07-31T14:07:22.903993+00:00",
-      "stages": [
-        {
-          "stage": "download",
-          "status": "ok",
-          "seconds": 8.7
-        }
-      ],
-      "new_filings": [],
-      "result": "no-op"
-    },
-    {
       "started_at": "2026-08-01T18:59:56.888459+00:00",
       "stages": [
         {
@@ -424,6 +412,31 @@
       "result": "rebuilt",
       "chunk_count": 7303,
       "finished_at": "2026-11-09T15:53:39.914283+00:00"
+    },
+    {
+      "started_at": "2026-11-16T15:22:29.462122+00:00",
+      "stages": [
+        {
+          "stage": "download",
+          "status": "ok",
+          "seconds": 12.4
+        },
+        {
+          "stage": "chunk",
+          "status": "ok",
+          "seconds": 37.2
+        },
+        {
+          "stage": "embed",
+          "status": "ok",
+          "seconds": 330.9
+        }
+      ],
+      "new_filings": 6,
+      "corpus_filings": 20,
+      "result": "rebuilt",
+      "chunk_count": 7303,
+      "finished_at": "2026-11-16T15:28:49.903794+00:00"
     }
   ],
   "known_filings": [
